@@ -1,0 +1,32 @@
+{
+  "name": "babylon-runtime",
+  "version": "0.0.1",
+  "description": "Code less, Babylon more",
+  "main": "dist/babylon-runtime.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axeon-software/babylon-runtime.git"
+  },
+  "keywords": [
+    "BabylonJS",
+    "runtime",
+    "_r"
+  ],
+  "author": "Fabien Le Vavasseur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/axeon-software/babylon-runtime/issues"
+  },
+  "homepage": "https://github.com/axeon-software/babylon-runtime#readme",
+  "devDependencies": {
+    "@types/q": "^1.0.0",
+    "babylonjs": "^3.0.1-alpha",
+    "typescript": "^2.3.2"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "outFile": "dist/babylon-runtime.js",
+    "sourceMap": true,
+    "declaration": true
+  },
+  "files" : [
+    "node_modules/babylonjs/babylon.d.ts"
+  ],
+  "include": [
+    "src/core.ts",
+    "src/**/*"
+  ]
+}

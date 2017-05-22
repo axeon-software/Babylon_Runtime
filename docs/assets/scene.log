@@ -1,0 +1,172 @@
+Exporter version: 5.2.0, Blender version: 2.78 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used:
+		selected layers only:  false
+		flat shading entire scene:  false
+		inline textures:  false
+		texture directory:  C:\Users\AXEON\Documents\AXEON_Software\PROGRAMME\3D\Babylon.js\Babylon Runtime\default-scene\BJS\assets\
+	Python World class constructor completed
+	processing begun of camera (FreeCamera):  hotspot.PI.cam.002
+	processing begun of mesh:  hotspot.PI.002
+		processing begun of Standard material:  hotspot.PI.000
+			Diffuse texture found "hotspot.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		num positions      :  4
+		num normals        :  4
+		num uvs            :  8
+		num uvs2           :  0
+		num colors         :  16
+		num indices        :  6
+	processing begun of mesh:  hotspot.PI.001
+		registered as also a user of material:  hotspot.PI.000
+		num positions      :  4
+		num normals        :  4
+		num uvs            :  8
+		num uvs2           :  0
+		num colors         :  16
+		num indices        :  6
+	processing begun of camera (FreeCamera):  hotspot.PI.cam.001
+	processing begun of camera (FreeCamera):  hotspot.PI.cam.000
+	processing begun of mesh:  hotspot.PI.000
+		registered as also a user of material:  hotspot.PI.000
+		num positions      :  4
+		num normals        :  4
+		num uvs            :  8
+		num uvs2           :  0
+		num colors         :  16
+		num indices        :  6
+	processing begun of mesh:  checker.1m.012
+		processing begun of Standard material:  checker.1m
+			Diffuse texture found "checker.1m.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		num positions      :  4
+		num normals        :  4
+		num uvs            :  8
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6
+	processing begun of mesh:  checker.1m.011
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.010
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.009
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.008
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.007
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.006
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.005
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.004
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.003
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.002
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.001
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  checker.1m.000
+		mesh is an instance of :  checker.1m.012.  Processing halted.
+	processing begun of mesh:  _collz.000
+		processing begun of Standard material:  _collz.000
+		num positions      :  20
+		num normals        :  20
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  108
+	processing begun of mesh:  _collz.001
+		registered as also a user of material:  _collz.000
+		num positions      :  62
+		num normals        :  62
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  282
+	processing begun of mesh:  teapot.000
+		processing begun of Standard material:  teapotMaterial.000
+			Ambient texture found "AO_teapot.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVChannel_2"
+		num positions      :  1352
+		num normals        :  1352
+		num uvs            :  2704
+		num uvs2           :  2704
+		num colors         :  0
+		num indices        :  2976
+	processing begun of mesh:  monkey.000
+		processing begun of Standard material:  monkeyMaterial.000
+			Ambient texture found "AO_monkey.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+		num positions      :  1620
+		num normals        :  1620
+		num uvs            :  3240
+		num uvs2           :  3240
+		num colors         :  0
+		num indices        :  2904
+	processing begun of node:  Sun.target
+	processing begun of node:  Camera.orbit.target
+	processing begun of camera (ArcRotateCamera):  Camera.orbit
+	processing begun of camera (FreeCamera):  Camera.FPV
+	processing begun of mesh:  sphere.000
+		processing begun of Standard material:  sphereMaterial.000
+			Diffuse texture found "AO_sphere.000_AO.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap.001"
+			Reflection texture found "spheremap01.jpg"
+				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
+		num positions      :  844
+		num normals        :  844
+		num uvs            :  1688
+		num uvs2           :  1688
+		num colors         :  0
+		num indices        :  2880
+	processing begun of mesh:  wallz.000
+		processing begun of Standard material:  groundMaterial.000
+			Ambient texture found "AO_wallz.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+		processing begun of Standard material:  wallzMaterial.000
+			Ambient texture found "AO_wallz.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+			Diffuse texture found "checker01.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		processing begun of Standard material:  wallzMaterial.001
+			Ambient texture found "AO_wallz.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+			Diffuse texture found "checker01.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		processing begun of multimaterial:  scene.Multimaterial#0
+		num positions      :  12
+		num normals        :  12
+		num uvs            :  24
+		num uvs2           :  24
+		num colors         :  0
+		num indices        :  18
+	processing begun of camera (FreeCamera):  Camera.dev
+	processing begun of mesh:  cube.000
+		processing begun of Standard material:  cubeMaterial.000
+			Ambient texture found "AO_cube.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+		processing begun of Standard material:  cubeMaterial.001
+			Ambient texture found "AO_cube.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+			Diffuse texture found "checker01.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		processing begun of Standard material:  cubeMaterial.002
+			Ambient texture found "AO_cube.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+		processing begun of Standard material:  cubeMaterial.003
+			Ambient texture found "AO_cube.000_AO.png"
+				Image texture found, type:  ambientTexture, mapped using: "UVMap.001"
+		processing begun of multimaterial:  scene.Multimaterial#1
+		num positions      :  124
+		num normals        :  124
+		num uvs            :  248
+		num uvs2           :  248
+		num colors         :  0
+		num indices        :  180
+	processing begun of light (SUN):  Sun
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========
+elapsed time:  0 min, 0.3112 secs

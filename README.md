@@ -4,18 +4,18 @@
 * *JQuery*-like API to interact with 3D contents.
 
 ## Quick Look
-```
+```json
 [
     {
         "material1" : {
-            diffuseColor : "#ff0000",
-            diffusePower : 0.1
+            "diffuseColor" : "#ff0000",
+            "diffusePower" : 0.1
         }
     }, 
     {
         "mesh2" : {
-            position : {
-                x : 10
+            "position" : {
+                "x" : 10
             }
         }
     }

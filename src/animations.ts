@@ -3,7 +3,23 @@
  * # Examples
  * ## 2 seconds animation
  * ```js
- * _r.animations.animate('mesh.000', {
+ * _r.animate([
+ *      {
+ *          'mesh.000' : {
+ *              position : {
+ *                  x : 10
+ *          }
+ *      },
+ *      {
+ *          'mesh.001' : {
+ *              position : {
+ *                  y : 10
+ *              }
+ *          }
+ *      }
+ * }, 5)
+ *
+ * _r.animate('mesh.000', {
  *      position : {
  *          x : 10
  *      }
@@ -26,13 +42,6 @@
  * ### On elements
  * ```js
  * _r("mesh.*").animate(position : {
- *          x : 10
- * }, 2)
- * ```
- *
- * ### Global
- * ```js
- * _r.animate("mesh.*", position : {
  *          x : 10
  * }, 2)
  * ```
@@ -181,14 +190,12 @@ module _r.animations {
         return _options;
     }
 
-    export function animate(nodes : any | string, properties : any, options? : number | IAnimationOption) : Elements {
+    export function animate(nodes : string, properties : any, options? : number | IAnimationOption) : Elements {
         var elements = new Elements(nodes);
         var _options = getAnimationOptions(options);
         var to = _options.to ? _options.to : _options.duration * _options.fps;
         var from = _options.from ? _options.from : 0 ;
-        console.log("begin animation", elements)
         elements.each(function(element) {
-
             if(!element.animations) {
                 element.animations = [];
             }
@@ -202,13 +209,23 @@ module _r.animations {
                     }
                 }
                 var endValue = properties[property];
-                if(_r.is.PlainObject( properties[property])) {
-                    endValue = _r.extend({}, element[property]);
-                    for(var prop in properties[property]) {
-                        endValue[prop] = properties[property][prop];
-                    }
-                }
                 var animationType = guessAnimationType(element, property) || BABYLON.Animation.ANIMATIONTYPE_FLOAT;
+                if(_r.is.PlainObject(properties[property])) {
+                    endValue = _r.extend({}, element[property]);
+                    Object.getOwnPropertyNames(properties[property]).forEach(function(prop) {
+                        endValue[prop] = properties[property][prop];
+                    });
+                    if(animationType == BABYLON.Animation.ANIMATIONTYPE_COLOR3) {
+                        endValue = new BABYLON.Color3(endValue[0], endValue[1], endValue[2]);
+                        console.log("COLOR", endValue);
+                    }
+
+                }
+
+                console.log("animationtype", animationType)
+                if(animationType == BABYLON.Animation.ANIMATIONTYPE_COLOR3) {
+                    console.log("color anomation", name, property, from, startValue, to, endValue);
+                }
                 var animation = new BABYLON.Animation(name, property, _options.fps, animationType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
                 var keys;
                 if(_options.keys) {
@@ -248,3 +265,36 @@ module _r.animations {
 
 
 }
+
+module _r {
+    export function animate(...params : any[]) {
+        if(params.length == 2) {
+            if(_r.is.String(params[0])) {
+                _r.animations.animate(params[0], params[1]);
+            }
+            else {
+                if(_r.is.Array(params[0])) {
+                    params[0].forEach(function(param) {
+
+                        _r.animate(param, params[1]);
+                    });
+                }
+                else {
+                    Object.getOwnPropertyNames(params[0]).forEach(function(param) {
+                        _r.animations.animate(param, params[0][param], params[1]);
+                    });
+                }
+
+            }
+        }
+        else {
+            if(params.length == 3) {
+                _r.animations.animate(params[0], params[1], params[2]);
+            }
+            else {
+                console.error("_r.animate required 2 or 3 arguments, not " + params.length);
+            }
+        }
+    }
+}
+

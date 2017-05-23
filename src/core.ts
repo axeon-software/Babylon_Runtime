@@ -46,11 +46,11 @@ module _r {
 
     export function merge(target: any, source: any, excluded? : Array<string>): any {
         var others = {};
-        for(var property in source) {
+        Object.getOwnPropertyNames(source).forEach(function(property) {
             if(excluded.indexOf(property) == -1) {
                 others[property] = source[property];
             }
-        }
+        });
         _r.extend(target, others);
         return target;
     }

@@ -2,14 +2,37 @@
     {
         "hotspot*:mesh" : {
             "OnPickTrigger" : function() {
-                _r.animate("cube.000", {
-                    position : {
-                        y : 10
+                _r.animate("monkey.000", {
+                    material : {
+                        ambientColor : {
+                            r : 0,
+                            g : 0,
+                            b : 0
+                        }
+                    }
+                }, 5)
+                /**
+                _r.animate({
+                    "cube.000": {
+                        position: {
+                            y: 10
+                        }
+                    },
+                    "sphere.000" : {
+                        position : {
+                            x : 10
+                        }
                     }
                 }, {
                     duration : 5,
-                    easing : "easeInOutQuart"
-                })
+                    easing : "easeInOutQuart" // easings.net
+                });
+
+                _r.animate("teapot.000", {
+                    position : {
+                        z : 10
+                    }
+                }, 5);**/
             }
         }
     }

@@ -1,8 +1,6 @@
 module _r {
 
-    export function animate(nodes : any | string, properties : any, options? : number | _r.animations.IAnimationOption) {
-        _r.animations.animate.call(this, nodes, properties, options);
-    }
+
 
     /** Helpers **/
     export function color(...parameters : any[]) {

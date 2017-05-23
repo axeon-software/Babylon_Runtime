@@ -1,7 +1,7 @@
 module _r {
-    /** Animations??? **/
-    export function animate(...params : any[]) {
-        _r.animations.animate.call(params);
+
+    export function animate(nodes : any | string, properties : any, options? : number | _r.animations.IAnimationOption) {
+        _r.animations.animate.call(this, nodes, properties, options);
     }
 
     /** Helpers **/

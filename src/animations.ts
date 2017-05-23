@@ -186,7 +186,9 @@ module _r.animations {
         var _options = getAnimationOptions(options);
         var to = _options.to ? _options.to : _options.duration * _options.fps;
         var from = _options.from ? _options.from : 0 ;
+        console.log("begin animation", elements)
         elements.each(function(element) {
+
             if(!element.animations) {
                 element.animations = [];
             }
@@ -233,6 +235,7 @@ module _r.animations {
                 element.animations.push(animation);
             });
             _r.trigger(element, "onAnimationStart");
+
             _r.scene.beginAnimation(element, from, to, _options.loop, _options.speedRatio, function() {
                 if(_options.onAnimationEnd) {
                     _options.onAnimationEnd.call(element);

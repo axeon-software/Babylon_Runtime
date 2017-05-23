@@ -1,0 +1,16 @@
+[
+    {
+        "hotspot*:mesh" : {
+            "OnPickTrigger" : function() {
+                _r.animate("cube.000", {
+                    position : {
+                        y : 10
+                    }
+                }, {
+                    duration : 5,
+                    easing : "easeInOutQuart"
+                })
+            }
+        }
+    }
+]

@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/q": "^1.0.0",
     "babylonjs": "^3.0.1-alpha",
+    "q": "^1.5.0",
     "typescript": "^2.3.2"
   }
 }

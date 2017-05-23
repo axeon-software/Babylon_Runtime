@@ -11,7 +11,7 @@ module _r {
         var target = params[0];
         for(var i = 1; i < params.length; i++) {
             var nextSource = params[i];
-            for (var key in nextSource) {
+            Object.getOwnPropertyNames(nextSource).forEach(function(key) {
                 if(overrides[key]) {
                     var res = overrides[key](target, nextSource, key);
                     if(res) {
@@ -37,10 +37,9 @@ module _r {
                                 target[key] = nextSource[key];
                             }
                         }
-
                     }
                 }
-            }
+            })
         }
         return target;
     }

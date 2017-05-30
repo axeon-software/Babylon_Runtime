@@ -1,7 +1,4 @@
 module _r {
-
-
-
     /** Helpers **/
     export function color(...parameters : any[]) {
         if(parameters.length == 1) {

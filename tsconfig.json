@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "outFile": "dist/babylon-runtime.js",
+    "allowJs": true,
     "sourceMap": true,
     "declaration": true
   },
@@ -9,6 +10,7 @@
     "node_modules/babylonjs/babylon.d.ts"
   ],
   "include": [
+    "node_modules/q/q.js",
     "src/core.ts",
     "src/**/*"
   ]

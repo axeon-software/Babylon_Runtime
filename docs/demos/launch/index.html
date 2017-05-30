@@ -6,14 +6,31 @@
     <script src="../../../node_modules/babylonjs/babylon.js"></script>
     <script src="../../../node_modules/q/q.js"></script>
     <script src="../../../dist/babylon-runtime.js"></script>
+    <script>
+        _r.override(['animate'], function(target, source, property) {
+            _r.select(target).on("OnPickTrigger", function() {
+                _r.select("sphere.000").animate({
+                    position : {
+                        y : 10
+                    }
+                })
+            })
+        })
+    </script>
 </head>
 <body>
 <script>
     _r.launch({
         scene : "scene.babylon",
         assets : "../../assets/",
-        activeCamera : "Camera.FPV"
+        activeCamera : "Camera.FPV",
+        patch : [
+            "test.patch"
+        ]
+
     })
+
+
 </script>
 </body>
 </html>

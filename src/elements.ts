@@ -2,9 +2,7 @@ module _r {
 
     export class Elements {
         length: number;
-        // TODO Selector by name or id : static member
 
-        // TODO on doit pouvoir passer un Elements existant.
         constructor(params?: any) {
             if (!params || params === '' || typeof params === 'string' && params.trim() === '') {
                 this.length = 0;

@@ -73,7 +73,7 @@ module _r {
             if(!target[property]) {
                 target[property] = new BABYLON.FresnelParameters();
             }
-            _r.merge(target[property], configuration);
+            _r.extend(target[property], configuration);
         });
 
     _r.override(

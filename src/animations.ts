@@ -217,15 +217,9 @@ module _r.animations {
                     });
                     if(animationType == BABYLON.Animation.ANIMATIONTYPE_COLOR3) {
                         endValue = new BABYLON.Color3(endValue[0], endValue[1], endValue[2]);
-                        console.log("COLOR", endValue);
                     }
-
                 }
 
-                console.log("animationtype", animationType)
-                if(animationType == BABYLON.Animation.ANIMATIONTYPE_COLOR3) {
-                    console.log("color anomation", name, property, from, startValue, to, endValue);
-                }
                 var animation = new BABYLON.Animation(name, property, _options.fps, animationType, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
                 var keys;
                 if(_options.keys) {

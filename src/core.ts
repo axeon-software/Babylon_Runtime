@@ -19,25 +19,35 @@ module _r {
                     }
                 }
                 else {
-                    if (_r.is.PlainObject(nextSource[key])) {
-                        if(target[key] == null) {
-                            target[key] = {}
+                    if(key.indexOf('::') != -1) {
+                        var split = key.split('::');
+                        var res = _r[split[0]][split[1]](nextSource[key]);
+                        if(res) {
+                            target = res;
                         }
-                        target[key] = extend(target[key], nextSource[key]);
                     }
                     else {
-                        if(target[key] != null && _r.is.Color(target[key]) && _r.is.HexColor(nextSource[key])) {
-                            target[key] = BABYLON.Color3.FromHexString(nextSource[key]);
+                        if (_r.is.PlainObject(nextSource[key])) {
+                            if(target[key] == null) {
+                                target[key] = {}
+                            }
+                            target[key] = extend(target[key], nextSource[key]);
                         }
                         else {
-                            if(_r.is.Function(nextSource[key])) {
-                                target[key] = nextSource[key].call(target, key);
+                            if(target[key] != null && _r.is.Color(target[key]) && _r.is.HexColor(nextSource[key])) {
+                                target[key] = BABYLON.Color3.FromHexString(nextSource[key]);
                             }
                             else {
-                                target[key] = nextSource[key];
+                                if(_r.is.Function(nextSource[key])) {
+                                    target[key] = nextSource[key].call(target, key);
+                                }
+                                else {
+                                    target[key] = nextSource[key];
+                                }
                             }
                         }
                     }
+
                 }
             })
         }
@@ -47,7 +57,7 @@ module _r {
     export function merge(target: any, source: any, excluded? : Array<string>): any {
         var others = {};
         Object.getOwnPropertyNames(source).forEach(function(property) {
-            if(excluded.indexOf(property) == -1) {
+            if(!excluded || excluded.indexOf(property) == -1) {
                 others[property] = source[property];
             }
         });
@@ -55,23 +65,22 @@ module _r {
         return target;
     }
 
-    export function patch(nodes : any, patch : any) : Elements {
-        var el = new Elements(nodes);
-        el.each(function(obj) {
-            console.info("patch", obj.name, patch);
-            if (!obj.metadata) {
-                obj.metadata = {};
-            }
-            if (!obj.metadata.patch) {
-                obj.metadata.patch = [];
-            }
-            obj.metadata.patch.push(patch);
-            if(!obj || !patch) {
-                console.log("patch null", obj, patch);
-            }
-            _r.extend(obj, patch);
-        });
-        return el;
+    export function patch(...params : any[]) : Elements {
+        if(params.length == 1) {
+            return _r.extend({}, params[0]);
+        }
+        else {
+            var nodes = params[0];
+            var patch = params[1];
+            var el = new Elements(nodes);
+            el.each(function(obj) {
+                console.info("patch", obj.name, patch);
+                _r.extend(obj, patch);
+            });
+            return el;
+        }
+
+
 
     }
 }

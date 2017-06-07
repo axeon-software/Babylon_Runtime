@@ -15,10 +15,6 @@ module _r.mesh {
         return _r.merge(_box, params, ['name', 'size', 'updatable', 'sideOrientation'])
     };
 
-    _r.override(['mesh.box'], function(target, source, property) {
-        return box(source[property]);
-    });
-
     /** Sphere **/
     export interface ISphere {
         name : string,
@@ -35,10 +31,6 @@ module _r.mesh {
         var _sphere = BABYLON.Mesh.CreateSphere(params.name, params.segments, params.diameter, _r.scene, params.updatable, <number> params.sideOrientation);
         return _r.merge(_sphere,params, ['name', 'segments', 'diameter', 'updatable', 'sideOrientation'])
     };
-
-    _r.override(["mesh.sphere"], function(target, source, property) {
-        return sphere(source[property]);
-    });
 
     /** Ground **/
     export interface IGround {
@@ -73,7 +65,4 @@ module _r.mesh {
         var _plane = BABYLON.Mesh.CreatePlane(params.name, params.size, _r.scene, params.updatable, <number> params.sideOrientation);
         return _r.merge(_plane, params, ['name', 'size', 'updatable', 'sideOrientation'])
     }
-
-
-
 }

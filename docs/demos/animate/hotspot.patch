@@ -2,16 +2,14 @@
     {
         "hotspot*:mesh" : {
             "OnPickTrigger" : function() {
-                _r.animate("monkey.000", {
-                    material : {
-                        ambientColor : {
-                            r : 0,
-                            g : 0,
-                            b : 0
-                        }
+                _r.animate("scene.monkeyMaterial.000", {
+                    ambientColor : {
+                        r : 1,
+                        g : 0,
+                        b : 0
                     }
-                }, 5)
-                /**
+                }, 5);
+
                 _r.animate({
                     "cube.000": {
                         position: {
@@ -22,17 +20,29 @@
                         position : {
                             x : 10
                         }
+                    },
+                    "teapot.000" : {
+                        position : {
+                            z : 10
+                        }
                     }
                 }, {
                     duration : 5,
                     easing : "easeInOutQuart" // easings.net
                 });
 
-                _r.animate("teapot.000", {
-                    position : {
-                        z : 10
+                /** should trigger a console.warn and do nothing because we can't animate a material... **/
+                _r.animate("monkey.000", {
+                    material : {
+                        ambientColor : {
+                            r : 1,
+                            g : 1,
+                            b : 1
+                        }
                     }
-                }, 5);**/
+                });
+
+                /** TODO : cancel animation like jQuery _r().finish() **/
             }
         }
     }

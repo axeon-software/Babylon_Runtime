@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>_r.launch</title>
+    <script src="../../../node_modules/babylonjs/babylon.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
+</head>
+<body>
+<script>
+    _r.launch({
+        scene : function() {
+            _r.scene.ambientColor = _r.color("#000000")
+            _r.patch([
+                {
+                    "camera::free" : {
+                        name: "camera1",
+                        position: {
+                            x: 0,
+                            y: 5,
+                            z: -10
+                        },
+                        target: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }
+                },
+                {
+                    "mesh::sphere": {
+                        name: "sphere1",
+                        segments: 16,
+                        diameter: 2,
+                        position: {
+                            y: 1
+                        },
+                        material : {
+                            "material::standard" : {
+                                name : "mat1",
+                                diffuseColor : "#ff0000",
+                                reflectionTexture : {
+                                    "texture.cube" : {
+                                        rootUrl : '../../assets/cubemap/',
+                                        coordinatesMode : 'SPHERICAL_MODE'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                   "mat1" : {
+                       "useEmissiveAsIllumination": true,
+                       "emissiveColor": "#ffffff",
+                       "emissiveFresnelParameters": {
+                           "leftColor": "#ff0000",
+                           "rightColor": "#000000",
+                           "bias": 0.4,
+                           "power": 4
+                       }
+                   }
+                },
+                {
+                    "light::hemispheric": {
+                        name: "light1",
+                        direction: {
+                            y: 1
+                        },
+                        intensity: 0.5
+                    }
+                },
+                {
+                    "mesh::ground": {
+                        name: "ground1",
+                        width: 6,
+                        height: 6,
+                        subdivisions: 2
+                    }
+                }]);
+        },
+        assets : "../../assets/",
+        activeCamera : "camera1"
+    });
+
+
+    _r.ready(function() {
+
+    })
+
+
+</script>
+</body>
+</html>

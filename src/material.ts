@@ -41,8 +41,4 @@ module _r.material {
         var _material = new BABYLON.StandardMaterial(params.name, _r.scene);
         return _r.merge(_material, params, ['name']);
     }
-
-    _r.override(['material.standard'], function(target, source, property) {
-        return standard(source[property]);
-    });
 }

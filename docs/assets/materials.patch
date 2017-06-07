@@ -1,5 +1,11 @@
 [
     {
+        "scene.multiCube*":
+        {
+            "diffuseColor":  "#000000",
+        }
+    },
+    {
         "scene.ground_01, scene.room_ground_01, room_wallz_01 ":
         {
             "diffuseColor": "#000000",
@@ -11,19 +17,6 @@
         "scene.ground_01":
         {
             "useAlphaFromDiffuseTexture": true
-        }
-    },
-    {
-        "scene.wonderfulFloatingSphere.000":
-        {
-            "diffuseColor": "#000000",
-            "ambientColor": {
-                r:.2,
-                g:.4,
-                b:.5
-            },
-            "specularColor": "#000000"
-
         }
     }
 ]

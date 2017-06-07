@@ -6,16 +6,39 @@ Exporter version: 5.2.0, Blender version: 2.78 (sub 0)
 		inline textures:  false
 		texture directory:  F:\Program Files\GitHub\babylon-runtime\docs\assets\
 	Python World class constructor completed
-	processing begun of mesh:  wonderfulFloatingSphere.000
-		processing begun of Standard material:  wonderfulFloatingSphere.000
-			Reflection texture found "spheremap01.png"
-				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
-		num positions      :  557
-		num normals        :  557
-		num uvs            :  1114
-		num uvs2           :  1114
+	processing begun of mesh:  runtime.000
+		processing begun of Standard material:  runtime_01
+			Ambient texture found "runtime.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  runtime_02
+		processing begun of multimaterial:  scene.Multimaterial#0
+		num positions      :  2156
+		num normals        :  2156
+		num uvs            :  4312
+		num uvs2           :  4312
 		num colors         :  0
-		num indices        :  2880
+		num indices        :  4506
+	processing begun of mesh:  multiCube.000
+		processing begun of Standard material:  multiCube_01
+			Ambient texture found "multiCube.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  multiCube_02
+			Ambient texture found "multiCube.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  multiCube_03
+			Ambient texture found "multiCube.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  multiCube_04
+			Ambient texture found "multiCube.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  multiCube_05
+		processing begun of multimaterial:  scene.Multimaterial#1
+		num positions      :  253
+		num normals        :  253
+		num uvs            :  506
+		num uvs2           :  506
+		num colors         :  0
+		num indices        :  306
 	processing begun of mesh:  pedestal.000
 		processing begun of Standard material:  pedestal.000
 			Ambient texture found "pedestal.000_lightmap"
@@ -35,13 +58,13 @@ Exporter version: 5.2.0, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  room_wallz_01
 			Ambient texture found "room.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of multimaterial:  scene.Multimaterial#0
-		num positions      :  47
-		num normals        :  47
-		num uvs            :  94
-		num uvs2           :  94
+		processing begun of multimaterial:  scene.Multimaterial#2
+		num positions      :  325
+		num normals        :  325
+		num uvs            :  650
+		num uvs2           :  650
 		num colors         :  0
-		num indices        :  66
+		num indices        :  468
 	processing begun of mesh:  ground.000
 		processing begun of Standard material:  ground_01
 			Diffuse texture found "ground01.png"
@@ -60,10 +83,16 @@ Exporter version: 5.2.0, Blender version: 2.78 (sub 0)
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
 		processing begun of Standard material:  videoFlooder_video_01
+			Ambient texture found "videoFlooder.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+			Reflection texture found "spheremap01.png"
+				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
 		processing begun of Standard material:  videoFlooder_metal_01
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of multimaterial:  scene.Multimaterial#1
+			Reflection texture found "spheremap01.png"
+				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
+		processing begun of multimaterial:  scene.Multimaterial#3
 		num positions      :  1310
 		num normals        :  1310
 		num uvs            :  2620
@@ -78,4 +107,4 @@ Exporter version: 5.2.0, Blender version: 2.78 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.2394 secs
+elapsed time:  0 min, 0.3256 secs

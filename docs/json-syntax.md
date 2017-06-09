@@ -5,7 +5,7 @@ All you have to know is that's an open-standard data file format, and some rules
   - to access an object, you have to hold it between __{ }__ and write inside object name enclosed by __" "__,
   - once you have select an object, you want to highlight some of its parameters. So after _"objectName"_, add __: { }__, and write inside parameter name enclosed by __" "__ :
 
-```JSON
+```javascript
 {
   "myObjectToTweak":
   {
@@ -15,7 +15,7 @@ All you have to know is that's an open-standard data file format, and some rules
 ```
   - if you have multiple params, they must end with a comma but not the last :
 
-```JSON
+```javascript
 {
   "myObjectToTweak":
   {
@@ -27,14 +27,14 @@ All you have to know is that's an open-standard data file format, and some rules
 ```
   - same if multiple objects. Notice that comma is between objects, so last parameter of first object doesn't have to end by comma) :
 
-```JSON
+```javascript
 {
   "myObjectToTweak":
   {
     "myParamToTweak" : "myValue",
     "myOtherParamToTweak" : "myValue2" /* no comma here */
   } /* nope, no comma here neither */
-}, /* here it is !*/
+}, /* here it is ! */
 {
   "myOtherObjectToTweak":
   {
@@ -45,7 +45,7 @@ All you have to know is that's an open-standard data file format, and some rules
 ```
   - parameters value not have to be bound to quotes if they're number or boolean values ; other must be quoted :
 
-```JSON
+```javascript
 {
   "myObjectToTweak":
   {
@@ -57,7 +57,7 @@ All you have to know is that's an open-standard data file format, and some rules
 ```
   - level up : suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules :
 
-```JSON
+```javascript
 {
   "myObjectToTweak":
   {

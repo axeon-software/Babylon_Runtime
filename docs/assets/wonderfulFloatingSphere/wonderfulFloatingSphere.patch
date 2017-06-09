@@ -1,0 +1,60 @@
+[
+	/**** meshes ****/
+
+	{
+		"wonderfulFloatingSphere.000:mesh":
+		{
+			"position":
+			{
+				x: -2,
+				y: 1.5,
+				z: -2
+			}
+		}
+	},
+
+	/**** materials ****/
+
+	{
+		/*
+
+		Remember that blender exporter add babylon file name in front of all materials name, like this :
+		babylonFileName.materialName
+
+		 */
+
+		"wonderfulFloatingSphere.wonderfulFloatingSphere.000":
+		{
+			"diffuseColor": "#000000",
+			"ambientColor": "#000000",
+			"specularColor": "#aa1100",
+			"specularPower": 5,
+			"emissiveColor": "#ffffff",
+			"useEmissiveAsIllumination": true,
+			"emissiveFresnelParameters":
+			{
+				"leftColor":
+				{
+					r: .5,
+					g: .7,
+					b: 1
+				},
+				"rightColor": "#666666",
+				"bias": 0,
+				"power": 1
+			}
+		}
+	},
+	{
+		"wonderfulFloatingSphere.wonderfulFloatingSphere.001":
+		{
+			"diffuseColor": "#000000",
+			"ambientColor":
+			{
+				r: .5,
+				g: .7,
+				b: 1
+			}
+		}
+	}
+]

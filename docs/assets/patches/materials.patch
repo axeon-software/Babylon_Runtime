@@ -1,0 +1,49 @@
+[
+	{
+		"scene.multiCube*":
+		{
+			"diffuseColor": "#000000",
+		}
+	},
+	{
+		"scene.ground_01, scene.room_ground_01, room_wallz_01 ":
+		{
+			"diffuseColor": "#000000",
+			"ambientColor": "#ffffff",
+			"specularColor": "#000000"
+		}
+	},
+	{
+		"scene.ground_01":
+		{
+			"useAlphaFromDiffuseTexture": true
+		}
+	},
+	{
+		"scene.videoFlooder_metal_01":
+		{
+			"diffuseColor": "#808693",
+			"ambientColor": "#333333"
+		}
+	},
+
+	/***
+
+	Assign VideoTexture
+
+	 ***/
+
+	{
+		"scene.videoFlooder_videoON_01":
+		{
+			"diffuseTexture":
+			{
+				videoTexture:
+				{
+					name: 'cosmos-laundromat-trailer',
+					urls: ['videos/cosmos-laundromat-trailer.mp4', 'videos/cosmos-laundromat-trailer.ogv', 'videos/cosmos-laundromat-trailer.webm']
+				}
+			}
+		}
+	}
+]

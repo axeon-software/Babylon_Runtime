@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>_r - patches</title>
+	<script src="http://preview.babylonjs.com/babylon.js"></script>
+	<script src="../../assets/js/babylon-runtime.js"></script> 
+</head>
+<body>
+<script>
+    _r.launch({
+        scene : "scene.babylon",
+        assets : "../../assets/",
+        activeCamera : "cameraFree.000",        
+        patch : [
+            {
+                "cameraFree.000":
+                {
+                
+                }
+            }
+        ]
+    });
+    _r.ready(function(){
+        _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
+        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
+    });
+</script>
+</body>
+</html>

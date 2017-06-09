@@ -1,0 +1,49 @@
+[
+
+	/****
+
+	Change material on pick.
+
+	 ****/
+/* (waiting to know how to play/pause video on launch, and cut sound)
+	{
+		"videoFlooder.000:mesh":
+		{
+			OnPickUpTrigger: function ()
+			{
+				console.log("video assigned !");
+                _r.assignMaterial("videoFlooder.000:mesh", 1, "scene.videoFlooder_videoON_01");
+			}
+		}
+	},
+*/
+
+	/****
+
+	Import another .babylon into scene,
+	by pressing on the magic button.
+
+	****/
+
+	{
+		"magicButton.000:mesh":
+		{
+			OnPickUpTrigger: function ()
+			{
+				/* this is javascript */
+				console.log("red magic button picked !!§");
+				_r.importLibrary(
+				{
+					/* this is babylon-runtime JSON */
+					name: "wonderfulFloatingSphere",
+					rootUrl: "wonderfulFloatingSphere/",
+					fileName: "wonderfulFloatingSphere.babylon",
+					patch: [
+						"wonderfulFloatingSphere/wonderfulFloatingSphere.patch"
+					]
+				}
+				)
+			}
+		}
+	}
+]

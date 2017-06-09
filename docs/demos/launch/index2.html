@@ -12,7 +12,14 @@
         scene : "scene.babylon",
         assets : "../../assets/",
         activeCamera : "cameraFree.000"
-    })
+    });
+    _r.ready(function(){
+        _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
+        /*  or if you prefer RGB syntax :
+            _r.scene.ambientColor = new BABYLON.Color3(1,1,1);
+        */
+        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
+    });
 </script>
 </body>
 </html>

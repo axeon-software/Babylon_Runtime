@@ -78,6 +78,23 @@ All you have to know is that JSON is an open-standard data file format, and that
   }
 }
 ```
+  - if a param appears multiple time, it is the last which is taken into account:
+```javascript
+{
+  "myObjectToTweak":
+  {
+    "myParamToTweak": 1, /* this is finally ignored... */
+    "myParamToTweak": 42, /* ...'cause of this line */
+    "coolThing": "#ffffff" /* this is finally ignored... */
+  }
+},
+{
+  "myObjectToTweak":
+  {
+    "coolThing": "#000000" /* ...'cause of this line */
+  }
+}
+```
 
 Depends of your text editor, but surely their is an option or plugin: 
 

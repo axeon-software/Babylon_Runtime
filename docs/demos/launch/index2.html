@@ -8,11 +8,13 @@
 </head>
 <body>
 <script>
-    _r.launch({
-        scene : "scene.babylon",
-        assets : "../../assets/",
-        activeCamera : "cameraFree.000"
-    });
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	assets: "../../assets/",
+    	activeCamera: "cameraFree.000"
+    }
+    );
     _r.ready(function(){
         _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
         /*  or if you prefer RGB syntax :

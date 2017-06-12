@@ -1,9 +1,9 @@
 # Some rules about JSON syntax
 
-All you have to know is that's an open-standard data file format, and some rules about writing data in JSON for babylon-runtime :
+All you have to know is that JSON is an open-standard data file format, and that there is some rules about writing data:
 
-  - to access an object, you have to hold it between __{ }__ and write inside object name enclosed by __" "__,
-  - once you have select an object, you want to highlight some of its parameters. So after _"objectName"_, add __: { }__, and write inside parameter name enclosed by __" "__ :
+  - to access an object, you have to hold it between two braces __{ }__ and write inside the object name enclosed by quotes __" "__,
+  - once you have select an object, you want to highlight some of its parameters. So after _"objectName"_, add a colon and two braces __: { }__, and write inside the parameter name enclosed by quotes __" "__:
 
 ```javascript
 {
@@ -13,7 +13,7 @@ All you have to know is that's an open-standard data file format, and some rules
   }
 }
 ```
-  - if you have multiple params, they must end with a comma but not the last :
+  - if you have multiple params, they must end with a comma but not the last:
 
 ```javascript
 {
@@ -25,7 +25,7 @@ All you have to know is that's an open-standard data file format, and some rules
   }
 }
 ```
-  - same if multiple objects. Notice that comma is between objects, so last parameter of first object doesn't have to end by comma) :
+  - same if multiple objects. Notice that comma is between objects, so last parameter of first object doesn't have to end by comma:
 
 ```javascript
 {
@@ -55,7 +55,7 @@ All you have to know is that's an open-standard data file format, and some rules
   }
 }
 ```
-  - level up: suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules :
+  - level up: suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules:
 
 ```javascript
 {
@@ -79,7 +79,7 @@ All you have to know is that's an open-standard data file format, and some rules
 }
 ```
 
-Depends of your text editor, but surely their is an option or plugin : 
+Depends of your text editor, but surely their is an option or plugin: 
 
 -   to help format JSON data (e.g. for notepad++ : [JSToolNpp](http://www.sunjw.us/jstoolnpp/)),
 -   to open/closed quotes automatically (e.g. in notepad++ : settings > autocompletion).

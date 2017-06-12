@@ -73,7 +73,7 @@ Now we have our scene, we want setup things inside.
 
 #### We want a patch
 
-To start, we will configure where our camera spawn. We have to add a patch parameter in _\_r.launch_ function, and tell it that we want access to our camera :
+To start, we will configure our camera. We have to add a patch parameter in _\_r.launch_ function, and tell it that we want access to it:
 
 ```javascript
     _r.launch(
@@ -93,9 +93,9 @@ To start, we will configure where our camera spawn. We have to add a patch param
 
 #### JSON syntax
 
-Explanation about [JSON](https://en.wikipedia.org/wiki/JSON) syntax must be made, you'll find a [dedicated page here](json-syntax.html).
+Explanation about [JSON](https://en.wikipedia.org/wiki/JSON) syntax must be made, you'll find a [dedicated page here](json-syntax.html). Read it and come back.
 
-#### Get ant tweak params
+#### How to get and tweak parameters
 
 So, in our babylon app, we quickly realize that our camera speed is a way too high. We know thanks to [BJS doc](http://doc.babylonjs.com/classes/2.5/targetcamera#speed-number) that our cam have a speed parameter. But what is the current value ? Two solutions:
   - ask to \_r:
@@ -131,7 +131,7 @@ Now we enjoy our new speed value, we have to save it in patch. Just add speed pa
     );
 ```
 
-Do we want also set camera position & rotation at spawn ? No problem:
+Do you want also set camera FOV, position & rotation at spawn ? No problem:
 
 ```javascript
     _r.launch(
@@ -144,15 +144,16 @@ Do we want also set camera position & rotation at spawn ? No problem:
     			"cameraFree.000":
     			{
     				"speed": 0.05,
+    				"fov": 1.1,
     				"position":
     				{
-    					x: 2.72,
-    					z: -1.91 /* no comma */
+    					"x": 2.72,
+    					"z": -1.91 /* no comma */
     				}, /* comma */
     				"rotation":
     				{
-    					x: 0.11,
-    					y: -0.43
+    					"x": 0.11,
+    					"y": -0.43
     				}
     			}
     		}
@@ -160,15 +161,15 @@ Do we want also set camera position & rotation at spawn ? No problem:
     }
     );
 ```
-
+To get coordinates, you just had to move and orient your camera in BJS scene to the desired place, then type ``` _r("cameraFree.000")[0].position; ``` and ``` _r("cameraFree.000")[0].rotation; ```, and report values to the patch.
 
 [launch demo scene](demos/first-patches)
 
 #### Starting to customize materials
 
-In our demo scene, due to lightmap textures in ambientTexture channel we want to control material color by ambientColor, and set diffuseColor to black by default (to reset its influence, and tweak it later if needed).
+In our demo scene, due to lightmap textures in ambientTexture channel, we want to control material color by ambientColor, and set diffuseColor to black by default (to reset its influence, and tweak it later if needed).
 
-One way to do it is to apply a patch for each materials, one by one:
+One way to do this is to apply a patch for each materials, one by one:
 
 ```javascript
 {
@@ -189,7 +190,7 @@ But, you'll admit it, it's a little pain to select all materials like this ; obv
 
 By using star selector ``` * ``` , you can tell to \_r that you want select all elements. Here some usage example, to try in the browser console:
 
-  - ``` _r("*") ``` will return all element of the current scene (objects, materials, lights, etc),
+  - ``` _r("*") ``` will return all elements of the current scene (objects, materials, lights, etc),
   - ``` _r("*:mesh") ``` wil return all objects,
   - ``` _r("*:material") ``` wil return all materials,
   - ``` _r("*Cube*") ``` will return all elements which contains _Cube_ in their names,
@@ -197,7 +198,7 @@ By using star selector ``` * ``` , you can tell to \_r that you want select all 
   - ``` _r("p*") ``` will return all elements where names start with _p_,
   - ``` _r("*Cube*01") ``` will return all elements which contains _Cube_ in their names and end with _01_.
 
-Time to write our patch:
+Time to enhance our patch:
 
 ```javascript
     _r.launch(
@@ -210,32 +211,204 @@ Time to write our patch:
     			"cameraFree.000":
     			{
     				"speed": 0.05,
+    				"fov": 1.1,
     				"position":
     				{
-    					x: 2.72,
-    					z: -1.91
+    					"x": 2.72,
+    					"z": -1.91
     				},
     				"rotation":
     				{
-    					x: 0.11,
-    					y: -0.43
+    					"x": 0.11,
+    					"y": -0.43
     				}
     			}
     		},
             {
-                "*:material":
+                "*:material": /* select all materials in scene... */
                 {
-                    "diffuseColor": "#000000"
+                    "diffuseColor": "#000000" /* ... and set diffuse color to black */ 
                 }
             }
     	]
     }
     );
 ```
-![all-materials-patched01](tutorials-assets/all-materials-patched01.jpg)
+![all materials patched](tutorials-assets/all-materials-patched01.jpg)
 
 [launch demo scene](demos/first-patches/index2.html)
 
+You can know try to customize any material. Probably the easy way to access and tweak data is via BJS debug layer.
+Here an quick example with the torrus:
+![torrus patched](tutorials-assets/torrus-patched01.jpg)
 
+```javascript
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	assets: "../../assets/",
+    	activeCamera: "cameraFree.000",
+    	patch: [
+    		{
+    			"cameraFree.000":
+    			{
+    				"speed": 0.05,
+    				"fov": 1.1,
+    				"position":
+    				{
+    					"x": 2.72,
+    					"z": -1.91
+    				},
+    				"rotation":
+    				{
+    					"x": 0.11,
+    					"y": -0.43
+    				}
+    			}
+    		},
+            {
+                "*:material": /* select all materials in scene... */
+                {
+                    "diffuseColor": "#000000" /* ... and set diffuse color to black */ 
+                }
+            },
+            {
+                "scene.torrus_01":
+                {
+                    "diffuseColor":{"r": 0, "g": 0.3, "b": 0.8},
+                    "ambientColor":{"r": 0.6, "g": 0.6, "b": 0.6},
+                    "specularColor":{"r": 1, "g": 0.4, "b": 0.4},
+                    "specularPower": 10
+                }
+            }
+    	]
+    }
+    );
+```
+[launch demo scene](demos/first-patches/index3.html)
+
+#### Some bits of organisation
+
+Assume you have tons of materials, you're _index.html_ will be probably messy.
+So, is there a way to confine patches to external files ? Yes.
+
+Create a folder named as you want, near your _index.html_, then create one file named _cameras.patch_ and another named _materials.patch_.
+
+As you can guess, you can now cut & paste patch data from your _index.html_ to the right _.patch_ files ; and tell to \_r where are stored this patches.
+
+Things to know:
+- patch file must have _.patch_ extension,
+- entire patch file content must be included in square brackets __[ ]__ (one patch file is a table).
+
+>   cameras.patch
+
+```javascript
+[
+	{
+		"cameraFree.000":
+		{
+			"speed": 0.05,
+			"fov": 1.1,
+			"position":
+			{
+				"x": 2.72,
+				"z": -1.91
+			},
+			"rotation":
+			{
+				"x": 0.11,
+				"y": -0.43
+			}
+		}
+	}
+]
+```
+
+>   materials.patch
+
+```javascript
+[
+	{
+		"*:material":
+		{
+			"diffuseColor": "#000000"
+		}
+	},
+	{
+		"scene.torrus_01":
+		{
+			"diffuseColor":
+			{
+				"r": 0,
+				"g": 0.3,
+				"b": 0.8
+			},
+			"ambientColor":
+			{
+				"r": 0.6,
+				"g": 0.6,
+				"b": 0.6
+			},
+			"specularColor":
+			{
+				"r": 1,
+				"g": 0.4,
+				"b": 0.4
+			},
+			"specularPower": 10
+		}
+	}
+]
+```
+
+> index.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>_r / patches</title>
+	<script src="http://preview.babylonjs.com/babylon.js"></script>
+	<script src="../../assets/js/babylon-runtime.js"></script> 
+</head>
+<body>
+<script>
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	assets: "../../assets/",
+    	activeCamera: "cameraFree.000",
+    	patch: [
+    		"patches/cameras.patch",
+    		"patches/materials.patch"
+    	]
+    }
+    );
+    _r.ready(function(){
+        _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
+        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
+    });
+</script>
+</body>
+</html>
+```
+[launch demo scene](demos/first-patches/index4.html)
+
+This is clearer way to work isn't it ? You can create any files you want if you need, this can help for team work.
 
 ## Advanced
+
+### Advanced materials options
+
+#### Fresnel
+
+#### VideoTexture
+
+### Create user interactions
+
+### Import other .babylon in scene
+
+### Animate things
+
+### Use \_r and write my own javascript as well

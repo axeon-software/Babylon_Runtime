@@ -103,8 +103,8 @@ Depends of your text editor, but surely their is an option or plugin:
 
 
 
-Bad pratice but pratical: __comments are not allowed in JSON!__ But if you work in team this may be helpful anyway.
+Bad pratice but pratical: comments are in theory __not allowed in JSON!__ But if you work in team this may be helpful anyway, so close our eyes...
 
 
 
-You're now a JSON master.
+Hooray, you're now a JSON master !

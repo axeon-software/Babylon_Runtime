@@ -9,7 +9,7 @@ All you have to know is that's an open-standard data file format, and some rules
 {
   "myObjectToTweak":
   {
-    "myParamToTweak" : "myValue"
+    "myParamToTweak": "myValue"
   }
 }
 ```
@@ -19,9 +19,9 @@ All you have to know is that's an open-standard data file format, and some rules
 {
   "myObjectToTweak":
   {
-    "myParamToTweak" : "myValue",
-    "myOtherParamToTweak" : "myValue2",
-    "myAnotherParamToTweak" : "myValue3" /* no comma here */
+    "myParamToTweak": "myValue",
+    "myOtherParamToTweak": "myValue2",
+    "myAnotherParamToTweak": "myValue3" /* no comma here */
   }
 }
 ```
@@ -31,50 +31,50 @@ All you have to know is that's an open-standard data file format, and some rules
 {
   "myObjectToTweak":
   {
-    "myParamToTweak" : "myValue",
-    "myOtherParamToTweak" : "myValue2" /* no comma here */
+    "myParamToTweak": "myValue",
+    "myOtherParamToTweak": "myValue2" /* no comma here */
   } /* nope, no comma here neither */
 }, /* here it is ! */
 {
   "myOtherObjectToTweak":
   {
-    "myParamToTweak" : "myValue",
-    "myOtherParamToTweak" : "myValue2"
+    "myParamToTweak": "myValue",
+    "myOtherParamToTweak": "myValue2"
   }
 }
 ```
-  - parameters value not have to be bound to quotes if they're number or boolean values ; other must be quoted :
+  - parameters value not have to be bound to quotes if they're number or boolean values ; other must be quoted:
 
 ```javascript
 {
   "myObjectToTweak":
   {
-    "myParamToTweak" : "myStringValue",
-    "myOtherParamToNumberTweak" : 42,
-    "myAnotherParamToBooleanTweak" : false
+    "myParamToTweak": "myStringValue",
+    "myOtherParamToNumberTweak": 42,
+    "myAnotherParamToBooleanTweak": false
   }
 }
 ```
-  - level up : suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules :
+  - level up: suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules :
 
 ```javascript
 {
   "myObjectToTweak":
   {
-    "myOvercomplicatedColor" :
+    "myOvercomplicatedColor":
     {
       "r": 0.123,
       "g": 0.666,
       "b": 1 /* that's right, no comma */
     }, /* don't forget this one */
-    "myEasyParam" :true,
-    "myOtherParam" : "#FF8EF0"
+    "myEasyParam":true,
+    "myOtherParam": "#FF8EF0"
   }
 },
 {
   "myOtherObject":
   {
-    "myParamToTweak" : 1
+    "myParamToTweak": 1
   }
 }
 ```
@@ -83,5 +83,11 @@ Depends of your text editor, but surely their is an option or plugin :
 
 -   to help format JSON data (e.g. for notepad++ : [JSToolNpp](http://www.sunjw.us/jstoolnpp/)),
 -   to open/closed quotes automatically (e.g. in notepad++ : settings > autocompletion).
+
+
+
+Bad pratice but pratical: __comments are not allowed in JSON!__ But if you work in team this may be helpful anyway.
+
+
 
 You're now a JSON master.

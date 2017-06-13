@@ -78,6 +78,23 @@ All you have to know is that JSON is an open-standard data file format, and that
   }
 }
 ```
+  - if a param appears multiple time, it is the last which is taken into account:
+```javascript
+{
+  "myObjectToTweak":
+  {
+    "myParamToTweak": 1, /* this is finally ignored... */
+    "myParamToTweak": 42, /* ...'cause of this line */
+    "coolThing": "#ffffff" /* this is finally ignored... */
+  }
+},
+{
+  "myObjectToTweak":
+  {
+    "coolThing": "#000000" /* ...'cause of this line */
+  }
+}
+```
 
 Depends of your text editor, but surely their is an option or plugin: 
 
@@ -86,8 +103,8 @@ Depends of your text editor, but surely their is an option or plugin:
 
 
 
-Bad pratice but pratical: __comments are not allowed in JSON!__ But if you work in team this may be helpful anyway.
+Bad pratice but pratical: comments are in theory __not allowed in JSON!__ But if you work in team this may be helpful anyway, so close our eyes...
 
 
 
-You're now a JSON master.
+Hooray, you're now a JSON master !

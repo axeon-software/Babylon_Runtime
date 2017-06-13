@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>_r.launch</title>
+    <title>_r / patches</title>
 	<script src="http://preview.babylonjs.com/babylon.js"></script>
 	<script src="../../assets/js/babylon-runtime.js"></script> 
 </head>
@@ -12,14 +12,37 @@
     {
     	scene: "scene.babylon",
     	assets: "../../assets/",
-    	activeCamera: "cameraFree.000"
+    	activeCamera: "cameraFree.000",
+    	patch: [
+
+    		{
+    			"cameraFree.000":
+    			{
+    				"speed": 0.05,
+                    "fov": 1.1,
+    				"position":
+    				{
+    					"x": 2.72,
+    					"z": -1.91
+    				},
+    				"rotation":
+    				{
+    					"x": 0.11,
+    					"y": -0.43
+    				}
+    			}
+    		},
+            {
+                "*:material":
+                {
+                    "diffuseColor": "#000000"
+                }
+            }
+    	]
     }
     );
     _r.ready(function(){
         _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
-        /*  or if you prefer RGB syntax :
-            _r.scene.ambientColor = new BABYLON.Color3(1,1,1);
-        */
         _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
     });
 </script>

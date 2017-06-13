@@ -10,6 +10,7 @@
     "node_modules/babylonjs/babylon.d.ts"
   ],
   "include": [
+    "node_modules/pepjs/pep.js",
     "node_modules/q/q.js",
     "src/core.ts",
     "src/**/*"

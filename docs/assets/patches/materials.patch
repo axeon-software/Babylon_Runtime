@@ -1,6 +1,6 @@
 [
 	{
-		"scene.multiCube*":
+		"*:material":
 		{
 			"diffuseColor": "#000000",
 		}
@@ -8,15 +8,8 @@
 	{
 		"scene.ground_01, scene.room_ground_01, room_wallz_01 ":
 		{
-			"diffuseColor": "#000000",
 			"ambientColor": "#ffffff",
 			"specularColor": "#000000"
-		}
-	},
-	{
-		"scene.ground_01":
-		{
-			"useAlphaFromDiffuseTexture": true
 		}
 	},
 	{
@@ -50,19 +43,45 @@
 			"specularPower": 10
 		}
 	},
+	{
+		"scene.strangeThing_porridge_01":
+		{
+			"diffuseColor": {"r": 0.1, "g": 0.1, "b": 0.1},
+			"ambientColor": {"r": 0.6, "g": 0.7, "b": 0.8},
+			"emissiveColor": {"r": 1, "g": 0.2, "b": 0},
+            "useEmissiveAsIllumination": true,
+            "emissiveFresnelParameters":
+            {
+                "leftColor": "#ffffff",
+                "rightColor": "#000000",
+                "power": 1,
+                "bias": 0
+            },
+            "specularColor": {"r": 0.5, "g": 0.1, "b": 0},
+            "specularPower": 7
+		}
+	},
+	{
+		"scene.strangeThing_base_01":
+		{
+			"ambientColor": "#444444",
+            "specularColor": "#774444",
+            "specularPower": 20
+		}
+	},
 
 	/***
 
 	Assign VideoTexture
 
-	 ***/
+	***/
 
 	{
 		"scene.videoFlooder_videoON_01":
 		{
 			"diffuseTexture":
 			{
-				"videoTexture":
+				"texture::video":
 				{
 					"name": "cosmos-laundromat-trailer",
 					"urls": ["videos/cosmos-laundromat-trailer.mp4", "videos/cosmos-laundromat-trailer.ogv", "videos/cosmos-laundromat-trailer.webm"]

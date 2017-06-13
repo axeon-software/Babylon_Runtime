@@ -42,58 +42,46 @@ As you can see, babylon-runtime (we will name it _\_r_ later) just need 3 parame
 - where is the .babylon file,
 - which camera at launch.
 
-Once our scene is loaded, we probably want to tweak scene parameters, such as ambientColor. So we have to tell to \_r some actions in a _ready_ function :
+Once our scene is loaded, we probably want to tweak scene parameters, such as ambientColor, so here comes patches !
+
+### Let's do some patches
+
+ We'll have our .babylon file, that could be update anytime during our 3D scene production.
+ Patches will helps us to keep our scene modification even if we re-export our scene from our 3D modeler every 5 minutes.
+
+ How to start patching ? Here an example:
 
 ```javascript
     _r.launch({
         scene: "scene.babylon",
         assets: "../../assets/",
-        activeCamera: "cameraFree.000"
-    });
-    _r.ready(function(){
-        _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
-        /*  or if you prefer RGB syntax:
-            _r.scene.ambientColor = new BABYLON.Color3(1,1,1);
-        */
-        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
+        activeCamera: "cameraFree.000",
+        patch:
+    	[
+    		{
+    			"scene":
+    			{
+    				"ambientColor": "#ffffff",
+    				"clearColor": "#9CC1CE"
+    			}
+    		}
+    	]
     });
 ```
 
-Don't be scary, it's indeed javascript here, 'cause _scene_ is a special case. Later, for classic things like materials, cameras & others, we'll stay in JSON syntax which keep it simple.
-
-So, in this new line, we select scene by writing _\_r.scene_, and we access to some of its color setup.
+We've just tell to babylon runtime to patch our scene, and set its ambientColor to white & its clearColor to blue.
 
 ![_r launch option](tutorials-assets/launch-options01.jpg)
 
+[launch demo scene](demos/launch/index2.html)
 
+Hmm ok, but what is this weird way to arrange data?
 
-### Let's do some patches
+#### Take a look to JSON syntax
 
-Now we have our scene, we want setup things inside.
+Explanations about [JSON](https://en.wikipedia.org/wiki/JSON) syntax must be made, you'll find a [dedicated page here](json-syntax.html). 
 
-#### We want a patch
-
-To start, we will configure our camera. We have to add a patch parameter in _\_r.launch_ function, and tell it that we want access to it:
-
-```javascript
-    _r.launch(
-    {
-    	scene: "scene.babylon",
-    	assets: "../../assets/",
-    	activeCamera: "cameraFree.000",
-    	patch: [
-    		{
-    			"cameraFree.000":
-    			{}
-    		}
-    	]
-    }
-    );
-```
-
-#### JSON syntax
-
-Explanation about [JSON](https://en.wikipedia.org/wiki/JSON) syntax must be made, you'll find a [dedicated page here](json-syntax.html). Read it and come back.
+Read it and come back, you'll be ready to patching your BJS scene in every direction.
 
 #### How to get and tweak parameters
 
@@ -111,7 +99,15 @@ So, in our babylon app, we quickly realize that our camera speed is a way too hi
     - go to Cameras tabs, select the desired camera and check its value,
     - to tweak it, just edit the number.
 
-Now we enjoy our new speed value, we have to save it in patch. Just add speed parameter in our index.html:
+Now we enjoy our new speed value, we have to save it in patch.
+
+We have to add a selector of our camera, including our custom speed value. By knowing JSON syntax, we have to integrate this piece of data in our index.html:
+
+```JSON
+{ "cameraFree.000": { "speed": 0.05 } }
+```
+
+Let's go!
 
 ```javascript
     _r.launch(
@@ -119,13 +115,21 @@ Now we enjoy our new speed value, we have to save it in patch. Just add speed pa
     	scene: "scene.babylon",
     	assets: "../../assets/",
     	activeCamera: "cameraFree.000",
-    	patch: [
+    	patch:
+        [
+            {
+    			"scene":
+    			{
+    				"ambientColor": "#ffffff", /* comma */
+    				"clearColor": "#9CC1CE" /* last param, so no comma */
+    			}
+    		}, /* don't forget this comma */
     		{
     			"cameraFree.000":
     			{
-                  "speed": 0.05
+    				"speed": 0.05 /* only one param, no comma */
     			}
-    		}
+    		} /* no comma here 'cause it's the end of the last element */
     	]
     }
     );
@@ -139,17 +143,25 @@ Do you want also set camera FOV, position & rotation at spawn ? No problem:
     	scene: "scene.babylon",
     	assets: "../../assets/",
     	activeCamera: "cameraFree.000",
-    	patch: [
+    	patch:
+        [
+            {
+    			"scene":
+    			{
+    				"ambientColor": "#ffffff",
+    				"clearColor": "#9CC1CE"
+    			}
+    		},
     		{
     			"cameraFree.000":
     			{
     				"speed": 0.05,
-    				"fov": 1.1,
+                    "fov": 1.1,
     				"position":
     				{
     					"x": 2.72,
-    					"z": -1.91 /* no comma */
-    				}, /* comma */
+    					"z": -1.91
+    				},
     				"rotation":
     				{
     					"x": 0.11,
@@ -162,6 +174,8 @@ Do you want also set camera FOV, position & rotation at spawn ? No problem:
     );
 ```
 To get coordinates, you just had to move and orient your camera in BJS scene to the desired place, then type ``` _r("cameraFree.000")[0].position; ``` and ``` _r("cameraFree.000")[0].rotation; ```, and report values to the patch.
+
+![check in console](tutorials-assets/check-in-console01.jpg)
 
 [launch demo scene](demos/first-patches)
 
@@ -188,7 +202,7 @@ One way to do this is to apply a patch for each materials, one by one:
 ```
 But, you'll admit it, it's a little pain to select all materials like this ; obviously, there is an easy way.
 
-By using star selector ``` * ``` , you can tell to \_r that you want select all elements. Here some usage example, to try in the browser console:
+By using star selector ``` * ``` , you can tell to \_r that you want select all elements. Here some usage examples, to try in the browser console:
 
   - ``` _r("*") ``` will return all elements of the current scene (objects, materials, lights, etc),
   - ``` _r("*:mesh") ``` wil return all objects,
@@ -248,7 +262,15 @@ Here an quick example with the torrus:
     	scene: "scene.babylon",
     	assets: "../../assets/",
     	activeCamera: "cameraFree.000",
-    	patch: [
+    	patch:
+        [
+            {
+    			"scene":
+    			{
+    				"ambientColor": "#ffffff",
+    				"clearColor": "#9CC1CE"
+    			}
+    		},
     		{
     			"cameraFree.000":
     			{
@@ -292,13 +314,27 @@ Here an quick example with the torrus:
 Assume you have tons of materials, you're _index.html_ will be probably messy.
 So, is there a way to confine patches to external files ? Yes.
 
-Create a folder named as you want, near your _index.html_, then create one file named _cameras.patch_ and another named _materials.patch_.
+Create a folder named as you want, near your _index.html_, then create one file named _cameras.patch_, another named _scene.patch_ and one more named _materials.patch_.
 
 As you can guess, you can now cut & paste patch data from your _index.html_ to the right _.patch_ files ; and tell to \_r where are stored this patches.
 
 Things to know:
 - patch file must have _.patch_ extension,
 - entire patch file content must be included in square brackets __[ ]__ (one patch file is a table).
+
+> scene.patch
+
+```javascript
+[
+	{
+		"scene":
+		{
+			"ambientColor": "#ffffff",
+			"clearColor": "#9CC1CE"
+		}
+	}
+]
+```
 
 >   cameras.patch
 
@@ -379,16 +415,14 @@ Things to know:
     	scene: "scene.babylon",
     	assets: "../../assets/",
     	activeCamera: "cameraFree.000",
-    	patch: [
+    	patch: 
+    	[
+    		"patches/scene.patch",
     		"patches/cameras.patch",
     		"patches/materials.patch"
     	]
     }
     );
-    _r.ready(function(){
-        _r.scene.ambientColor = new BABYLON.Color3.FromHexString('#ffffff');
-        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
-    });
 </script>
 </body>
 </html>
@@ -399,15 +433,121 @@ This is clearer way to work isn't it ? You can create any files you want if you 
 
 ## Advanced
 
+At this point, you may be interested by the [tips page](runtime-tips.html), take a look and come back.
+
 ### Advanced materials options
 
 #### Fresnel
 
-#### VideoTexture
+As we have seen when configuring colors, some parameters required other parameters in value.
+_diffuseColor_ value can be set to an unique value in hexadecimal, but can also be composed of RGB color, having _R_, _G_ and _B_ channels to specify.
+
+Fresnel is one of these multi-paramaters. [As seen in the BJS doc'](http://doc.babylonjs.com/classes/2.5/standardmaterial#diffusefresnelparameters-fresnelparameters-classes-2-5-fresnelparameters-), we have some types of fresnel.
+
+To active one of these, just report it as shown below. Here an example with emissiveFresnelParameters:
+
+```JSON
+{
+    "myMaterial":
+    {
+        "emissiveFresnelParameters":
+        {
+            "leftColor": "#ffffff",
+            "rightColor": "#000000",
+            "power": 1,
+            "bias": 0
+        }
+    }
+}
+```
+And a patch example in our demo scene:
+```JSON
+{
+    "scene.strangeThing_porridge_01":
+    {
+        "diffuseColor": { "r": 0.1, "g": 0.1, "b": 0.1 },
+        "ambientColor": { "r": 0.6, "g": 0.7, "b": 0.8 },
+        "emissiveColor": { "r": 1, "g": 0.2, "b": 0 },
+        "useEmissiveAsIllumination": true,
+        "emissiveFresnelParameters":
+        {
+            "leftColor": "#ffffff",
+            "rightColor": "#000000",
+            "power": 1,
+            "bias": 0
+        },
+        "specularColor": { "r": 0.5, "g": 0.1, "b": 0 },
+        "specularPower": 7
+    }
+}
+```
+[launch demo scene](demos/advanced-materials-options/)
+
+
+#### Texture creation
 
 ### Create user interactions
 
+That's right, you can react to some user actions with patches !
+
+Suppose we want a color modification when user click (or touch) on _\_r Code less, babylon more._ object.
+
+Here we call __OnPickUpTrigger__ function. How to implement it ?
+
+```javascript
+{
+    "myObject":
+    {
+        "OnPickUpTrigger": function ()
+        {
+            /* this is javascript */
+            alert("alerts hurts.");
+        }
+    }
+}
+```
+As you can see, here we have to work with javascript. But we can use \_r to easily access to objects. In our demo scene, let's create a file named _interactions.patch_ (don't forget to add it in index.html patch list).
+Here our new file:
+```javascript
+[
+	{
+		"runtime.000:mesh":
+		{
+			"OnPickUpTrigger": function ()
+			{
+				/* this is javascript */
+				_r("scene.runtime_02")[0].ambientColor = _r.color("#ff3300"); /* color need to be converted by _r.color function, 'cause we're in javascript and not JSON */
+			}
+		}
+	}
+]
+```
+
+Over-complicated code here, to alternate colors on click:
+
+```javascript
+[
+	{
+		"runtime.000:mesh":
+		{
+			"OnPickUpTrigger": function ()
+			{
+                var logoColor = _r("scene.runtime_02")[0].ambientColor;
+                if(logoColor == "{R: 1 G:1 B:1}")
+                    _r("scene.runtime_02")[0].ambientColor = _r.color("#ff3300");
+                else
+                    _r("scene.runtime_02")[0].ambientColor = _r.color("#ffffff");
+			}
+		}
+	}
+]
+```
+[launch demo scene](demos/user-interactions/)
+
 ### Import other .babylon in scene
+
+For some reasons, we have separate our final scene into multiple babylon files. Obviously we want merge them. There is a runtime function for that, named __\_r.library.show()__.
+As it is a javascript function, you can't include it on a patch. We'll use the __\_r.ready()__ function to call _library.show_.
 
 ### Animate things
 

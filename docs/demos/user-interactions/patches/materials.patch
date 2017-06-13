@@ -1,0 +1,78 @@
+[
+	{
+		"*:material":
+		{
+			"diffuseColor": "#000000"
+		}
+	},
+	{
+		"scene.torrus_01":
+		{
+			"diffuseColor":
+			{
+				"r": 0,
+				"g": 0.3,
+				"b": 0.8
+			},
+			"ambientColor":
+			{
+				"r": 0.6,
+				"g": 0.6,
+				"b": 0.6
+			},
+			"specularColor":
+			{
+				"r": 1,
+				"g": 0.4,
+				"b": 0.4
+			},
+			"specularPower": 10
+		}
+	},
+	{
+		"scene.strangeThing_base_01":
+		{
+			"ambientColor": "#444444",
+			"specularColor": "#774444",
+			"specularPower": 20
+		}
+	},
+	{
+		"scene.strangeThing_porridge_01":
+		{
+			"diffuseColor":
+			{
+				"r": 0.1,
+				"g": 0.1,
+				"b": 0.1
+			},
+			"ambientColor":
+			{
+				"r": 0.6,
+				"g": 0.7,
+				"b": 0.8
+			},
+			"emissiveColor":
+			{
+				"r": 1,
+				"g": 0.2,
+				"b": 0
+			},
+			"useEmissiveAsIllumination": true,
+			"emissiveFresnelParameters":
+			{
+				"leftColor": "#ffffff",
+				"rightColor": "#000000",
+				"power": 1,
+				"bias": 0
+			},
+			"specularColor":
+			{
+				"r": 0.5,
+				"g": 0.1,
+				"b": 0
+			},
+			"specularPower": 7
+		}
+	}
+]

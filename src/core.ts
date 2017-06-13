@@ -67,7 +67,18 @@ module _r {
 
     export function patch(...params : any[]) : Elements {
         if(params.length == 1) {
-            return _r.extend({}, params[0]);
+           params[0].forEach(function(_patch) {
+               var selector = Object.getOwnPropertyNames(_patch)[0];
+               if(selector.indexOf('::') != -1) {
+                   var split = selector.split('::');
+                   _r[split[0]][split[1]](_patch[selector]);
+               }
+               else {
+                   _r.select(selector).each(function(element) {
+                       _r.extend(element, _patch[selector]);
+                   });
+               }
+           });
         }
         else {
             var nodes = params[0];
@@ -79,8 +90,6 @@ module _r {
             });
             return el;
         }
-
-
 
     }
 }

@@ -72,6 +72,10 @@ module _r {
                         regExp = new RegExp('^' + exp + '$'),
                         scene = _r.scene;
 
+                    if(selector == "scene") {
+                        self[i++] = scene;
+                    }
+
                     types.forEach(function(_type) {
                         scene[_type].forEach(function(_item) {
                             // TODO : name or ID ?
@@ -318,10 +322,7 @@ module _r {
 
 
         /** TODO CLONE **/
-
-
     }
-
 
     export function select(params) : Elements{
         return new Elements(params);

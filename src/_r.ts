@@ -20,10 +20,6 @@ module _r {
         }
     }
 
-    _r.override(["scene"], function(target, source, property) {
-        _r.extend(_r.scene, source[property]);
-    });
-
     /**
     _r.override(["texture"], function(params){
         return _r.texture.base(params);

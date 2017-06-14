@@ -69,26 +69,12 @@
             "specularPower": 20
 		}
 	},
-
-	/***
-
-	Assign VideoTexture
-
-	***/
-
-	{
-		"scene.videoFlooder_videoON_01":
-		{
-			"diffuseTexture":
-			{
-				"texture::video":
-				{
-					"name": "cosmos-laundromat-trailer",
-					"urls": ["videos/cosmos-laundromat-trailer.mp4", "videos/cosmos-laundromat-trailer.ogv", "videos/cosmos-laundromat-trailer.webm"]
-				}
-			},
-			"ambientColor": "#ffffff"
-		}
-	}
-
+    {
+        "scene.decals_01":
+        {
+            "useAlphaFromDiffuseTexture": true,
+            "alphaMode": 1,
+            "alpha": .1
+        }
+    }
 ]

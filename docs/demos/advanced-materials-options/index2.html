@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>_r / patches</title>
+	<script src="http://preview.babylonjs.com/babylon.js"></script>
+	<script src="../../assets/js/babylon-runtime.js"></script> 
+</head>
+<body>
+<script>
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	assets: "../../assets/",
+    	activeCamera: "cameraFree.000",
+    	patch:
+        [
+        	"patches/scene.patch",
+        	"patches/cameras.patch",
+        	"patches/materials.patch",
+        	{
+                /* overwriting cameras.patch */
+        		"cameraFree.000":
+        		{
+        			"position": {x: -1.3963191324721822, z: 1.1137527212889644},
+        			"rotation": {x: 0.44020103283251544, y: -6.88455797353627}
+        		}
+        	},
+            {
+              "scene.videoFlooder_video_01":
+              {
+              	"diffuseTexture":
+              	{
+              		"texture::base":
+              		{
+              			"url": "../../assets/painting01.png"
+              		}
+              	},
+                "ambientColor": "#ffffff"
+              }
+            }
+        ]
+    }
+    );
+</script>
+</body>
+</html>

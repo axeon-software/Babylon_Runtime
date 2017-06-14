@@ -1,16 +1,20 @@
 # Babylon Runtime Tips
 
+### My screen is white !!§
+
+Check your browser console, you've probably forget a comma somewhere (browser generally tell you where).
+
 ### I see some strange numbers starting by "."
 
 This is just a shortcut to write numbers between 1 and -1. Writing __-.5__ or __-0.5__ is the same.
 
-### My parameter doesn't appear in BJS inspector !
+### Some properties doesn't appear in BJS inspector !
 
 Access it via browser console and __\_r()__ selector.
 
 Examples:
 
-  - type ``` _r("myMaterialName")[0] ``` and search for your param,
+  - type ``` _r("myMaterialName")[0] ``` and search for your property,
   - type:
     - ``` _r("myMaterialName")[0].emissiveFresnelParameters.bias ``` to have direct access to current value,
     - ``` _r("myMaterialName")[0].emissiveFresnelParameters.bias = 0.5 ``` to set custom value.
@@ -58,17 +62,24 @@ Examples:
 ```javascript
 {
   /* this select only material named myName */
-  "myName:material": { "param": "value" }
+  "myName:material": { "property": "value" }
 },
 {
   /* this select only meshes named myName */
-  "myName:mesh": { "param": "value" }
+  "myName:mesh": { "property": "value" }
 }
 ```
 > in browser console
 ```javascript
 /* this select only first material named myName */
-_r("myName:material")[0].param = "value";
+_r("myName:material")[0].property = "value";
 /* this select only first meshes named myName */
-_r("myName:mesh")[0].param = "value";
+_r("myName:mesh")[0].property = "value";
+```
+
+### I want to patch on the fly
+
+You can use:
+```javascript
+_r.patch([{"*:material":{"ambientColor":"#ff0000"}}])
 ```

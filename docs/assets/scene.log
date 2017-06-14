@@ -6,6 +6,17 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		inline textures:  false
 		texture directory:  C:\Users\AXEON\Documents\GitHub\babylon-runtime\docs\assets\
 	Python World class constructor completed
+	processing begun of mesh:  decals.000
+		processing begun of Standard material:  decals_01
+			Diffuse texture found "gradient01.png"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+				WARNING: Opacity non-std way to indicate opacity, use material alpha to also use Opacity texture
+		num positions      :  29
+		num normals        :  29
+		num uvs            :  58
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  96
 	processing begun of mesh:  strangeThing.000
 		processing begun of Standard material:  strangeThing_porridge_01
 			Ambient texture found "strangeThing.000_lightmap"
@@ -108,19 +119,19 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		num colors         :  0
 		num indices        :  306
 	processing begun of mesh:  pedestal.000
-		processing begun of Standard material:  pedestal.000
+		processing begun of Standard material:  pedestal_01
 			Ambient texture found "pedestal.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of Standard material:  pedestal.001
+		processing begun of Standard material:  pedestal_02
 			Ambient texture found "pedestal.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
 		processing begun of multimaterial:  scene.Multimaterial#4
-		num positions      :  159
-		num normals        :  159
-		num uvs            :  318
-		num uvs2           :  318
+		num positions      :  351
+		num normals        :  351
+		num uvs            :  702
+		num uvs2           :  702
 		num colors         :  0
-		num indices        :  258
+		num indices        :  546
 	processing begun of mesh:  room.000
 		processing begun of Standard material:  room_ground_01
 			Ambient texture found "room.000_lightmap"
@@ -165,12 +176,9 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  videoFlooder_plastic_01
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of Standard material:  videoFlooder_videoOFF_01
+		processing begun of Standard material:  videoFlooder_video_01
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-			Reflection texture found "spheremap01.png"
-				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
-		processing begun of Standard material:  videoFlooder_videoON_01
 			Reflection texture found "spheremap01.png"
 				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
 		processing begun of Standard material:  videoFlooder_metal_01
@@ -182,12 +190,12 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
 		processing begun of multimaterial:  scene.Multimaterial#6
-		num positions      :  1353
-		num normals        :  1353
-		num uvs            :  2706
-		num uvs2           :  2706
+		num positions      :  1363
+		num normals        :  1363
+		num uvs            :  2726
+		num uvs2           :  2726
 		num colors         :  0
-		num indices        :  4959
+		num indices        :  4938
 	processing begun of camera (UniversalCamera):  cameraFree.000
 	processing begun of node:  cameraArcRotate.000.target
 	processing begun of camera (ArcRotateCamera):  cameraArcRotate.000
@@ -196,4 +204,4 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.8061 secs
+elapsed time:  0 min, 0.7939 secs

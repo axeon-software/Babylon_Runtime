@@ -3,65 +3,65 @@
 All you have to know is that JSON is an open-standard data file format, and that there is some rules about writing data:
   - all your patches must be contained between two square brackets __[ ]__
   - to access an object, you have to hold it between two braces __{ }__ and write inside the object name enclosed by quotes __" "__,
-  - once you have select an object, you want to highlight some of its parameters. So after _"objectName"_, add a colon and two braces __: { }__, and write inside the parameter name enclosed by quotes __" "__:
+  - once you have select an object, you want to highlight some of its properties. So after _"objectName"_, add a colon and two braces __: { }__, and write inside the property name enclosed by quotes __" "__:
 
 ```javascript
 [
   {
     "myObjectToTweak":
     {
-      "myParamToTweak": "myValue"
+      "myPropertyToTweak": "myValue"
     }
   }
 ]
 ```
-  - if you have multiple params, they must end with a comma but not the last:
+  - if you have multiple properties, they must end with a comma but not the last:
 
 ```javascript
 [
   {
     "myObjectToTweak":
     {
-      "myParamToTweak": "myValue",
-      "myOtherParamToTweak": "myValue2",
-      "myAnotherParamToTweak": "myValue3" /* no comma here */
+      "myPropertyToTweak": "myValue",
+      "myOtherPropertyToTweak": "myValue2",
+      "myAnotherPropertyToTweak": "myValue3" /* no comma here */
     }
   }
 ]
 ```
-  - same if multiple objects. Notice that comma is between objects, so last parameter of first object doesn't have to end by comma:
+  - same if multiple objects. Notice that comma is between objects, so last property of first object doesn't have to end by comma:
 
 ```javascript
 [
   {
     "myObjectToTweak":
     {
-      "myParamToTweak": "myValue",
-      "myOtherParamToTweak": "myValue2" /* no comma here */
+      "myPropertyToTweak": "myValue",
+      "myOtherPropertyToTweak": "myValue2" /* no comma here */
     } /* nope, no comma here neither */
   }, /* here it is ! */
   {
     "myOtherObjectToTweak":
     {
-      "myParamToTweak": "myValue",
-      "myOtherParamToTweak": "myValue2"
+      "myPropertyToTweak": "myValue",
+      "myOtherPropertyToTweak": "myValue2"
     }
   }
 ]
 ```
-  - parameters value not have to be bound to quotes if they're number or boolean values ; other must be quoted:
+  - properties value not have to be bound to quotes if they're number or boolean values ; other must be quoted:
 
 ```javascript
 {
   "myObjectToTweak":
   {
-    "myParamToTweak": "myStringValue",
-    "myOtherParamToNumberTweak": 42,
-    "myAnotherParamToBooleanTweak": false
+    "myPropertyToTweak": "myStringValue",
+    "myOtherPropertyToNumberTweak": 42,
+    "myAnotherPropertyToBooleanTweak": false
   }
 }
 ```
-  - level up: suppose a param is composed of params, like a color in red, green & blue. Too easy, same rules:
+  - level up: suppose a property is composed of properties, like a color in red, green & blue. Too easy, same rules:
 
 ```javascript
 [
@@ -74,26 +74,26 @@ All you have to know is that JSON is an open-standard data file format, and that
         "g": 0.666,
         "b": 1 /* that's right, no comma */
       }, /* don't forget this one */
-      "myEasyParam":true,
-      "myOtherParam": "#FF8EF0"
+      "myEasyProperty":true,
+      "myOtherProperty": "#FF8EF0"
     }
   },
   {
     "myOtherObject":
     {
-      "myParamToTweak": 1
+      "myPropertyToTweak": 1
     }
   }
 ]
 ```
-  - if a param appears multiple time, it is the last which is taken into account:
+  - if a property appears multiple time, it is the last which is taken into account:
 ```javascript
 [
   {
     "myObjectToTweak":
     {
-      "myParamToTweak": 1, /* this is finally ignored... */
-      "myParamToTweak": 42, /* ...'cause of this line */
+      "myPropertyToTweak": 1, /* this is finally ignored... */
+      "myPropertyToTweak": 42, /* ...'cause of this line */
       "coolThing": "#ffffff" /* this is finally ignored... */
     }
   },
@@ -112,7 +112,7 @@ __[ , , , ]__ : list.
 
 __[ { "object": {  } } , { "object": {  } }  ]__ : elements in list.
 
-__[ { "object": { "param":"value" } } , { "object": { "param":"value",  "param":"value" } }  ]__ : elements with parameters in list.
+__[ { "object": { "property":"value" } } , { "object": { "property":"value",  "property":"value" } }  ]__ : elements with properties in list.
 
 
 

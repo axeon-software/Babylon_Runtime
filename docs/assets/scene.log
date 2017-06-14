@@ -6,6 +6,30 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		inline textures:  false
 		texture directory:  C:\Users\AXEON\Documents\GitHub\babylon-runtime\docs\assets\
 	Python World class constructor completed
+	processing begun of mesh:  strangeThing.000
+		processing begun of Standard material:  strangeThing_porridge_01
+			Ambient texture found "strangeThing.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  strangeThing_base_01
+			Ambient texture found "strangeThing.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of multimaterial:  scene.Multimaterial#0
+		num positions      :  2585
+		num normals        :  2585
+		num uvs            :  5170
+		num uvs2           :  5170
+		num colors         :  0
+		num indices        :  6462
+	processing begun of mesh:  runtime.000
+		processing begun of Standard material:  runtime_01
+		processing begun of Standard material:  runtime_02
+		processing begun of multimaterial:  scene.Multimaterial#1
+		num positions      :  2515
+		num normals        :  2515
+		num uvs            :  5030
+		num uvs2           :  5030
+		num colors         :  0
+		num indices        :  5895
 	processing begun of mesh:  torrus.000
 		processing begun of Standard material:  torrus_01
 			Ambient texture found "torrrrus.000_lightmap"
@@ -27,7 +51,7 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  painting_frame_01
 			Ambient texture found "painting.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of multimaterial:  scene.Multimaterial#0
+		processing begun of multimaterial:  scene.Multimaterial#2
 		num positions      :  205
 		num normals        :  205
 		num uvs            :  410
@@ -62,16 +86,6 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		num uvs2           :  892
 		num colors         :  0
 		num indices        :  1368
-	processing begun of mesh:  runtime.000
-		processing begun of Standard material:  runtime_01
-		processing begun of Standard material:  runtime_02
-		processing begun of multimaterial:  scene.Multimaterial#1
-		num positions      :  2183
-		num normals        :  2183
-		num uvs            :  4366
-		num uvs2           :  4366
-		num colors         :  0
-		num indices        :  4578
 	processing begun of mesh:  multiCube.000
 		processing begun of Standard material:  multiCube_01
 			Ambient texture found "multiCube.000_lightmap"
@@ -86,7 +100,7 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 			Ambient texture found "multiCube.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
 		processing begun of Standard material:  multiCube_05
-		processing begun of multimaterial:  scene.Multimaterial#2
+		processing begun of multimaterial:  scene.Multimaterial#3
 		num positions      :  253
 		num normals        :  253
 		num uvs            :  506
@@ -100,7 +114,7 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  pedestal.001
 			Ambient texture found "pedestal.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of multimaterial:  scene.Multimaterial#3
+		processing begun of multimaterial:  scene.Multimaterial#4
 		num positions      :  159
 		num normals        :  159
 		num uvs            :  318
@@ -127,7 +141,7 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  room_metal_01
 			Reflection texture found "spheremap01.png"
 				Image texture found, type:  reflectionTexture, mapped using: "UVMap"
-		processing begun of multimaterial:  scene.Multimaterial#4
+		processing begun of multimaterial:  scene.Multimaterial#5
 		num positions      :  588
 		num normals        :  588
 		num uvs            :  1176
@@ -167,7 +181,7 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  videoFlooder_plastic_02
 			Ambient texture found "videoFlooder.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
-		processing begun of multimaterial:  scene.Multimaterial#5
+		processing begun of multimaterial:  scene.Multimaterial#6
 		num positions      :  1353
 		num normals        :  1353
 		num uvs            :  2706
@@ -182,4 +196,4 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.5949 secs
+elapsed time:  0 min, 0.8061 secs

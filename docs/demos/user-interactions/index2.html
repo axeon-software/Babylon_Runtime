@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>_r / patches</title>
+	<script src="http://preview.babylonjs.com/babylon.js"></script>
+	<script src="../../assets/js/babylon-runtime.js"></script> 
+</head>
+<body>
+<script>
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	assets: "../../assets/",
+    	activeCamera: "cameraFree.000",
+    	patch:
+        [
+        	"patches/scene.patch",
+        	"patches/cameras.patch",
+        	"patches/materials.patch",
+        	"patches/interactions.patch",
+        	{
+                /* overwriting cameras.patch */
+        		"cameraFree.000":
+        		{
+        			"position": {x: -0.6978207264778162, z: -1.9664503552282537},
+        			"rotation": {x: 0.13993229565826285, y: -7.865866292047802}
+        		}
+        	}
+        ]
+    }
+    );
+</script>
+</body>
+</html>

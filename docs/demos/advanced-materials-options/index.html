@@ -15,31 +15,18 @@
     	activeCamera: "cameraFree.000",
     	patch:
         [
-            {
-    			"scene":
-    			{
-    				"ambientColor": "#ffffff",
-    				"clearColor": "#9CC1CE"
-    			}
-    		},
-    		{
-    			"cameraFree.000":
-    			{
-    				"speed": 0.05,
-                    "fov": 1.1,
-    				"position":
-    				{
-    					"x": 2.72,
-    					"z": -1.91
-    				},
-    				"rotation":
-    				{
-    					"x": 0.11,
-    					"y": -0.43
-    				}
-    			}
-    		}
-    	]
+        	"patches/scene.patch",
+        	"patches/cameras.patch",
+        	"patches/materials.patch",
+        	{
+                /* overwriting cameras.patch */
+        		"cameraFree.000":
+        		{
+        			"position": { "x": 1.47, "z": -1.12 },
+        			"rotation": { "x": 0.76, "y": -3.8 }
+        		}
+        	}
+        ]
     }
     );
 </script>

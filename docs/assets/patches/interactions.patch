@@ -28,22 +28,32 @@
 	{
 		"magicButton.000:mesh":
 		{
-			OnPickUpTrigger: function ()
+			"OnPickUpTrigger": function ()
 			{
 				/* this is javascript */
-				console.log("red magic button picked !!§");
-				_r.importLibrary(
+				console.log("red magic button picked !");
+				_r.library.show(
 				{
 					/* this is babylon-runtime JSON */
-					name: "wonderfulFloatingSphere",
-					rootUrl: "wonderfulFloatingSphere/",
-					fileName: "wonderfulFloatingSphere.babylon",
-					patch: [
+					"name": "wonderfulFloatingSphere",
+					"rootUrl": "wonderfulFloatingSphere/",
+					"fileName": "wonderfulFloatingSphere.babylon",
+					"patch": [
 						"wonderfulFloatingSphere/wonderfulFloatingSphere.patch"
 					]
 				}
 				)
 			}
+		}
+	},
+	{
+		"runtime.000:mesh":
+		{
+			"OnPickUpTrigger": function ()
+			{
+				/* this is javascript */
+                _r("scene.runtime_02")[0].ambientColor = _r.color("#ff3300");
+            }
 		}
 	}
 ]

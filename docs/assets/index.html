@@ -1,36 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>BJS Runtime demo</title>
 	<meta charset="UTF-8"> 
+    <title>BJS Runtime demo</title>
 	<script src="http://preview.babylonjs.com/babylon.js"></script> 
-	<script src="js/babylon-runtime.js"></script> 
-    <style type='text/css'>
-        body {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-        }
-    </style>
+	<script src="js/babylon-runtime.js"></script>
 </head>
-
 <body>
 <script>
-    _r.launch({
-        scene : "scene.babylon",
-        activeCamera : "cameraFree.000",
-        patch : [
-            'patches/materials.patch',
-            'patches/interactions.patch',
-            'patches/cameras.patch'
-        ]
-    });
-    _r.ready(function(){
-        _r.scene.ambientColor = BABYLON.Color3.FromHexString('#ffffff');
-        _r.scene.clearColor = new BABYLON.Color3.FromHexString('#9CC1CE');
-    });
+    _r.launch(
+    {
+    	scene: "scene.babylon",
+    	activeCamera: "cameraFree.000",
+    	patch: [
+    		'patches/scene.patch',
+    		'patches/cameras.patch',
+    		'patches/interactions.patch',
+    		'patches/materials.patch'
+    	]
+    }
+    );
 </script>
 </body>
 </html>

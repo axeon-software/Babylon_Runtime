@@ -1,3 +1,9 @@
+# some file types
+
 *.blend1
 *.DS_Store
 Thumbs.db
+
+# some foldes
+
+node_modules/

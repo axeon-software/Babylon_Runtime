@@ -2,8 +2,14 @@
 
 *.blend1
 *.DS_Store
-Thumbs.db
+*.old
+*.sav
 
-# some foldes
+# some specific files
+
+Thumbs.db
+scene.log
+
+# some specific folders
 
 node_modules/

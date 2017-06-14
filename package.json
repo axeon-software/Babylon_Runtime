@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish" : "typedoc --out docs/api src/ --mode file --name 'Babylon runtime API'"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "babylonjs": "^3.0.1-alpha",
     "pepjs": "^0.4.3",
     "q": "^1.5.0",
+    "typedoc": "^0.7.1",
     "typescript": "^2.3.2"
   }
 }

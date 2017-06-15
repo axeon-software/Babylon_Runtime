@@ -3349,48 +3349,6 @@ var _r;
 })(_r || (_r = {}));
 var _r;
 (function (_r) {
-    /** Helpers **/
-    function color() {
-        var parameters = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            parameters[_i] = arguments[_i];
-        }
-        if (parameters.length == 1) {
-            return BABYLON.Color3.FromHexString(parameters[0]);
-        }
-        else {
-            if (parameters.length == 3) {
-                return new BABYLON.Color3(parameters[0], parameters[1], parameters[2]);
-            }
-            else {
-                if (parameters.length == 4) {
-                    return new BABYLON.Color4(parameters[0], parameters[1], parameters[2], parameters[3]);
-                }
-                else {
-                    console.error('_r.color() cannot be parsed');
-                    return BABYLON.Color3.Black();
-                }
-            }
-        }
-    }
-    _r.color = color;
-    /**
-    _r.override(["texture"], function(params){
-        return _r.texture.base(params);
-    });
-
-    _r.override(["cubeTexture"], function(params) {
-        return _r.texture.cube(params);
-    });
-
-    _r.override(['videoTexture'], function(params) {
-        return _r.texture.video(params);
-    });
-
-    _r.override(["reflectionProbe"], function(params) {
-        return _r.reflectionProbe.create(params);
-    });
-     **/
     /** Overrides **/
     _r.override([
         'NothingTrigger ',
@@ -3440,6 +3398,39 @@ var _r;
             console.error("BABYLON.Runtime::" + property + " is only supported for BABYLON.Camera");
         }
     });
+    /** Helpers **/
+    function color() {
+        var parameters = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            parameters[_i] = arguments[_i];
+        }
+        if (parameters.length == 1) {
+            return BABYLON.Color3.FromHexString(parameters[0]);
+        }
+        else {
+            if (parameters.length == 3) {
+                return new BABYLON.Color3(parameters[0], parameters[1], parameters[2]);
+            }
+            else {
+                if (parameters.length == 4) {
+                    return new BABYLON.Color4(parameters[0], parameters[1], parameters[2], parameters[3]);
+                }
+                else {
+                    console.error('_r.color() cannot be parsed');
+                    return BABYLON.Color3.Black();
+                }
+            }
+        }
+    }
+    _r.color = color;
+    function showDebug() {
+        _r.scene.debugLayer.show();
+    }
+    _r.showDebug = showDebug;
+    function hideDebug() {
+        _r.scene.debugLayer.hide();
+    }
+    _r.hideDebug = hideDebug;
 })(_r || (_r = {}));
 /**
  *
@@ -4124,14 +4115,6 @@ var _r;
             }
         }
         debug.error = error;
-        function showDebug() {
-            _r.scene.debugLayer.show();
-        }
-        debug.showDebug = showDebug;
-        function hideDebug() {
-            _r.scene.debugLayer.hide();
-        }
-        debug.hideDebug = hideDebug;
     })(debug = _r.debug || (_r.debug = {}));
 })(_r || (_r = {}));
 var _r;
@@ -4474,7 +4457,7 @@ var _r;
             return result;
         };
         Elements.prototype.attr = function (attribute, value) {
-            if (value) {
+            if (value != null) {
                 this.each(function (item) {
                     item[attribute] = value;
                 });

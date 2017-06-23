@@ -278,7 +278,7 @@ module _r {
         }
 
         attr(attribute: string, value?: any) : any {
-            if (value) {
+            if (value != null) {
                 this.each(function (item) {
                     item[attribute] = value;
                 });

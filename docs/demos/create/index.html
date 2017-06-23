@@ -10,8 +10,12 @@
 <script>
     _r.launch({
         scene : function() {
-            _r.scene.ambientColor = _r.color("#000000")
             _r.patch([
+                {
+                    "scene" : {
+                        clearColor : _r.color(1, 0, 0, 0.4)
+                    }
+                },
                 {
                     "camera::free" : {
                         name: "camera1",
@@ -44,22 +48,22 @@
                                         rootUrl : '../../assets/cubemap/',
                                         coordinatesMode : 'SPHERICAL_MODE'
                                     }
-                                }
+                                },
+                                "emissiveColor": "#ffffff"
                             }
                         }
                     }
                 },
                 {
-                   "mat1" : {
-                       "useEmissiveAsIllumination": true,
-                       "emissiveColor": "#ffffff",
-                       "emissiveFresnelParameters": {
-                           "leftColor": "#ff0000",
-                           "rightColor": "#000000",
-                           "bias": 0.4,
-                           "power": 4
-                       }
-                   }
+                    'mat1' : {
+                        "useEmissiveAsIllumination": true,
+                        "emissiveFresnelParameters": {
+                            "leftColor": "#ff0000",
+                            "rightColor": "#000000",
+                            "bias": 0.4,
+                            "power": 4
+                        }
+                    }
                 },
                 {
                     "light::hemispheric": {
@@ -82,13 +86,6 @@
         assets : "../../assets/",
         activeCamera : "camera1"
     });
-
-
-    _r.ready(function() {
-
-    })
-
-
 </script>
 </body>
 </html>

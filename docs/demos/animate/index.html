@@ -9,13 +9,90 @@
 <body>
 <script>
     _r.launch({
-        scene : "scene.babylon",
-        assets : "../../assets/",
-        activeCamera : "Camera.FPV",
-        patch : [
-            'hotspot.patch'
-        ]
-    })
+        scene : function() {
+            _r.patch([
+                {
+                    "scene" : {
+                        clearColor : _r.color(1, 0, 0, 0.4)
+                    }
+                },
+                {
+                    "camera::free" : {
+                        name: "camera1",
+                        position: {
+                            x: 0,
+                            y: 5,
+                            z: -10
+                        },
+                        target: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }
+                },
+                {
+                    "mesh::sphere": {
+                        name: "sphere1",
+                        segments: 16,
+                        diameter: 2,
+                        position: {
+                            y: 1
+                        },
+                        material : {
+                            "material::standard" : {
+                                name : "mat1",
+                                diffuseColor : "#ff0000",
+                                reflectionTexture : {
+                                    "texture.cube" : {
+                                        rootUrl : '../../assets/cubemap/',
+                                        coordinatesMode : 'SPHERICAL_MODE'
+                                    }
+                                },
+                                "emissiveColor": "#ffffff"
+                            }
+                        }
+                    }
+                },
+                {
+                    'mat1' : {
+                        "useEmissiveAsIllumination": true,
+                        "emissiveFresnelParameters": {
+                            "leftColor": "#ff0000",
+                            "rightColor": "#000000",
+                            "bias": 0.4,
+                            "power": 4
+                        }
+                    }
+                },
+                {
+                    "light::hemispheric": {
+                        name: "light1",
+                        direction: {
+                            y: 1
+                        },
+                        intensity: 0.5
+                    }
+                },
+                {
+                    "mesh::ground": {
+                        name: "ground1",
+                        width: 6,
+                        height: 6,
+                        subdivisions: 2
+                    }
+                }])
+        },
+        activeCamera : "camera1"
+    });
+
+    _r.ready(function() {
+        var animation = new _r.animations.Animation("anim1", "sphere1", "position", { x : 10});
+        animation.duration = 3;
+        _r("sphere1").on("OnPickTrigger", function() {
+            animation.play();
+        });
+    });
 </script>
 </body>
 </html>

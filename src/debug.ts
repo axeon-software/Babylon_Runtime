@@ -25,11 +25,5 @@ module _r.debug {
         }
     }
 
-    export function showDebug() {
-        _r.scene.debugLayer.show();
-    }
 
-    export function hideDebug() {
-        _r.scene.debugLayer.hide();
-    }
 }

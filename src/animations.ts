@@ -49,31 +49,12 @@
  *
  */
 module _r.animations {
-    function guessAnimationType(element, property) {
-        if(_r.is.Vector2(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
-        }
-        if(_r.is.Vector3(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
-        }
-        if(_r.is.Number(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_FLOAT;
-        }
-        if(_r.is.Color(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_COLOR3;
-        }
-        if(_r.is.Quaternion(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_QUATERNION;
-        }
-        if(_r.is.Matrix(element[property])) {
-            return BABYLON.Animation.ANIMATIONTYPE_MATRIX;
-        }
-        return null;
-
-    }
-
-    // map http://easings.net/fr to Babylon
-    export function getEasing(easing : string) : BABYLON.EasingFunction {
+    /**
+     * Map http://easings.net to Babylon.EasingFunction
+     * @param easing
+     * @returns {any}
+     */
+    export function getEasingFunction(easing : string) : BABYLON.EasingFunction {
         var mode;
         var func;
         if(easing.indexOf("easeInOut") != -1) {
@@ -144,6 +125,223 @@ module _r.animations {
         }
     }
 
+    /**
+     * Guess the BABYLON.Animation.ANIMATIONTYPE from an element's property
+     * @param element
+     * @param property
+     * @returns {any}
+     */
+    export function getAnimationType(element : any, property : string) : number {
+        if(_r.is.Vector2(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
+        }
+        if(_r.is.Vector3(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
+        }
+        if(_r.is.Number(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_FLOAT;
+        }
+        if(_r.is.Color(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_COLOR3;
+        }
+        if(_r.is.Quaternion(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_QUATERNION;
+        }
+        if(_r.is.Matrix(element[property])) {
+            return BABYLON.Animation.ANIMATIONTYPE_MATRIX;
+        }
+        return null;
+    }
+
+
+    export class Animation {
+        private _fps : number;
+        public elements : Elements;
+        constructor(public name : string, elements : string | Elements, public property : string, public value : any) {
+            this.elements = _r.select(elements);
+        }
+
+        static getEasingFunction(easing : string) : BABYLON.EasingFunction {
+            var mode;
+            var func;
+            if(easing.indexOf("easeInOut") != -1) {
+                mode = BABYLON.EasingFunction.EASINGMODE_EASEINOUT;
+                func = easing.replace("easeInOut", "");
+            }
+            else {
+                if(easing.indexOf("easeIn") != -1) {
+                    mode = BABYLON.EasingFunction.EASINGMODE_EASEIN;
+                    func = easing.replace("easeIn", "");
+                }
+                else {
+                    if(easing.indexOf("easeOut") != -1) {
+                        mode = BABYLON.EasingFunction.EASINGMODE_EASEOUT;
+                        func = easing.replace("easeOut", "");
+                    }
+                    else {
+                        console.info("_r::unrecognized easing function " + easing);
+                        return null;
+                    }
+                }
+            }
+            var easingFunction;
+            switch(func) {
+                case "Sine":
+                    easingFunction = new BABYLON.SineEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quad":
+                    easingFunction = new BABYLON.QuadraticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Cubic":
+                    easingFunction = new BABYLON.CubicEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quart":
+                    easingFunction = new BABYLON.QuarticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quint":
+                    easingFunction = new BABYLON.QuinticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Expo" :
+                    easingFunction = new BABYLON.ExponentialEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Circ":
+                    easingFunction = new BABYLON.CircleEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Back":
+                    easingFunction = new BABYLON.BackEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Elastic":
+                    easingFunction = new BABYLON.ElasticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Bounce":
+                    easingFunction = new BABYLON.BounceEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                default:
+                    console.warn("_r::unrecognized easing function " + easing);
+                    return null;
+            }
+        }
+
+        static getAnimationType(element : any, property : string) : number {
+            if(_r.is.Vector2(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
+            }
+            if(_r.is.Vector3(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
+            }
+            if(_r.is.Number(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_FLOAT;
+            }
+            if(_r.is.Color(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_COLOR3;
+            }
+            if(_r.is.Quaternion(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_QUATERNION;
+            }
+            if(_r.is.Matrix(element[property])) {
+                return BABYLON.Animation.ANIMATIONTYPE_MATRIX;
+            }
+            return null;
+        }
+
+        public easing : string;
+
+        public animationType : string;
+
+        public loopMode : string | boolean;
+
+        public keys : Array<any>;
+
+        public duration : number;
+
+        get fps() : number {
+            return this._fps || 30;
+        }
+
+        set fps(value : number) {
+            this._fps = value;
+        }
+
+        private getLoopMode() {
+            var _loopMode;
+            if(this.loopMode != null) {
+                if(_r.is.String(this.loopMode)) {
+                    return BABYLON.Animation['ANIMATIONLOOPMODE_' + (<string> this.loopMode).toUpperCase()];
+                }
+                else {
+                    return this.loopMode;
+                }
+            }
+            return false;
+        }
+
+        private _getAnimationType() {
+            if(this.animationType != null) {
+                return BABYLON.Animation['ANIMATIONTYPE_' + this.animationType.toUpperCase()];
+            }
+            else {
+                return Animation.getAnimationType(this.elements[0], this.property);
+            }
+        }
+
+        private prepareAnimation() {
+            var self = this;
+            this.elements.each(function(element){
+                console.log("animationType :", self._getAnimationType())
+                var animation = new BABYLON.Animation(self.name, self.property, self.fps, self._getAnimationType(), self.getLoopMode());
+                if(this.keys) {
+                    animation.setKeys(self.keys);
+                }
+                else {
+                    var keys = [];
+                    keys.push({
+                        frame : 0,
+                        value : element[self.property]
+                    });
+                    keys.push({
+                        frame : self.duration * self.fps,
+                        value : _r.merge(element[self.property], self.value)
+                    });
+                    animation.setKeys(keys);
+                }
+                if(self.easing != null) {
+                    animation.setEasingFunction(Animation.getEasingFunction(self.easing));
+                }
+                if(!element.animations) {
+                    element.animations = [];
+                }
+                element.animations.push(animation);
+            });
+        }
+
+        clip(from : number, to : number) {
+            this.prepareAnimation();
+            var self = this;
+            this.elements.each(function(element) {
+                _r.scene.beginAnimation(element, from, to, self.getLoopMode())
+            });
+        }
+
+        play() {
+            this.elements.log('animations');
+            this.clip(0, this.duration * this._fps);
+        }
+
+        finish() {
+
+        }
+    }
+
     export interface IAnimationOption {
         duration : number;
         fps? : number;
@@ -209,7 +407,7 @@ module _r.animations {
                     }
                 }
                 var endValue = properties[property];
-                var animationType = guessAnimationType(element, property) || BABYLON.Animation.ANIMATIONTYPE_FLOAT;
+                var animationType = getAnimationType(element, property) || BABYLON.Animation.ANIMATIONTYPE_FLOAT;
                 if(_r.is.PlainObject(properties[property])) {
                     endValue = _r.extend({}, element[property]);
                     Object.getOwnPropertyNames(properties[property]).forEach(function(prop) {
@@ -238,7 +436,7 @@ module _r.animations {
                 }
                 animation.setKeys(keys);
                 if(_options.easing) {
-                    var easingFunction = getEasing(_options.easing);
+                    var easingFunction = getEasingFunction(_options.easing);
                     if(easingFunction) {
                         animation.setEasingFunction(easingFunction);
                     }

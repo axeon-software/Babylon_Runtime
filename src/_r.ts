@@ -1,43 +1,4 @@
 module _r {
-    /** Helpers **/
-    export function color(...parameters : any[]) {
-        if(parameters.length == 1) {
-            return BABYLON.Color3.FromHexString(parameters[0]);
-        }
-        else {
-            if(parameters.length == 3) {
-                return new BABYLON.Color3(parameters[0], parameters[1], parameters[2]);
-            }
-            else {
-                if(parameters.length == 4) {
-                    return new BABYLON.Color4(parameters[0], parameters[1], parameters[2], parameters[3]);
-                }
-                else {
-                    console.error('_r.color() cannot be parsed');
-                    return BABYLON.Color3.Black();
-                }
-            }
-        }
-    }
-
-    /**
-    _r.override(["texture"], function(params){
-        return _r.texture.base(params);
-    });
-
-    _r.override(["cubeTexture"], function(params) {
-        return _r.texture.cube(params);
-    });
-
-    _r.override(['videoTexture'], function(params) {
-        return _r.texture.video(params);
-    });
-
-    _r.override(["reflectionProbe"], function(params) {
-        return _r.reflectionProbe.create(params);
-    });
-     **/
-
     /** Overrides **/
     _r.override(
         [
@@ -98,4 +59,33 @@ module _r {
                 console.error("BABYLON.Runtime::" + property + " is only supported for BABYLON.Camera");
             }
         })
+
+    /** Helpers **/
+    export function color(...parameters : any[]) {
+        if(parameters.length == 1) {
+            return BABYLON.Color3.FromHexString(parameters[0]);
+        }
+        else {
+            if(parameters.length == 3) {
+                return new BABYLON.Color3(parameters[0], parameters[1], parameters[2]);
+            }
+            else {
+                if(parameters.length == 4) {
+                    return new BABYLON.Color4(parameters[0], parameters[1], parameters[2], parameters[3]);
+                }
+                else {
+                    console.error('_r.color() cannot be parsed');
+                    return BABYLON.Color3.Black();
+                }
+            }
+        }
+    }
+
+    export function showDebug() {
+        _r.scene.debugLayer.show();
+    }
+
+    export function hideDebug() {
+        _r.scene.debugLayer.hide();
+    }
 }

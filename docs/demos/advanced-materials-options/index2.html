@@ -18,26 +18,30 @@
         	"patches/scene.patch",
         	"patches/cameras.patch",
         	"patches/materials.patch",
-        	"patches/interactions.patch",
         	{
                 /* overwriting cameras.patch */
         		"cameraFree.000":
         		{
-        			"position": {x: -0.6978207264778162, z: -1.9664503552282537},
-        			"rotation": {x: 0.13993229565826285, y: -7.865866292047802}
+        			"position": {x: -1.3963191324721822, z: 1.1137527212889644},
+        			"rotation": {x: 0.44020103283251544, y: -6.88455797353627}
         		}
-        	}
+        	},
+            {
+              "scene.videoFlooder_video_01":
+              {
+              	"diffuseTexture":
+              	{
+              		"texture::base":
+              		{
+              			"url": "../../assets/painting01.png"
+              		}
+              	},
+                "ambientColor": "#ffffff"
+              }
+            }
         ]
     }
     );
-    _r.ready(function(){
-        console.log("import another .babylon");
-        _r.library.show({
-            "name": "wonderfulFloatingSphere",
-            "rootUrl": "../../assets/wonderfulFloatingSphere/",
-            "fileName": "wonderfulFloatingSphere.babylon"
-        });
-    });
 </script>
 </body>
 </html>

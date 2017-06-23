@@ -29,7 +29,29 @@
                         "patches/wonderfulFloatingSphere.patch"
                     ]
                 }
-                );
+                ).then(function()
+                    /* we have to wait end of import, then we can animate */
+                    {
+                        _r.animate(
+                            "wonderfulFloatingSphere.000:mesh",
+                            {
+                                "position":
+                                {
+                                    "y": 1.7
+                                },
+                                "rotation":
+                                {
+                                    "x":1,
+                                    "y":1,
+                                    "z":1
+                                }
+                            },
+                            {
+                                "duration": 2,
+                                "easing": "easeInOutSine"
+                            }
+                        );
+                    });                
                 _r("decals.000:mesh")[0].isVisible = true;
                 _r("scene.pedestal_02:material")[0].emissiveColor = _r.color("#FFCCBF");
                 _r("scene.pedestal_02:material")[0].useEmissiveAsIllumination = true;

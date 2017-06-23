@@ -42,7 +42,7 @@ As you can see, babylon-runtime (we will name it _\_r_ later) just need 3 parame
 - where is the .babylon file,
 - which camera at launch.
 
-Once our scene is loaded, we probably want to tweak scene parameters, such as ambientColor, so here comes patches !
+Once our scene is loaded, we probably want to tweak scene properties, such as ambientColor, so here comes patches !
 
 ### Let's do some patches
 
@@ -83,9 +83,9 @@ Explanations about [JSON](https://en.wikipedia.org/wiki/JSON) syntax must be mad
 
 Read it and come back, you'll be ready to patching your BJS scene in every direction.
 
-#### How to get and tweak parameters
+#### How to get and tweak properties
 
-So, in our babylon app, we quickly realize that our camera speed is a way too high. We know thanks to [BJS doc](http://doc.babylonjs.com/classes/2.5/targetcamera#speed-number) that our cam have a speed parameter. But what is the current value ? Two solutions:
+So, in our babylon app, we quickly realize that our camera speed is a way too high. We know thanks to [BJS doc](http://doc.babylonjs.com/classes/2.5/targetcamera#speed-number) that our cam have a speed property. But what is the current value ? Two solutions:
   - ask to \_r:
     - open your browser console (usually F12 key),
     - type ``` _r("cameraFree.000") ```,
@@ -121,13 +121,13 @@ Let's go!
     			"scene":
     			{
     				"ambientColor": "#ffffff", /* comma */
-    				"clearColor": "#9CC1CE" /* last param, so no comma */
+    				"clearColor": "#9CC1CE" /* last property, so no comma */
     			}
     		}, /* don't forget this comma */
     		{
     			"cameraFree.000":
     			{
-    				"speed": 0.05 /* only one param, no comma */
+    				"speed": 0.05 /* only one property, no comma */
     			}
     		} /* no comma here 'cause it's the end of the last element */
     	]
@@ -439,10 +439,10 @@ At this point, you may be interested by the [tips page](runtime-tips.html), take
 
 #### Fresnel
 
-As we have seen when configuring colors, some parameters required other parameters in value.
+As we have seen when configuring colors, some properties required other properties in value.
 _diffuseColor_ value can be set to an unique value in hexadecimal, but can also be composed of RGB color, having _R_, _G_ and _B_ channels to specify.
 
-Fresnel is one of these multi-paramaters. [As seen in the BJS doc'](http://doc.babylonjs.com/classes/2.5/standardmaterial#diffusefresnelparameters-fresnelparameters-classes-2-5-fresnelparameters-), we have some types of fresnel.
+Fresnel is one of these multi-properties. [As seen in the BJS doc'](http://doc.babylonjs.com/classes/2.5/standardmaterial#diffusefresnelparameters-fresnelparameters-classes-2-5-fresnelparameters-), we have some types of fresnel.
 
 To active one of these, just report it as shown below. Here an example with emissiveFresnelParameters:
 
@@ -485,6 +485,48 @@ And a patch example in our demo scene:
 
 
 #### Texture creation
+
+You can create, or replace, texture on the fly. We're going to test this on the TV screen.
+
+##### classic textures
+
+We want to select our screen material, and modify its diffuseTexture. Here how to do that:
+```javascript
+{
+  "myMaterial":
+  {
+    "diffuseTexture":
+    {
+      "texture::base":
+      {
+        "url": "my/path/to/texture.file"
+      }
+    }
+  }
+}
+```
+So in our demo scene, we have to write:
+```javascript
+{
+  "scene.videoFlooder_video_01":
+  {
+    "diffuseTexture":
+    {
+      "texture::base":
+      {
+        "url": "../../assets/painting01.png"
+      }
+    },
+    "ambientColor": "#ffffff"
+  }
+}
+```
+
+[launch demo scene](demos/advanced-materials-options/index2.html) (patch is place directly in the index.html here)
+
+##### videos
+
+##### cubemaps
 
 ### Create user interactions
 
@@ -549,6 +591,276 @@ Over-complicated code here, to alternate colors on click:
 For some reasons, we have separate our final scene into multiple babylon files. Obviously we want merge them. There is a runtime function for that, named __\_r.library.show()__.
 As it is a javascript function, you can't include it on a patch. We'll use the __\_r.ready()__ function to call _library.show_.
 
+Here the code structure:
+
+```javascript
+_r.ready(function(){
+    _r.library.show({
+        "name": "giveAName",
+        "rootUrl": "path/to/file/",
+        "fileName": "myFile.babylon"
+    });
+});
+```
+And with our demo scene as example:
+```javascript
+_r.ready(function(){
+    _r.library.show({
+        "name": "wonderfulFloatingSphere",
+        "rootUrl": "../../assets/wonderfulFloatingSphere/",
+        "fileName": "wonderfulFloatingSphere.babylon"
+    });
+});
+```
+[launch demo scene](demos/user-interactions/index2.html)
+
+We now want this sphere to float, so is this about patching ? Yes it is:
+```javascript
+_r.ready(function(){
+    _r.library.show({
+        "name": "wonderfulFloatingSphere",
+        "rootUrl": "../../assets/wonderfulFloatingSphere/",
+        "fileName": "wonderfulFloatingSphere.babylon",
+        "patch":
+        [
+            {
+                "wonderfulFloatingSphere.000:mesh":
+                {
+                    "position":
+                    {
+                        y: 1.5
+                    }
+                }
+            }
+        ]
+    });
+});
+```
+And of course we can write patches in a file, saved where you want:
+:
+```javascript
+_r.ready(function(){
+    _r.library.show({
+        "name": "wonderfulFloatingSphere",
+        "rootUrl": "../../assets/wonderfulFloatingSphere/",
+        "fileName": "wonderfulFloatingSphere.babylon",
+        "patch":
+        [
+            "patches/wonderfulFloatingSphere.patch"
+        ]
+    });
+});
+```
+
+[launch demo scene](demos/user-interactions/index3.html)
+
+How about load this sphere only when user click on the red button ?
+__Delete__ our \_r.ready function in our index.html, and go to our interations.patch file:
+
+> interations.patch
+
+```javascript
+{
+    "magicButton.000:mesh":
+    {
+        "OnPickUpTrigger": function ()
+        {
+            _r.library.show(
+            {
+                "name": "wonderfulFloatingSphere",
+                "rootUrl": "../../assets/wonderfulFloatingSphere/",
+                "fileName": "wonderfulFloatingSphere.babylon",
+                "patch":
+                [
+                    "patches/wonderfulFloatingSphere.patch"
+                ]
+            }
+            );
+            _r("decals.000:mesh")[0].isVisible = true;
+            _r("scene.pedestal_02:material")[0].emissiveColor = _r.color("#FFCCBF");
+            _r("scene.pedestal_02:material")[0].useEmissiveAsIllumination = true;
+        }
+    }
+}
+```
+
+We just tell to \_r that when user click on red button:
+
+-   please import a .babylon file,
+-   then set visible a mesh,
+-   and do some operations to a material.
+
+[launch demo scene](demos/user-interactions/index4.html) - view [interactions.patch](demos/user-interactions/patches/interactions.patch)
+
 ### Animate things
 
+This sphere is a little too static isn't it ? Once the red button clicked, we will add animation on sphere Y axis.
+Here comes the \_r.animate() function:
+
+```javascript
+_r.animate("elementToAnimate", { "property": value }, duration);
+```
+or with more anim' options:
+```javascript
+_r.animate("elementToAnimate", { "property": value }, { duration, easing });
+```
+Check [easings.net](http://easings.net) to see all possibilities of easing.
+
+You have several objects to anim' ?
+
+```javascript
+_r.animate(
+	{
+    	"elementToAnimate": { "property": value },
+        "elementToAnimate": { "property": value },
+        "elementToAnimate": { "property": value, "property": { "subproperty" : value, "subproperty" : value } }
+	}, duration);
+```
+So for our sphere, we have to write:
+```javascript
+_r.animate(
+    "wonderfulFloatingSphere.000:mesh",
+    {
+        "position":
+        {
+            "y": 1.7
+        }
+    },
+    {
+        "duration": 2,
+        "easing": "easeInOutSine"
+    }
+);
+```
+This will select the sphere, animate its Y position from original position to y = 1.7, during 2 seconds, using an easeInOutSine movement.
+
+In our _interactions.patch_ file, we naturally add our _animate_ after import our .babylon:
+> interations.patch
+
+```javascript
+{
+    "magicButton.000:mesh":
+    {
+        "OnPickUpTrigger": function ()
+        {
+            _r.library.show(
+            {
+                "name": "wonderfulFloatingSphere",
+                "rootUrl": "../../assets/wonderfulFloatingSphere/",
+                "fileName": "wonderfulFloatingSphere.babylon",
+                "patch":
+                [
+                    "patches/wonderfulFloatingSphere.patch"
+                ]
+            }
+            );
+            _r("decals.000:mesh")[0].isVisible = true;
+            _r("scene.pedestal_02:material")[0].emissiveColor = _r.color("#FFCCBF");
+            _r("scene.pedestal_02:material")[0].useEmissiveAsIllumination = true;
+            _r.animate(
+                "wonderfulFloatingSphere.000:mesh",
+                {
+                    "position":
+                    {
+                        "y": 1.7
+                    }
+                },
+                {
+                    "duration": 2,
+                    "easing": "easeInOutSine"
+                }
+            ); 
+        }
+    }
+}
+```
+
+By testing this, you'll soon see that... it doesn't work. We can see a warning in our browser console: ```BABYLON.Runtime::no object(s) found for selector "wonderfulFloatingSphere.000:mesh"```.
+This is 'cause javascript can run functions in asynchronous way, so here it try to animate an object which is not yet import in scene!
+
+Don't panic, there is a way to force a function to wait another function, by using __.then()__.
+
+Here how to use it:
+
+> interations.patch
+
+```javascript
+{
+    "magicButton.000:mesh":
+    {
+        "OnPickUpTrigger": function ()
+        {
+            /* this is javascript */
+            console.log("red magic button picked !");
+            _r.library.show(
+            {
+                "name": "wonderfulFloatingSphere",
+                "rootUrl": "../../assets/wonderfulFloatingSphere/",
+                "fileName": "wonderfulFloatingSphere.babylon",
+                "patch":
+                [
+                    "patches/wonderfulFloatingSphere.patch"
+                ]
+            }
+            ).then(function()
+                /* we have to wait end of import, then we can animate */
+                {
+                    _r.animate(
+                        "wonderfulFloatingSphere.000:mesh",
+                        {
+                            "position":
+                            {
+                                "y": 1.7
+                            }
+                        },
+                        {
+                            "duration": 2,
+                            "easing": "easeInOutSine"
+                        }
+                    );
+                });                
+            _r("decals.000:mesh")[0].isVisible = true;
+            _r("scene.pedestal_02:material")[0].emissiveColor = _r.color("#FFCCBF");
+            _r("scene.pedestal_02:material")[0].useEmissiveAsIllumination = true;
+        }
+    }
+}
+```
+Job done!
+
+### Add custom properties to an element
+
+
+
 ### Use \_r and write my own javascript as well
+
+
+
+### With \_r() selector, do actions on multiple elements, not just [0]
+
+As we already seen above, we know the selector ```_r("myElement")[0]``` give direct access to object. This is because ```_r("myElement")``` send us a table.
+For example, typing ```_r("*:material")```give us all materials in scene.
+
+Suppose we want all this materials with a red ambientColor. We're going to use a javascript function called __each() __.
+
+Type:
+
+```javascript
+_r("*:material").each( function(element){ element.ambientColor = _r.color("#ff0000"); } )
+```
+It works ! All our materials are now red.
+Code formatted for clarity:
+
+```javascript
+_r("*:material").each(
+	function(element){
+		element.ambientColor = _r.color("#ff0000");
+    }
+)
+```
+
+But this is not very a quick method, this is why we have the \_r __attr__ function !
+This will doing the same as above:
+```javascript
+_r("*:material").attr("ambientColor", _r.color("#ff0000"))
+```

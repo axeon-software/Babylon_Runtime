@@ -10,7 +10,7 @@ This is just a shortcut to write numbers between 1 and -1. Writing __-.5__ or __
 
 ### Some properties doesn't appear in BJS inspector !
 
-Access it via browser console and __\_r()__ selector.
+Access it via browser console and ```_r()``` selector.
 
 Examples:
 
@@ -21,7 +21,7 @@ Examples:
 
 ### I'm tired to write a line by color channel when using RGB type.
 
-You can use __\_r.color()__ function ! It works for RGB, RGBA and HEX color type.
+You can use ```_r.color()``` function ! It works for RGB, RGBA and HEX color type.
 
 Examples:
 
@@ -39,7 +39,7 @@ Examples:
 
 ### Some javascript code must be executed when scene loading is done.
 
-__\_r.ready(function(){__ _[...]_ __}); __ is here for you. Juste put it after ``` _r.launch(); ``` .
+```_r.ready(function(){ }); ``` is here for you. Juste put it after ``` _r.launch(); ``` .
 
 Example:
 

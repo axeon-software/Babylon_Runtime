@@ -4,7 +4,7 @@
 
 We assume that you know how to export a *.babylon* file from your 3D modeling software (we'll use Blender here), and that this *.babylon* contain at least one camera, one light and one object. For testing locally your scene, you have to launch a local web server (e.g. on Windows: [EasyPhp](http://www.easyphp.org/), [WampServer](http://www.wampserver.com/), ...). See an example on [BJS doc](http://doc.babylonjs.com/exporters/working_with_blender).
 
-Our babylon example file is in _babylon-runtime\docs\assets_ folder, and blender file in _babylon-runtime\docs\assets-sources_.
+Our babylon example scene is in `babylon-runtime\docs\assets\` folder, and source files (_.blend_ & textures) in `babylon-runtime\docs\assets-sources\`.
 
 ### Starting with index.html
 
@@ -98,7 +98,7 @@ But what is the current value? Two solutions:
 
   - ask to `_r`:
     - open your browser console (usually `F12` key),
-    - type `_r("cameraFree.000")` (we named it like this in our 3D modeling software),
+    - type `_r("cameraFree.000")` ,
       ![browser console example](tutorials-assets/browser-console01.jpg)
       - pro-tip: notice that you receive a table, here with only one element. For direct access when you know there is only one object, you can type `_r("cameraFree.000")[0]` to go directly to the first object in this table,
     - you can know check the speed value,
@@ -511,6 +511,8 @@ And a patch example in our demo scene:
     }
 }
 ```
+
+![fresnel01](tutorials-assets/fresnel01.jpg)
 
 [launch demo scene](demos/advanced-materials-options/)
 

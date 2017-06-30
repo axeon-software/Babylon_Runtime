@@ -1,4 +1,4 @@
-## Babylon-runtime `_r`
+## Babylon-runtime ( _r )
 
 Babylon-runtime is here to help BabylonJS artists by :
 

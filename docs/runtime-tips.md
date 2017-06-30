@@ -1,14 +1,16 @@
 # Babylon Runtime Tips
 
-### My screen is white !!!
+### My screen is white!!!
 
 Check your browser console, you've probably forget a comma somewhere (browser generally tell you where).
 
-### I see some strange numbers starting by "."
+### I see some strange numbers starting by a point`.`
 
-This is just a shortcut to write numbers between 1 and -1. Writing __-.5__ or __-0.5__ is the same.
+This is just a shortcut to write numbers between 1 and -1.
 
-### Some properties doesn't appear in BJS inspector !
+Writing __-.5__ or __-0.5__ is the same.
+
+### Some properties doesn't appear in BJS inspector!
 
 Access it via browser console and `_r()` selector.
 
@@ -30,10 +32,17 @@ Examples:
   "myMaterial":
   {
     "ambientColor": _r.color(1,.2,.3),
-    "diffuseColor": _r.color(1,.2,.3,.5)
+    "diffuseColor": _r.color(1,.2,.3,.5),
+    "emissiveColor": _r.color("#458721")
   }
 }
 ```
+
+
+
+### I have a debug camera, and want to switch to it via browser console
+
+Juste type `_r.camera.activate("myCameraName")`.
 
 
 
@@ -54,7 +63,7 @@ Example:
 
 ### I want to be sure I select only a precise type of element (mesh, light, camera, etc)
 
-In your selector, use :mesh, :material, :light or :camera.
+In your selector, use `:mesh`, `:material`, `:light` or `:camera`.
 
 Examples:
 > in patch file

@@ -16,6 +16,7 @@ To load and init a very basic scene with babylon-runtime, you have to tell to ba
 So let's go, here our starting html file:
 
 > index.html
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -36,6 +37,7 @@ So let's go, here our starting html file:
 </body>
 </html>
 ```
+
 [launch demo scene](demos/launch)
 
 As you can see, babylon-runtime (we will name it `_r` ) just need 3 parameters to launch a babylon file :
@@ -47,13 +49,14 @@ Once our scene is loaded, we probably want to tweak scene properties, such as *a
 
 ### Let's do some patches
 
- We'll have our *.babylon* file, that could be update anytime during our 3D scene production.
+We'll have our *.babylon* file, that could be update anytime during our 3D scene production.
 
 Patches will help us to keep our scene modifications even if we re-export & reload our scene from our 3D modeling software every 5 minutes.
 
- How to start patching? Here an example:
+How to start patching? Here an example:
 
 > sample in index.html
+
 ```javascript
     _r.launch({
         scene: "scene.babylon",
@@ -89,12 +92,15 @@ Read it and come back, you'll be ready to patching your BJS scene in every direc
 
 #### How to get and tweak properties
 
-So, in our babylon scene, we quickly realize that our camera speed is a way too high. We know thanks to [BJS doc](http://doc.babylonjs.com/classes/3.0/targetcamera#speed-number) that our cam have a speed property. But what is the current value? Two solutions:
+So, in our babylon scene, we quickly realize that our camera speed is a way too high. We know thanks to [BJS doc](http://doc.babylonjs.com/classes/3.0/targetcamera#speed-number) that our cam have a speed property.
+
+But what is the current value? Two solutions:
+
   - ask to `_r`:
     - open your browser console (usually `F12` key),
     - type `_r("cameraFree.000")` (we named it like this in our 3D modeling software),
       ![browser console example](tutorials-assets/browser-console01.jpg)
-      > pro-tip: notice that you receive a table, here with only one element. For direct access when you know there is only one object, you can type `_r("cameraFree.000")[0]` to go directly to the first object in this table,
+      - pro-tip: notice that you receive a table, here with only one element. For direct access when you know there is only one object, you can type `_r("cameraFree.000")[0]` to go directly to the first object in this table,
     - you can know check the speed value,
     - to tweak it, just edit the number.
   - get it via BJS inspector (since BJS 3.0):
@@ -114,6 +120,7 @@ We have to add a selector of our camera, including our custom speed value. Since
 So do it!
 
 > sample in index.html
+
 ```javascript
     _r.launch(
     {
@@ -143,6 +150,7 @@ So do it!
 Do you want also set camera FOV, position & rotation at spawn? No problem:
 
 > sample in index.html
+
 ```javascript
     _r.launch(
     {
@@ -219,9 +227,11 @@ By using star selector `*`, you can tell to `_r` that you want to select all ele
   - ` _r("p*")` will return all elements where names start with _p_,
   - ` _r("*Cube*01")` will return all elements which contains _Cube_ in their names and end with _01_.
 
+
 Time to enhance our patch:
 
 > sample in index.html
+
 ```javascript
     _r.launch(
     {
@@ -269,6 +279,7 @@ Here an quick example with the torrus:
 
 
 > sample in index.html
+
 ```javascript
     _r.launch(
     {
@@ -336,6 +347,7 @@ Things to know:
 - entire patch file content must be included in square brackets __[ ]__ (one patch file is an array).
 
 > scene.patch
+
 ```javascript
 [
 	{
@@ -350,6 +362,7 @@ Things to know:
 
 
 >   cameras.patch
+
 ```javascript
 [
 	{
@@ -374,6 +387,7 @@ Things to know:
 
 
 >   materials.patch
+
 ```javascript
 [
 	{
@@ -411,6 +425,7 @@ Things to know:
 
 
 > index.html
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -475,6 +490,7 @@ To active one of these, just report it as shown below. Here an example with emis
 ```
 
 And a patch example in our demo scene:
+
 ```JSON
 {
     "scene.strangeThing_porridge_01":
@@ -506,6 +522,7 @@ You can create or replace texture on the fly. We're going to test this on the TV
 ##### Classic textures
 
 We want to select our screen material, and modify its *diffuseTexture*. Here how to do that:
+
 ```javascript
 {
   "myMaterial":
@@ -522,6 +539,7 @@ We want to select our screen material, and modify its *diffuseTexture*. Here how
 ```
 
 So in our demo scene, we have to write:
+
 ```javascript
 {
   "scene.videoFlooder_video_01":
@@ -568,6 +586,7 @@ Here we call __OnPickUpTrigger__ function. How to implement it ?
 As you can see, here we have to work with javascript. But we can use `_r` to easily access to objects. In our demo scene, let's create a file named _interactions.patch_ (don't forget to add it in index.html patch list).
 
 Here our new file:
+
 ```javascript
 [
 	{
@@ -584,6 +603,7 @@ Here our new file:
 ```
 
 Over-complicated code here, to alternate colors on click:
+
 ```javascript
 [
 	{
@@ -610,6 +630,7 @@ For some reasons, we have split our final scene into multiple babylon files. Obv
 As it is a javascript function, you can't include it on a patch. We'll use the `_r.ready()` function to call _library.show_.
 
 Here the code structure:
+
 ```javascript
 _r.ready(function(){
     _r.library.show({
@@ -621,6 +642,7 @@ _r.ready(function(){
 ```
 
 And with our demo scene as example:
+
 ```javascript
 _r.ready(function(){
     _r.library.show({
@@ -634,6 +656,7 @@ _r.ready(function(){
 [launch demo scene](demos/user-interactions/index2.html)
 
 We now want this sphere to float in the air, so is this about patching? Yes it is:
+
 ```javascript
 _r.ready(function(){
     _r.library.show({
@@ -657,7 +680,7 @@ _r.ready(function(){
 ```
 
 And of course we can write patches in a file, saved where you want:
-:
+
 ```javascript
 _r.ready(function(){
     _r.library.show({
@@ -678,6 +701,7 @@ How about load this sphere only when user click on the red button?
 __Delete__ our `_r.ready` function in our _index.html_, and go to our _interations.patch_ file:
 
 > interations.patch
+
 ```javascript
 {
     "magicButton.000:mesh":
@@ -720,6 +744,7 @@ _r.animate("elementToAnimate", { "property": value }, duration);
 ```
 
 or with more anim' options:
+
 ```javascript
 _r.animate("elementToAnimate", { "property": value }, { duration, easing });
 ```
@@ -738,6 +763,7 @@ _r.animate(
 ```
 
 So for our sphere, we have to write:
+
 ```javascript
 _r.animate(
     "wonderfulFloatingSphere.000:mesh",
@@ -757,7 +783,9 @@ _r.animate(
 This will select the sphere, animate its Y position from original position to y = 1.7, during 2 seconds, using an easeInOutSine movement.
 
 In our _interactions.patch_ file, we naturally add our _animate_ after import our .babylon:
+
 > interations.patch
+
 ```javascript
 {
     "magicButton.000:mesh":
@@ -802,7 +830,9 @@ This is 'cause javascript can run functions in asynchronous way, so here it try 
 Don't panic, there is a way to force a function to wait another function, by using __.then()__.
 
 Here how to use it:
+
 > interations.patch
+
 ```javascript
 {
     "magicButton.000:mesh":
@@ -864,6 +894,7 @@ For example, typing `_r("*:material")` give us all materials in scene.
 Suppose we want all this materials with a red *ambientColor*. We're going to use a javascript function called __each() __.
 
 Type:
+
 ```javascript
 _r("*:material").each( function(element){ element.ambientColor = _r.color("#ff0000"); } )
 ```
@@ -871,6 +902,7 @@ _r("*:material").each( function(element){ element.ambientColor = _r.color("#ff00
 It works! All our materials are now red.
 
 Code formatted for clarity:
+
 ```javascript
 _r("*:material").each(
 	function(element){
@@ -881,6 +913,7 @@ _r("*:material").each(
 
 But this is not very a quick method, this is why we have the `_r` __attr__ function!
 This will doing the same as above:
+
 ```javascript
 _r("*:material").attr("ambientColor", _r.color("#ff0000"))
 ```

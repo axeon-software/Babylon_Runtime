@@ -1,4 +1,4 @@
-Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
+Exporter version: 5.3.0, Blender version: 2.78 (sub 0)
 ========= Conversion from Blender to Babylon.js =========
 	Scene settings used:
 		selected layers only:  false
@@ -62,13 +62,16 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  painting_frame_01
 			Ambient texture found "painting.000_lightmap"
 				Image texture found, type:  ambientTexture, mapped using: "UV2"
+		processing begun of Standard material:  painting_mount_01
+			Ambient texture found "painting.000_lightmap"
+				Image texture found, type:  ambientTexture, mapped using: "UV2"
 		processing begun of multimaterial:  scene.Multimaterial#2
-		num positions      :  205
-		num normals        :  205
-		num uvs            :  410
-		num uvs2           :  410
+		num positions      :  105
+		num normals        :  105
+		num uvs            :  210
+		num uvs2           :  210
 		num colors         :  0
-		num indices        :  324
+		num indices        :  150
 	processing begun of mesh:  door.001
 		processing begun of Standard material:  door_01
 			Ambient texture found "door.000_lightmap"
@@ -204,4 +207,4 @@ Exporter version: 5.3-beta, Blender version: 2.78 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.7939 secs
+elapsed time:  0 min, 1.5305 secs

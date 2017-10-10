@@ -1,14 +1,21 @@
 # Some rules about JSON syntax
 
+
+
+If you don't know anything about JSON, don't be scared. It may seem rough at first glance, but it's not :)
+
+
+
 All you have to know is that JSON is an open-standard data file format, and that there is some rules about writing data:
+
   - all your patches must be contained between two square brackets __[ ]__
-  - to access an object, you have to hold it between two braces __{ }__ and write inside the object name enclosed by quotes __" "__,
-  - once you have select an object, you want to highlight some of its properties. So after _"objectName"_, add a colon and two braces __: { }__, and write inside the property name enclosed by quotes __" "__:
+  - to access an element (object, material, etc), you have to hold it between two braces __{ }__ and write inside the element name enclosed by quotes __" "__,
+  - once you have select an element, you want to highlight some of its properties. So after _"elementName"_, add a colon and two braces __: { }__, and write inside the property name enclosed by quotes __" "__:
 
 ```javascript
 [
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "myPropertyToTweak": "myValue"
     }
@@ -20,7 +27,7 @@ All you have to know is that JSON is an open-standard data file format, and that
 ```javascript
 [
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "myPropertyToTweak": "myValue",
       "myOtherPropertyToTweak": "myValue2",
@@ -29,19 +36,19 @@ All you have to know is that JSON is an open-standard data file format, and that
   }
 ]
 ```
-  - same if multiple objects. Notice that comma is between objects, so last property of first object doesn't have to end by comma:
+  - same if multiple elements. Notice that comma is between elements, so last property of first element doesn't have to end by comma:
 
 ```javascript
 [
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "myPropertyToTweak": "myValue",
       "myOtherPropertyToTweak": "myValue2" /* no comma here */
     } /* nope, no comma here neither */
   }, /* here it is ! */
   {
-    "myOtherObjectToTweak":
+    "myOtherElementToTweak":
     {
       "myPropertyToTweak": "myValue",
       "myOtherPropertyToTweak": "myValue2"
@@ -53,20 +60,20 @@ All you have to know is that JSON is an open-standard data file format, and that
 
 ```javascript
 {
-  "myObjectToTweak":
+  "myElementToTweak":
   {
     "myPropertyToTweak": "myStringValue",
     "myOtherPropertyToNumberTweak": 42,
-    "myAnotherPropertyToBooleanTweak": false
+    "myAnotherPropertyToBooleanTweak": true
   }
 }
 ```
-  - level up: suppose a property is composed of properties, like a color in red, green & blue. Too easy, same rules:
+  - level up: suppose a property is composed of properties, like a color containing red, green & blue channels. Too easy, same rules:
 
 ```javascript
 [
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "myOvercomplicatedColor":
       {
@@ -79,18 +86,18 @@ All you have to know is that JSON is an open-standard data file format, and that
     }
   },
   {
-    "myOtherObject":
+    "myOtherElement":
     {
       "myPropertyToTweak": 1
     }
   }
 ]
 ```
-  - if a property appears multiple time, it is the last which is taken into account:
+  - if a property appears multiple times, it is the last which is taken into account:
 ```javascript
 [
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "myPropertyToTweak": 1, /* this is finally ignored... */
       "myPropertyToTweak": 42, /* ...'cause of this line */
@@ -98,7 +105,7 @@ All you have to know is that JSON is an open-standard data file format, and that
     }
   },
   {
-    "myObjectToTweak":
+    "myElementToTweak":
     {
       "coolThing": "#000000" /* ...'cause of this line */
     }
@@ -106,13 +113,18 @@ All you have to know is that JSON is an open-standard data file format, and that
 ]
 ```
 
-To resume, a patch is just a list, which can be represented by this scheme:
 
-__[ , , , ]__ : list.
+To resume, a patch is just a file containing a list, which can be represented by this scheme:
 
-__[ { "object": {  } } , { "object": {  } }  ]__ : elements in list.
+- first level, an array: 
+  __[ , , , ]__
 
-__[ { "object": { "property":"value" } } , { "object": { "property":"value",  "property":"value" } }  ]__ : elements with properties in list.
+- second level, an array with things: 
+  __[ { "element" } , { "element" }  ]__
+
+- third level, an array with things which have properties: 
+  __[ { "element": { "property":"value" } } , { "element": { "property":"value",  "property":"value" } }  ]__
+
 
 
 
@@ -123,8 +135,9 @@ Depends of your text editor, but surely their is an option or plugin:
 
 
 
-Bad pratice but pratical: comments are in theory __not allowed in JSON!__ But if you work in team this may be helpful anyway, so close our eyes...
+Bad pratice but pratical: comments are in theory not allowed in JSON!
+But if you work in team this may be helpful anyway, so close our eyes and help your teammates anyway...
 
 
 
-Hooray, you're now a JSON master !
+Hooray, you're now a JSON master \o/ ! You can go back to [tutorials](tutorials.html).

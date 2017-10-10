@@ -13,6 +13,7 @@ module _r {
         ktx? : boolean | Array<string>,
         enableOfflineSupport? : boolean,
         progressLoading : Function
+        loadingScreen : any
     }
 
     export function init(scene? : BABYLON.Scene) {
@@ -51,7 +52,7 @@ module _r {
     }
 
 
-    function load(scene : Function | string, assets? : string) : Q.Promise<BABYLON.Scene> {
+    function load(scene : Function | string, assets? : string, progressLoading? : Function ) : Q.Promise<BABYLON.Scene> {
         let deferred = Q.defer<BABYLON.Scene>();
         if(is.Function(scene)) {
             _r.scene = new BABYLON.Scene(_r.engine);
@@ -62,7 +63,7 @@ module _r {
             BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function(_scene) {
                 _r.scene = _scene;
                 deferred.resolve(_r.scene);
-            });
+            }, progressLoading);
         }
         return deferred.promise;
     }
@@ -88,6 +89,9 @@ module _r {
         }
 
         _r.engine = new BABYLON.Engine( _r.canvas, true, null);
+        if(params.loadingScreen) {
+            _r.engine.loadingScreen = params.loadingScreen;
+        }
         window.addEventListener('resize', function () {
             _r.engine.resize();
         });
@@ -109,7 +113,7 @@ module _r {
             _r.engine.enableOfflineSupport = false;
         }
 
-        load(params.scene, params.assets).then(function() {
+        load(params.scene, params.assets, params.progressLoading).then(function() {
             var promises = [];
             if(params.hasOwnProperty('patch')) {
                 params.patch.forEach(function(_patch) {
@@ -144,6 +148,7 @@ module _r {
                     }
                 }
                 init();
+                _r.engine.resize();
                 deferred.resolve();
                 _r.renderloop.run();
             });

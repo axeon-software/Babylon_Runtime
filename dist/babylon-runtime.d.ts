@@ -8,9 +8,52 @@ declare module _r {
 }
 declare module _r {
     /** Helpers **/
-    function color(...parameters: any[]): BABYLON.Color3 | BABYLON.Color4;
+    function color(...parameters: any[]): any;
     function showDebug(): void;
     function hideDebug(): void;
+}
+declare module _r {
+    class Animation2 {
+        elements: any;
+        property: string;
+        value: any;
+        animationType: number;
+        keys: Array<any>;
+        fps: number;
+        duration: number;
+        speedRatio: number;
+        enableBlending: boolean;
+        blendingSpeed: number;
+        animatables: Array<BABYLON.Animatable>;
+        onAnimationEnd: () => void;
+        onAnimationStart: () => void;
+        _onAnimationFrame: (frame: number, callback: () => void) => void;
+        constructor(elements: any, property: string, value: any);
+        getKeys(element: any): any[];
+        private onComplete();
+        play(from?: number, to?: number): void;
+        pause(): void;
+        restart(): void;
+        stop(): void;
+        reset(): void;
+        static getEasingFunction(easing: string): BABYLON.EasingFunction;
+    }
+    interface IAnimation {
+        fps?: number;
+        duration?: number;
+        speedRatio?: number;
+        name?: string;
+        from?: number;
+        to?: number;
+        loopMode?: boolean | number;
+        easing?: string;
+        step: (frame) => void;
+        progress: (promise, progress, remaining) => void;
+        complete: () => void;
+        start: () => void;
+        keys: Array<any>;
+    }
+    function animate2(elements: string | Elements, properties: any, value: any, options: number | IAnimation): void;
 }
 /**
  *
@@ -226,6 +269,7 @@ declare module _r {
         ktx?: boolean | Array<string>;
         enableOfflineSupport?: boolean;
         progressLoading: Function;
+        loadingScreen: any;
     }
     function init(scene?: BABYLON.Scene): void;
     var isReady: boolean;

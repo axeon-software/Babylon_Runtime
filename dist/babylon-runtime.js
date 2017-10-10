@@ -3405,7 +3405,16 @@ var _r;
             parameters[_i] = arguments[_i];
         }
         if (parameters.length == 1) {
-            return BABYLON.Color3.FromHexString(parameters[0]);
+            if (parameters[0] instanceof BABYLON.Color3) {
+                return parameters[0];
+            }
+            if (_r.is.HexColor(parameters[0])) {
+                return BABYLON.Color3.FromHexString(parameters[0]);
+            }
+            if (parameters[0].hasOwnProperty("r") && parameters[0].hasOwnProperty("g") && parameters[0].hasOwnProperty("b")) {
+                return new BABYLON.Color3(parameters[0]["r"], parameters[0]["g"], parameters[0]["b"]);
+            }
+            console.warn("_r.color::not a valid color", parameters[0]);
         }
         else {
             if (parameters.length == 3) {
@@ -3431,6 +3440,253 @@ var _r;
         _r.scene.debugLayer.hide();
     }
     _r.hideDebug = hideDebug;
+})(_r || (_r = {}));
+var _r;
+(function (_r) {
+    var Animation2 = (function () {
+        function Animation2(elements, property, value) {
+            this.elements = elements;
+            this.property = property;
+            this.value = value;
+            this.fps = 30;
+            this.duration = 0.4;
+            this.speedRatio = 1;
+            this.elements = _r.select(elements);
+            var element = _r.select(elements)[0];
+            if (_r.is.Vector2(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
+                return;
+            }
+            if (_r.is.Vector3(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_VECTOR3;
+                return;
+            }
+            if (_r.is.Number(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_FLOAT;
+                return;
+            }
+            if (_r.is.Color(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_COLOR3;
+                return;
+            }
+            if (_r.is.Quaternion(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_QUATERNION;
+                return;
+            }
+            if (_r.is.Matrix(element[property])) {
+                this.animationType = BABYLON.Animation.ANIMATIONTYPE_MATRIX;
+                return;
+            }
+        }
+        Animation2.prototype.getKeys = function (element) {
+            if (this.keys) {
+                return this.keys;
+            }
+            else {
+                var initialValue = element[this.property];
+                var finalValue;
+                switch (this.animationType) {
+                    case BABYLON.Animation.ANIMATIONTYPE_COLOR3:
+                        finalValue = new BABYLON.Color3();
+                        _r.extend(finalValue, initialValue, _r.color(this.value));
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_FLOAT:
+                        finalValue = this.value;
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_MATRIX:
+                        finalValue = new BABYLON.Matrix();
+                        _r.extend(finalValue, initialValue, this.value);
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_QUATERNION:
+                        finalValue = new BABYLON.Quaternion();
+                        _r.extend(finalValue, initialValue, this.value);
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_SIZE:
+                        finalValue = new BABYLON.Size(0, 0);
+                        _r.extend(finalValue, initialValue, this.value);
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_VECTOR2:
+                        finalValue = new BABYLON.Vector2(0, 0);
+                        _r.extend(finalValue, initialValue, this.value);
+                        break;
+                    case BABYLON.Animation.ANIMATIONTYPE_VECTOR3:
+                        finalValue = new BABYLON.Vector3(0, 0, 0);
+                        _r.extend(finalValue, initialValue, this.value);
+                        break;
+                }
+                return [
+                    {
+                        frame: 0,
+                        value: initialValue
+                    },
+                    {
+                        frame: this.fps * this.duration,
+                        value: finalValue
+                    }
+                ];
+            }
+        };
+        Animation2.prototype.onComplete = function () {
+            if (this.animatables) {
+                this.animatables.forEach(function (animatable) {
+                    if (animatable.animationStarted) {
+                        return;
+                    }
+                });
+                if (this.onAnimationEnd) {
+                    this.onAnimationEnd();
+                }
+            }
+        };
+        Animation2.prototype.play = function (from, to) {
+            var self = this;
+            var started = false;
+            var completed = false;
+            this.elements.each(function (element) {
+                if (!element.animations) {
+                    element.animations = [];
+                }
+                var animation = new BABYLON.Animation("_r.animation." + element.name + '.' + element.animations.length, self.property, self.fps, self.animationType);
+                var keys = self.getKeys(element);
+                animation.setKeys(keys);
+                if (self.enableBlending == true) {
+                    animation.enableBlending = true;
+                    if (self.blendingSpeed) {
+                        animation.blendingSpeed = self.blendingSpeed;
+                    }
+                }
+                element.animations.push(animation);
+                if (!self.animatables) {
+                    self.animatables = [];
+                }
+                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, false, self.speedRatio);
+                //_r.trigger(_r.scene, 'animationStart', animatable);
+                animatable.onAnimationEnd = self.onComplete;
+                self.animatables.push(animatable);
+            });
+            if (this.animatables && this.animatables.length > 0) {
+                if (this.onAnimationStart) {
+                    this.onAnimationStart();
+                }
+            }
+        };
+        Animation2.prototype.pause = function () {
+            this.elements.each(function (element) {
+                var animatable = _r.scene.getAnimatableByTarget(element);
+                animatable.pause();
+            });
+        };
+        Animation2.prototype.restart = function () {
+            this.elements.each(function (element) {
+                var animatable = _r.scene.getAnimatableByTarget(element);
+                animatable.restart();
+            });
+        };
+        Animation2.prototype.stop = function () {
+            this.elements.each(function (element) {
+                var animatable = _r.scene.getAnimatableByTarget(element);
+                animatable.stop();
+            });
+        };
+        Animation2.prototype.reset = function () {
+            this.elements.each(function (element) {
+                var animatable = _r.scene.getAnimatableByTarget(element);
+                animatable.reset();
+            });
+        };
+        Animation2.getEasingFunction = function (easing) {
+            var mode;
+            var func;
+            if (easing.indexOf("easeInOut") != -1) {
+                mode = BABYLON.EasingFunction.EASINGMODE_EASEINOUT;
+                func = easing.replace("easeInOut", "");
+            }
+            else {
+                if (easing.indexOf("easeIn") != -1) {
+                    mode = BABYLON.EasingFunction.EASINGMODE_EASEIN;
+                    func = easing.replace("easeIn", "");
+                }
+                else {
+                    if (easing.indexOf("easeOut") != -1) {
+                        mode = BABYLON.EasingFunction.EASINGMODE_EASEOUT;
+                        func = easing.replace("easeOut", "");
+                    }
+                    else {
+                        console.info("_r::unrecognized easing function " + easing);
+                        return null;
+                    }
+                }
+            }
+            var easingFunction;
+            switch (func) {
+                case "Sine":
+                    easingFunction = new BABYLON.SineEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quad":
+                    easingFunction = new BABYLON.QuadraticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Cubic":
+                    easingFunction = new BABYLON.CubicEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quart":
+                    easingFunction = new BABYLON.QuarticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Quint":
+                    easingFunction = new BABYLON.QuinticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Expo":
+                    easingFunction = new BABYLON.ExponentialEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Circ":
+                    easingFunction = new BABYLON.CircleEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Back":
+                    easingFunction = new BABYLON.BackEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Elastic":
+                    easingFunction = new BABYLON.ElasticEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                case "Bounce":
+                    easingFunction = new BABYLON.BounceEase();
+                    easingFunction.setEasingMode(mode);
+                    return easingFunction;
+                default:
+                    console.warn("_r::unrecognized easing function " + easing);
+                    return null;
+            }
+        };
+        return Animation2;
+    }());
+    _r.Animation2 = Animation2;
+    function animate2(elements, properties, value, options) {
+        var defaults = {
+            fps: 30,
+            duration: 0.4,
+            speedRatio: 1,
+            loop: false
+        };
+        options = _r.extend({}, defaults, options);
+        var animation = new _r.Animation2(elements, properties, value);
+        if (_r.is.Number(options)) {
+            animation.duration = options;
+        }
+        else {
+            for (var option in options) {
+                animation[option] = options[option];
+            }
+        }
+        animation.play();
+    }
+    _r.animate2 = animate2;
 })(_r || (_r = {}));
 /**
  *
@@ -3557,7 +3813,7 @@ var _r;
                     easingFunction.setEasingMode(mode);
                     return easingFunction;
                 default:
-                    console.warn("_r::unrecognized easing function " + easing);
+                    console.error("_r::unrecognized easing function " + easing);
                     return null;
             }
         }
@@ -3723,7 +3979,7 @@ var _r;
                 this.elements.each(function (element) {
                     console.log("animationType :", self._getAnimationType());
                     var animation = new BABYLON.Animation(self.name, self.property, self.fps, self._getAnimationType(), self.getLoopMode());
-                    if (this.keys) {
+                    if (self.keys) {
                         animation.setKeys(self.keys);
                     }
                     else {
@@ -3734,7 +3990,7 @@ var _r;
                         });
                         keys.push({
                             frame: self.duration * self.fps,
-                            value: _r.merge(element[self.property], self.value)
+                            value: _r.extend(new BABYLON.Vector3(0, 0, 0), element[self.property], self.value)
                         });
                         animation.setKeys(keys);
                     }
@@ -3745,18 +4001,23 @@ var _r;
                         element.animations = [];
                     }
                     element.animations.push(animation);
+                    console.log('?', element.name, element.animations);
                 });
             };
             Animation.prototype.clip = function (from, to) {
                 this.prepareAnimation();
                 var self = this;
-                this.elements.each(function (element) {
-                    _r.scene.beginAnimation(element, from, to, self.getLoopMode());
-                });
+                _r.scene.beginAnimation(this.elements[0], 0, 90, false);
+                /**this.elements.each(function(element) {
+                    console.log("ok",element, from, to, self.getLoopMode());
+                    _r.scene.beginAnimation(element, from, to, self.getLoopMode())
+                });**/
             };
             Animation.prototype.play = function () {
-                this.elements.log('animations');
-                this.clip(0, this.duration * this._fps);
+                console.log("wtf?");
+                _r.scene.beginAnimation(this.elements[0], 0, 90, false);
+                //console.log(this.duration * this.fps);
+                //this.clip(0, this.duration * this.fps);
             };
             Animation.prototype.finish = function () {
             };
@@ -4919,7 +5180,7 @@ var _r;
         }
     }
     _r.ready = ready;
-    function load(scene, assets) {
+    function load(scene, assets, progressLoading) {
         var deferred = Q.defer();
         if (_r.is.Function(scene)) {
             _r.scene = new BABYLON.Scene(_r.engine);
@@ -4930,7 +5191,7 @@ var _r;
             BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function (_scene) {
                 _r.scene = _scene;
                 deferred.resolve(_r.scene);
-            });
+            }, progressLoading);
         }
         return deferred.promise;
     }
@@ -4954,6 +5215,9 @@ var _r;
             document.body.appendChild(_r.canvas);
         }
         _r.engine = new BABYLON.Engine(_r.canvas, true, null);
+        if (params.loadingScreen) {
+            _r.engine.loadingScreen = params.loadingScreen;
+        }
         window.addEventListener('resize', function () {
             _r.engine.resize();
         });
@@ -4973,7 +5237,7 @@ var _r;
         else {
             _r.engine.enableOfflineSupport = false;
         }
-        load(params.scene, params.assets).then(function () {
+        load(params.scene, params.assets, params.progressLoading).then(function () {
             var promises = [];
             if (params.hasOwnProperty('patch')) {
                 params.patch.forEach(function (_patch) {
@@ -5008,6 +5272,7 @@ var _r;
                     }
                 }
                 init();
+                _r.engine.resize();
                 deferred.resolve();
                 _r.renderloop.run();
             });
@@ -5023,6 +5288,10 @@ var _r;
         library.libraries = [];
         function show(params) {
             var deferred = Q.defer();
+            _r.trigger(_r.scene, 'importStart', {
+                rootUrl: params.rootUrl,
+                fileName: params.fileName
+            });
             BABYLON.SceneLoader.ImportMesh(null, params.rootUrl, params.fileName, _r.scene, function (meshes) {
                 var names = [];
                 if (params.patch) {
@@ -5035,6 +5304,11 @@ var _r;
                             data.forEach(function (_patch) {
                                 _r.patchFile.apply(_patch);
                             });
+                            _r.trigger(_r.scene, 'importEnd', {
+                                rootUrl: params.rootUrl,
+                                fileName: params.fileName,
+                                meshes: meshes
+                            });
                             deferred.resolve(meshes);
                         }
                         catch (exception) {
@@ -5045,7 +5319,9 @@ var _r;
                 else {
                     deferred.resolve(meshes);
                 }
-            }, function () {
+            }, 
+            // TODO
+            function () {
                 //deferred.notify(arguments[0]);
             }, function () {
                 deferred.reject("Error while _r.importLibrary");

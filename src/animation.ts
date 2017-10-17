@@ -118,7 +118,7 @@ module _r {
                 if(!element.animations) {
                     element.animations = [];
                 }
-                var animation = new BABYLON.Animation("_r.animation." + element.name + '.' + element.animations.length, self.property, self.fps, self.animationType);
+                var animation = new BABYLON.Animation("_r.animation" + element.animations.length, self.property, self.fps, self.animationType);
                 var keys = self.getKeys(element);
                 animation.setKeys(keys);
                 if(self.enableBlending == true) {
@@ -265,24 +265,20 @@ module _r {
 
 
 
-    export function animate(elements : string | Elements, properties : any, value : any, options : number | IAnimation) {
-        var defaults = {
-            fps : 30,
-            duration : 0.4,
-            speedRatio : 1,
-            loop : false
-        };
-        options = _r.extend({}, defaults, options);
-
-        var animation = new _r.Animation(elements, properties, value);
-        if(_r.is.Number(options)) {
-            animation.duration = <number> options;
-        }
-        else {
-            for(var option in <IAnimation> options) {
-                animation[option] = options[option];
+    export function animate(elements : string | Elements, properties : any, options? : number | IAnimation | any) {
+        Object.getOwnPropertyNames(properties).forEach(function(property){
+            var animation = new _r.Animation(elements, property, properties[property]);
+            if(_r.is.Number(options)) {
+                animation.duration = <number> options;
             }
-        }
-        animation.play();
+            else {
+                for(var option in <IAnimation> options) {
+                    animation[option] = options[option];
+                }
+            }
+            animation.play();
+        });
+
+
     }
 }

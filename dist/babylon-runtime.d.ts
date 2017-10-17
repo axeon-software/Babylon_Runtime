@@ -12,152 +12,6 @@ declare module _r {
     function showDebug(): void;
     function hideDebug(): void;
 }
-declare module _r {
-    class Animation2 {
-        elements: any;
-        property: string;
-        value: any;
-        animationType: number;
-        keys: Array<any>;
-        fps: number;
-        duration: number;
-        speedRatio: number;
-        enableBlending: boolean;
-        blendingSpeed: number;
-        animatables: Array<BABYLON.Animatable>;
-        onAnimationEnd: () => void;
-        onAnimationStart: () => void;
-        _onAnimationFrame: (frame: number, callback: () => void) => void;
-        constructor(elements: any, property: string, value: any);
-        getKeys(element: any): any[];
-        private onComplete();
-        play(from?: number, to?: number): void;
-        pause(): void;
-        restart(): void;
-        stop(): void;
-        reset(): void;
-        static getEasingFunction(easing: string): BABYLON.EasingFunction;
-    }
-    interface IAnimation {
-        fps?: number;
-        duration?: number;
-        speedRatio?: number;
-        name?: string;
-        from?: number;
-        to?: number;
-        loopMode?: boolean | number;
-        easing?: string;
-        step: (frame) => void;
-        progress: (promise, progress, remaining) => void;
-        complete: () => void;
-        start: () => void;
-        keys: Array<any>;
-    }
-    function animate2(elements: string | Elements, properties: any, value: any, options: number | IAnimation): void;
-}
-/**
- *
- * # Examples
- * ## 2 seconds animation
- * ```js
- * _r.animate([
- *      {
- *          'mesh.000' : {
- *              position : {
- *                  x : 10
- *          }
- *      },
- *      {
- *          'mesh.001' : {
- *              position : {
- *                  y : 10
- *              }
- *          }
- *      }
- * }, 5)
- *
- * _r.animate('mesh.000', {
- *      position : {
- *          x : 10
- *      }
- * }, 2)
- * ```
- *
- * ## Easing with [easings](http://easings.net "easings.net")
- * ```js
- * _r.animations.animate('mesh.000', {
- *      position : {
- *          x : 10
- *      }
- * }, {
- *      duration : 2,
- *      easing : "easeOutQuint"
- * })
- * ```
- * @see {@link IAnimationOption}
- * ## Shortcuts
- * ### On elements
- * ```js
- * _r("mesh.*").animate(position : {
- *          x : 10
- * }, 2)
- * ```
- *
- *
- */
-declare module _r.animations {
-    /**
-     * Map http://easings.net to Babylon.EasingFunction
-     * @param easing
-     * @returns {any}
-     */
-    function getEasingFunction(easing: string): BABYLON.EasingFunction;
-    /**
-     * Guess the BABYLON.Animation.ANIMATIONTYPE from an element's property
-     * @param element
-     * @param property
-     * @returns {any}
-     */
-    function getAnimationType(element: any, property: string): number;
-    class Animation {
-        name: string;
-        property: string;
-        value: any;
-        private _fps;
-        elements: Elements;
-        constructor(name: string, elements: string | Elements, property: string, value: any);
-        static getEasingFunction(easing: string): BABYLON.EasingFunction;
-        static getAnimationType(element: any, property: string): number;
-        easing: string;
-        animationType: string;
-        loopMode: string | boolean;
-        keys: Array<any>;
-        duration: number;
-        fps: number;
-        private getLoopMode();
-        private _getAnimationType();
-        private prepareAnimation();
-        clip(from: number, to: number): void;
-        play(): void;
-        finish(): void;
-    }
-    interface IAnimationOption {
-        duration: number;
-        fps?: number;
-        easing?: string;
-        speedRatio?: number;
-        onAnimationEnd?: Function;
-        name?: string;
-        keys?: any[];
-        from: number;
-        to?: number;
-        loop: boolean;
-    }
-    function animate(nodes: string, properties: any, options?: number | IAnimationOption): Elements;
-}
-declare module _r {
-    function animate(...params: any[]): void;
-}
 declare module _r.camera {
     function toPanCamera(camera: string | BABYLON.Camera): BABYLON.Camera;
     function isActive(camera: BABYLON.Camera | string): string | boolean;
@@ -405,4 +259,148 @@ declare module _r.texture {
      * @returns {BABYLON.VideoTexture}
      */
     function video(params: IVideoTexture): BABYLON.VideoTexture;
+}
+/**
+ *
+ * # Examples
+ * ## 2 seconds animation
+ * ```js
+ * _r.animate([
+ *      {
+ *          'mesh.000' : {
+ *              position : {
+ *                  x : 10
+ *          }
+ *      },
+ *      {
+ *          'mesh.001' : {
+ *              position : {
+ *                  y : 10
+ *              }
+ *          }
+ *      }
+ * }, 5)
+ *
+ * _r.animate('mesh.000', {
+ *      position : {
+ *          x : 10
+ *      }
+ * }, 2)
+ * ```
+ *
+ * ## Easing with [easings](http://easings.net "easings.net")
+ * ```js
+ * _r.animations.animate('mesh.000', {
+ *      position : {
+ *          x : 10
+ *      }
+ * }, {
+ *      duration : 2,
+ *      easing : "easeOutQuint"
+ * })
+ * ```
+ * @see {@link IAnimationOption}
+ * ## Shortcuts
+ * ### On elements
+ * ```js
+ * _r("mesh.*").animate(position : {
+ *          x : 10
+ * }, 2)
+ * ```
+ *
+ *
+ */
+declare module _r.animations.old {
+    /**
+     * Map http://easings.net to Babylon.EasingFunction
+     * @param easing
+     * @returns {any}
+     */
+    function getEasingFunction(easing: string): BABYLON.EasingFunction;
+    /**
+     * Guess the BABYLON.Animation.ANIMATIONTYPE from an element's property
+     * @param element
+     * @param property
+     * @returns {any}
+     */
+    function getAnimationType(element: any, property: string): number;
+    class Animation {
+        name: string;
+        property: string;
+        value: any;
+        private _fps;
+        elements: Elements;
+        constructor(name: string, elements: string | Elements, property: string, value: any);
+        static getEasingFunction(easing: string): BABYLON.EasingFunction;
+        static getAnimationType(element: any, property: string): number;
+        easing: string;
+        animationType: string;
+        loopMode: string | boolean;
+        keys: Array<any>;
+        duration: number;
+        fps: number;
+        private getLoopMode();
+        private _getAnimationType();
+        private prepareAnimation();
+        clip(from: number, to: number): void;
+        play(): void;
+        finish(): void;
+    }
+    interface IAnimationOption {
+        duration: number;
+        fps?: number;
+        easing?: string;
+        speedRatio?: number;
+        onAnimationEnd?: Function;
+        name?: string;
+        keys?: any[];
+        from: number;
+        to?: number;
+        loop: boolean;
+    }
+    function animate(nodes: string, properties: any, options?: number | IAnimationOption): Elements;
+}
+declare module _r {
+    class Animation {
+        elements: any;
+        property: string;
+        value: any;
+        animationType: number;
+        keys: Array<any>;
+        easing: string;
+        fps: number;
+        duration: number;
+        speedRatio: number;
+        enableBlending: boolean;
+        blendingSpeed: number;
+        animatables: Array<BABYLON.Animatable>;
+        onAnimationEnd: () => void;
+        onAnimationStart: () => void;
+        _onAnimationFrame: (frame: number, callback: () => void) => void;
+        constructor(elements: any, property: string, value: any);
+        getKeys(element: any): any[];
+        private onComplete();
+        play(from?: number, to?: number): void;
+        pause(): void;
+        restart(): void;
+        stop(): void;
+        reset(): void;
+        static getEasingFunction(easing: string): BABYLON.EasingFunction;
+    }
+    interface IAnimation {
+        fps?: number;
+        duration?: number;
+        speedRatio?: number;
+        name?: string;
+        from?: number;
+        to?: number;
+        loopMode?: boolean | number;
+        easing?: string;
+        step: (frame) => void;
+        progress: (promise, progress, remaining) => void;
+        complete: () => void;
+        start: () => void;
+        keys: Array<any>;
+    }
+    function animate(elements: string | Elements, properties: any, options?: number | IAnimation | any): void;
 }

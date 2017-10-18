@@ -8,6 +8,7 @@ module _r {
         public speedRatio : number;
         public enableBlending : boolean;
         public blendingSpeed : number;
+        public loop : string | number | boolean;
         public animatables : Array<BABYLON.Animatable>;
         public onAnimationEnd : () => void;
         public onAnimationStart : () => void;
@@ -108,17 +109,40 @@ module _r {
             }
         }
 
+        getLoopMode() : number {
+            if(_r.is.Boolean(this.loop)) {
+                if(this.loop) {
+                    return BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE;
+                }
+            }
+            if(_r.is.String(this.loop)) {
+                if((<string> this.loop).toLowerCase() == "cycle") {
+                    return BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE;
+                }
+                if((<string> this.loop).toLocaleLowerCase() == "relative" || (<string> this.loop).toLocaleLowerCase() == "pingpong") {
+                    return BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE;
+                }
+            }
+            else {
+                if(_r.is.Number(this.loop)) {
+                    return <number> this.loop;
+                }
+            }
+            return BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT;
+        }
+
 
 
         play(from? : number, to? : number) {
             var self = this;
             var started = false;
             var completed = false;
+            var loop = this.getLoopMode();
             this.elements.each(function(element) {
                 if(!element.animations) {
                     element.animations = [];
                 }
-                var animation = new BABYLON.Animation("_r.animation" + element.animations.length, self.property, self.fps, self.animationType);
+                var animation = new BABYLON.Animation("_r.animation" + element.animations.length, self.property, self.fps, self.animationType, loop);
                 var keys = self.getKeys(element);
                 animation.setKeys(keys);
                 if(self.enableBlending == true) {
@@ -127,14 +151,16 @@ module _r {
                         animation.blendingSpeed = self.blendingSpeed;
                     }
                 }
+
                 if(self.easing) {
                     animation.setEasingFunction(_r.Animation.getEasingFunction(self.easing));
                 }
                 element.animations.push(animation);
+
                 if(!self.animatables) {
                     self.animatables = [];
                 }
-                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, false, self.speedRatio);
+                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, true, self.speedRatio);
                 //_r.trigger(_r.scene, 'animationStart', animatable);
                 animatable.onAnimationEnd = self.onComplete;
                 self.animatables.push(animatable);
@@ -265,7 +291,7 @@ module _r {
 
 
 
-    export function animate(elements : string | Elements, properties : any, options? : number | IAnimation | any) {
+    export function animate(elements : string | Elements, properties : any, options? : number | IAnimation | any)  {
         Object.getOwnPropertyNames(properties).forEach(function(property){
             var animation = new _r.Animation(elements, property, properties[property]);
             if(_r.is.Number(options)) {

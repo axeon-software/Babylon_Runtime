@@ -11,16 +11,13 @@ module _r {
         el.each(function(_element) {
             if(!_element.hasOwnProperty(expando)) {
                 _element[expando] = _cache.length;
-                _cache[_element[expando]] = [];
+                _cache[_element[expando]] = {};
             }
-            if(key) {
-                if(value) {
+            if(key != null) {
+                if(value != null) {
                     _cache[_element[expando]][key] = value;
                 }
                 else {
-                    if(!_cache[_element[expando]][key]) {
-                        _cache[_element[expando]][key] = {}
-                    }
                     result = _cache[_element[expando]][key];
                     return false; // break the each.
                 }

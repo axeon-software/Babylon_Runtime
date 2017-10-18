@@ -177,7 +177,7 @@ module _r {
         }
 
         animate(properties : any, options? : any) : void{
-            return _r.animate(this, properties, options);
+            _r.animate(this, properties, options);
         }
 
         fadeOut(options : any[]) {
@@ -197,13 +197,12 @@ module _r {
 
         stop(animationName? : string) : Elements{
             this.each(function(element) {
-                _r.scene.stopAnimation(element, animationName);
+                var animatable = _r.scene.getAnimatableByTarget(element);
+                if(animatable) {
+                    animatable.stop();
+                }
             });
             return this;
-        }
-
-        finish()  {
-
         }
 
         each(callback: Function) : Elements{

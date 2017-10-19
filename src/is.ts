@@ -84,4 +84,8 @@ module _r.is {
         var extension = split[split.length - 1].trim();
         return extension == 'runtime' || extension == 'patch' || extension == 'js';
     }
+
+    export function Boolean(expr : any) : boolean {
+        return typeof expr == 'boolean';
+    }
 }

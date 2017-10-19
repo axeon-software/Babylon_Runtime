@@ -293,7 +293,6 @@ module _r.camera {
             catch (ex) {
                 console.error('_r::setActiveCamera::OnActivate', ex);
             }
-
         }
         var deactivated = _r.scene.activeCamera;
         _r.scene.activeCamera = _camera;

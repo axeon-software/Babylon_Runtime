@@ -274,6 +274,7 @@ module _r.camera {
         console.info('setActiveCamera : ' + _camera.name);
         if (_r.scene.activeCamera) {
             _r.scene.activeCamera.detachControl(_r.canvas);
+            _r.trigger(_r.scene.activeCamera, "deactivate");
             if(_r.scene.activeCamera.hasOwnProperty("OnDeactivate")) {
                 try {
                     _r.scene.activeCamera["OnDeactivate"].call(_r.scene.activeCamera);
@@ -283,6 +284,7 @@ module _r.camera {
                 }
             }
         }
+        _r.trigger(_camera, 'activate');
         if(_camera.hasOwnProperty("OnActivate")) {
             try {
                 _camera["OnActivate"].call( _camera);
@@ -293,8 +295,11 @@ module _r.camera {
             }
 
         }
+        var deactivated = _r.scene.activeCamera;
         _r.scene.activeCamera = _camera;
+        _r.trigger(deactivated, "deactivated");
         _r.scene.activeCamera.attachControl(_r.canvas);
+        _r.trigger(_r.scene.activeCamera, "activated");
     }
 
     _r.override(

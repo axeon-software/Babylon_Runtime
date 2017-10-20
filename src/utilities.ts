@@ -63,7 +63,20 @@ module _r {
     /** Helpers **/
     export function color(...parameters : any[]) {
         if(parameters.length == 1) {
-            return BABYLON.Color3.FromHexString(parameters[0]);
+            if(parameters[0] instanceof BABYLON.Color3){
+                return parameters[0];
+            }
+
+            if(_r.is.HexColor(parameters[0])) {
+                return BABYLON.Color3.FromHexString(parameters[0]);
+            }
+
+            if(parameters[0].hasOwnProperty("r") && parameters[0].hasOwnProperty("g") && parameters[0].hasOwnProperty("b")) {
+                return new BABYLON.Color3(parameters[0]["r"], parameters[0]["g"], parameters[0]["b"]);
+            }
+            console.warn("_r.color::not a valid color", parameters[0]);
+
+
         }
         else {
             if(parameters.length == 3) {

@@ -51,7 +51,6 @@ module _r.patchFile {
             });
         }
         else {
-
             Object.getOwnPropertyNames(_patch).forEach(function(selector){
                 var value = _patch[selector];
                 _r.select(selector).patch(value);

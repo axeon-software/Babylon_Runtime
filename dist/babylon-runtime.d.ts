@@ -7,10 +7,50 @@ declare module _r {
     function patch(...params: any[]): Elements;
 }
 declare module _r {
-    /** Helpers **/
-    function color(...parameters: any[]): any;
-    function showDebug(): void;
-    function hideDebug(): void;
+    class Animation {
+        elements: any;
+        property: string;
+        value: any;
+        animationType: number;
+        keys: Array<any>;
+        easing: string;
+        fps: number;
+        duration: number;
+        speedRatio: number;
+        enableBlending: boolean;
+        blendingSpeed: number;
+        loop: string | number | boolean;
+        animatables: Array<BABYLON.Animatable>;
+        onAnimationEnd: () => void;
+        onAnimationStart: () => void;
+        _onAnimationFrame: (frame: number, callback: () => void) => void;
+        constructor(elements: any, property: string, value: any);
+        getKeys(element: any): any[];
+        private onComplete();
+        getLoopMode(): number;
+        play(from?: number, to?: number): void;
+        pause(): void;
+        restart(): void;
+        stop(): void;
+        reset(): void;
+        static getEasingFunction(easing: string): BABYLON.EasingFunction;
+    }
+    interface IAnimation {
+        fps?: number;
+        duration?: number;
+        speedRatio?: number;
+        name?: string;
+        from?: number;
+        to?: number;
+        loopMode?: boolean | number;
+        easing?: string;
+        step: (frame) => void;
+        progress: (promise, progress, remaining) => void;
+        complete: () => void;
+        start: () => void;
+        keys: Array<any>;
+    }
+    function animate(elements: string | Elements, properties: any, options?: number | IAnimation | any): void;
 }
 declare module _r.camera {
     function toPanCamera(camera: string | BABYLON.Camera): BABYLON.Camera;
@@ -63,7 +103,6 @@ declare module _r {
         fadeIn(options: any[]): void;
         fadeTo(value: number, options: any): void;
         stop(animationName?: string): Elements;
-        finish(): void;
         each(callback: Function): Elements;
         map(func: (obj: any) => any): Elements;
         filter(func: (obj: any) => boolean): Elements;
@@ -108,6 +147,7 @@ declare module _r.is {
     function Material(x: any): boolean;
     function Texture(x: any): boolean;
     function PatchFile(expr: string): boolean;
+    function Boolean(expr: any): boolean;
 }
 declare module _r {
     var scene: any;
@@ -146,9 +186,23 @@ declare module _r.library {
 declare module _r.light {
     interface IHemisphericLight {
         name: string;
-        direction: any;
+        direction?: any;
     }
     function hemispheric(params: IHemisphericLight): BABYLON.HemisphericLight;
+    interface IPointLight {
+        name: string;
+        direction?: any;
+        diffuse?: any;
+        specular?: any;
+    }
+    function point(params: IPointLight): BABYLON.PointLight;
+    interface IDirectionalLight {
+        name: string;
+        direction?: any;
+        diffuse?: any;
+        specular?: any;
+    }
+    function directional(params: IDirectionalLight): BABYLON.DirectionalLight;
 }
 declare module _r {
     function assignMaterial(...args: any[]): void;
@@ -260,147 +314,14 @@ declare module _r.texture {
      */
     function video(params: IVideoTexture): BABYLON.VideoTexture;
 }
-/**
- *
- * # Examples
- * ## 2 seconds animation
- * ```js
- * _r.animate([
- *      {
- *          'mesh.000' : {
- *              position : {
- *                  x : 10
- *          }
- *      },
- *      {
- *          'mesh.001' : {
- *              position : {
- *                  y : 10
- *              }
- *          }
- *      }
- * }, 5)
- *
- * _r.animate('mesh.000', {
- *      position : {
- *          x : 10
- *      }
- * }, 2)
- * ```
- *
- * ## Easing with [easings](http://easings.net "easings.net")
- * ```js
- * _r.animations.animate('mesh.000', {
- *      position : {
- *          x : 10
- *      }
- * }, {
- *      duration : 2,
- *      easing : "easeOutQuint"
- * })
- * ```
- * @see {@link IAnimationOption}
- * ## Shortcuts
- * ### On elements
- * ```js
- * _r("mesh.*").animate(position : {
- *          x : 10
- * }, 2)
- * ```
- *
- *
- */
-declare module _r.animations.old {
-    /**
-     * Map http://easings.net to Babylon.EasingFunction
-     * @param easing
-     * @returns {any}
-     */
-    function getEasingFunction(easing: string): BABYLON.EasingFunction;
-    /**
-     * Guess the BABYLON.Animation.ANIMATIONTYPE from an element's property
-     * @param element
-     * @param property
-     * @returns {any}
-     */
-    function getAnimationType(element: any, property: string): number;
-    class Animation {
-        name: string;
-        property: string;
-        value: any;
-        private _fps;
-        elements: Elements;
-        constructor(name: string, elements: string | Elements, property: string, value: any);
-        static getEasingFunction(easing: string): BABYLON.EasingFunction;
-        static getAnimationType(element: any, property: string): number;
-        easing: string;
-        animationType: string;
-        loopMode: string | boolean;
-        keys: Array<any>;
-        duration: number;
-        fps: number;
-        private getLoopMode();
-        private _getAnimationType();
-        private prepareAnimation();
-        clip(from: number, to: number): void;
-        play(): void;
-        finish(): void;
-    }
-    interface IAnimationOption {
-        duration: number;
-        fps?: number;
-        easing?: string;
-        speedRatio?: number;
-        onAnimationEnd?: Function;
-        name?: string;
-        keys?: any[];
-        from: number;
-        to?: number;
-        loop: boolean;
-    }
-    function animate(nodes: string, properties: any, options?: number | IAnimationOption): Elements;
+declare module _r.to {
+    function Color(expr: any): BABYLON.Color3 | BABYLON.Color4;
+    function HexString(expr: any): string;
+    function Vector3(expr: any): BABYLON.Vector3;
 }
 declare module _r {
-    class Animation {
-        elements: any;
-        property: string;
-        value: any;
-        animationType: number;
-        keys: Array<any>;
-        easing: string;
-        fps: number;
-        duration: number;
-        speedRatio: number;
-        enableBlending: boolean;
-        blendingSpeed: number;
-        animatables: Array<BABYLON.Animatable>;
-        onAnimationEnd: () => void;
-        onAnimationStart: () => void;
-        _onAnimationFrame: (frame: number, callback: () => void) => void;
-        constructor(elements: any, property: string, value: any);
-        getKeys(element: any): any[];
-        private onComplete();
-        play(from?: number, to?: number): void;
-        pause(): void;
-        restart(): void;
-        stop(): void;
-        reset(): void;
-        static getEasingFunction(easing: string): BABYLON.EasingFunction;
-    }
-    interface IAnimation {
-        fps?: number;
-        duration?: number;
-        speedRatio?: number;
-        name?: string;
-        from?: number;
-        to?: number;
-        loopMode?: boolean | number;
-        easing?: string;
-        step: (frame) => void;
-        progress: (promise, progress, remaining) => void;
-        complete: () => void;
-        start: () => void;
-        keys: Array<any>;
-    }
-    function animate(elements: string | Elements, properties: any, options?: number | IAnimation | any): void;
+    /** Helpers **/
+    function color(...parameters: any[]): any;
+    function showDebug(): void;
+    function hideDebug(): void;
 }

@@ -34,8 +34,9 @@ module _r {
                             target[key] = extend(target[key], nextSource[key]);
                         }
                         else {
-                            if(target[key] != null && _r.is.Color(target[key]) && _r.is.HexColor(nextSource[key])) {
-                                target[key] = BABYLON.Color3.FromHexString(nextSource[key]);
+                            // TODO _r.to.Color()
+                            if(target[key] != null && _r.is.Color(target[key])) {
+                                target[key] = _r.to.Color(nextSource[key]);
                             }
                             else {
                                 if(_r.is.Function(nextSource[key])) {

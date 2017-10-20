@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>_r.light</title>
+    <script src="../../assets/js/babylon.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
+</head>
+<body>
+<script>
+    // see http://www.babylonjs-playground.com/?06
+    _r.launch({
+        scene : function() {
+            _r.patch([
+                {
+                    "camera::arcrotate" : {
+                        name : "Camera",
+                        alpha : 0,
+                        beta : 0,
+                        radius : 10,
+                        position : {
+                            x : -10,
+                            y : 10,
+                            z : 0
+                        }
+                    }
+                }, {
+                    "light::point" : {
+                        name : "Omni0",
+                        direction : {
+                            y : 10
+                        },
+                        diffuse : 'rgb(255, 0, 0)',
+                        specular : 'rgb(255, 0, 0)'
+                    }
+                }, {
+                    "light::point" : {
+                        name : "Omni1",
+                        direction : {
+                            y : -10
+                        },
+                        diffuse : 'rgb(0, 255, 0)',
+                        specular : {
+                            r : 0,
+                            g : 1,
+                            b : 0
+                        }
+                    }
+                }, {
+                    "light::point" : {
+                        name : "Omni2",
+                        direction : {
+                            x : 10
+                        },
+                        diffuse : {
+                            r : 0,
+                            b : 1,
+                            g : 0
+                        },
+                        specular : {
+                            r : 0,
+                            g : 0,
+                            b : 1
+
+                        }
+                    }
+                }, {
+                    "light::directional" : {
+                        name : "Dir0",
+                        direction : {
+                            x : 1,
+                            y : -1
+                        },
+                        diffuse : {
+                            r : 1,
+                            g : 1,
+                            b : 1
+                        },
+                        specular : {
+                            r : 1,
+                            g : 1,
+                            b : 1
+                        }
+                    }
+                }, {
+                    "mesh::sphere" : {
+                        name : "Sphere0",
+                        segments : 16,
+                        diameter : 0.5,
+                        material : {
+                            "material::standard" : {
+                                name : "red",
+                                diffuseColor : "#000000",
+                                specularColor : '#000000',
+                                emissiveColor : {
+                                    r : 1
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    "mesh::sphere" : {
+                        name : "Sphere1",
+                        segments : 16,
+                        diameter : 0.5,
+                        material : {
+                            "material::standard" : {
+                                name : "green",
+                                diffuseColor : "#000000",
+                                specularColor : '#000000',
+                                emissiveColor : {
+                                    r : 0,
+                                    g : 1,
+                                    b : 0
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    "mesh::sphere" : {
+                        name : "Sphere2",
+                        segments : 16,
+                        diameter : 0.5,
+                        material : {
+                            "material::standard" : {
+                                name : "blue",
+                                diffuseColor : "#000000",
+                                specularColor : '#000000',
+                                emissiveColor : {
+                                    r : 0,
+                                    g : 0,
+                                    b : 1
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    "mesh::sphere" : {
+                        name : "Sphere",
+                        segments : 16,
+                        diameter : 3,
+                        material : {
+                            "material::standard" : {
+                                name : "kosh",
+                                diffuseColor : {
+                                    r : 1,
+                                    g : 1,
+                                    b : 1,
+                                    a : 0
+                                }
+                            }
+                        }
+                    }
+                }
+
+            ])
+        },
+        activeCamera : "Camera"
+    });
+
+
+    _r.ready(function() {
+        var alpha = 0;
+        _r.scene.beforeRender = function() {
+            _r.patch([
+                {
+                    "Omni0, Sphere0": {
+                        position: {
+                            x: 10 * Math.sin(alpha),
+                            y: 0,
+                            z: 10 * Math.cos(alpha)
+                        }
+                    }
+                },
+                {
+                    "Omni1, Sphere1": {
+                        position: {
+                            x: 10 * Math.sin(alpha),
+                            y: 0,
+                            z: -10 * Math.cos(alpha)
+                        }
+                    }
+                },
+                {
+                    "Omni2, Sphere2": {
+                        position: {
+                            x: 10 * Math.cos(alpha),
+                            y: 0,
+                            z: 10 * Math.sin(alpha)
+                        }
+                    }
+                }
+            ]);
+            alpha += 0.01;
+        }
+    })
+
+</script>
+</body>
+</html>

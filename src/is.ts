@@ -41,7 +41,7 @@ module _r.is {
     }
 
     export function Color(x : any) : boolean {
-        return HexColor(x) || x instanceof BABYLON.Color3 || x instanceof BABYLON.Color4;
+        return HexColor(x) || x instanceof BABYLON.Color3 || x instanceof BABYLON.Color4 || (x.hasOwnProperty('r') || x.hasOwnProperty('g') || x.hasOwnProperty('b'));
     }
 
     export function HexColor(x : any) : boolean{

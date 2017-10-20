@@ -60,10 +60,17 @@ module _r {
             deferred.resolve(_r.scene);
         }
         else {
-            BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function(_scene) {
-                _r.scene = _scene;
+            if(scene) {
+                BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function(_scene) {
+                    _r.scene = _scene;
+                    deferred.resolve(_r.scene);
+                }, progressLoading);
+            }
+            else {
+                _r.scene = new BABYLON.Scene(_r.engine);
                 deferred.resolve(_r.scene);
-            }, progressLoading);
+            }
+
         }
         return deferred.promise;
     }

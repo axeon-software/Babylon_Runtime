@@ -2,6 +2,7 @@
 declare module _r {
     var overrides: any[];
     function override(properties: Array<string>, callback: (target, source, property) => any): void;
+    function isOverrided(target: any, source: any, property: string): boolean;
     function extend(...params: any[]): any;
     function merge(target: any, source: any, excluded?: Array<string>): any;
     function patch(...params: any[]): Elements;
@@ -126,7 +127,7 @@ declare module _r {
 declare module _r {
     function on(elements: any, event: string, handler: (...args: any[]) => void, repeat?: boolean): Elements;
     function one(elements: any, type: string, handler: (args: any) => void): Elements;
-    function off(elements: any, type: string, handler?: (args: any) => void): Elements;
+    function off(elements: any, event: string, handler?: (args: any) => void): Elements;
     function trigger(elements: any, event: string, data?: any): Elements;
 }
 declare module _r.is {
@@ -148,6 +149,12 @@ declare module _r.is {
     function Texture(x: any): boolean;
     function PatchFile(expr: string): boolean;
     function Boolean(expr: any): boolean;
+    /**
+     * Check is a javascript Object is a DOM Object
+     * @param expr
+     * @constructor
+     */
+    function DOM(expr: any): boolean;
 }
 declare module _r {
     var scene: any;
@@ -318,6 +325,7 @@ declare module _r.to {
     function Color(expr: any): BABYLON.Color3 | BABYLON.Color4;
     function HexString(expr: any): string;
     function Vector3(expr: any): BABYLON.Vector3;
+    function ScreenVector(position: any): void;
 }
 declare module _r {
     /** Helpers **/

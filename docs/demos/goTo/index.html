@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>_r.camera.goTo</title>
+    <script src="../../assets/js/babylon.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
+</head>
+<body>
+<script>
+    _r.launch({
+        scene : "scene.babylon",
+        assets : "assets/",
+        activeCamera: "Camera.FPV"
+    });
+
+    _r.ready(function() {
+        console.group("hotspots details");
+        console.log("each mesh :")
+        _r('hotspot*:mesh').each(function(mesh) {
+            console.log(mesh.name);
+        });
+        console.log("has an associated camera :")
+        _r('*hotspot*:camera').each(function(camera) {
+            console.log(camera.name);
+        });
+        console.log('so for each hotspot.PI.00X we have a ghost camera cam.hotspot.PI.00X')
+        console.groupEnd();
+    });
+
+    _r.ready(function() {
+        _r('hotspot*:mesh').on('OnPickTrigger', function() {
+            console.group("click on " + this.name);
+            var ghost = _r('cam.' + this.name)[0];
+            console.log("ghost cam : " + ghost.name);
+            _r.camera.goTo(ghost.position, ghost.rotation);
+            console.groupEnd();
+        });
+    })
+</script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>_r.animate</title>
     <script src="../../assets/js/babylon.js"></script>
-    <script src="../../assets/js/babylon-runtime.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
 </head>
 <body>
 <script>
@@ -32,12 +32,48 @@
                     }
                 },
                 {
-                    "mesh::sphere": {
+                    "camera::free" : {
+                        name: "camera2",
+                        position: {
+                            x: 0,
+                            y: 5,
+                            z: -10
+                        },
+                        target: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }
+                },
+                {
+                    "mesh::box": {
                         name: "sphere1",
-                        segments: 16,
-                        diameter: 2,
+                        size: 2,
                         position: {
                             y: 1
+                        },
+                        material : {
+                            "material::standard" : {
+                                name : "mat1",
+                                diffuseColor : "#ff0000",
+                                reflectionTexture : {
+                                    "texture.cube" : {
+                                        rootUrl : '../../assets/cubemap/',
+                                        coordinatesMode : 'SPHERICAL_MODE'
+                                    }
+                                },
+                                "emissiveColor": "#ffffff"
+                            }
+                        }
+                    }
+                },
+                {
+                    "mesh::box": {
+                        name: "sphere2",
+                        size: 2,
+                        position: {
+                            y: 5
                         },
                         material : {
                             "material::standard" : {
@@ -85,12 +121,29 @@
         },
         activeCamera : "camera1"
     });
-
     _r.ready(function() {
-        var animation = new _r.animations.Animation("anim1", "sphere1", "position", { x : 10});
-        animation.duration = 3;
-        _r("sphere1").on("OnPickTrigger", function() {
-            animation.play();
+        _r("*:mesh").on("OnPickTrigger", function(e) {
+            _r("sphere1, sphere2").animate({
+                position : { y : 3},
+                rotation : { y : 1}
+            }, {
+                duration : 2,
+                loop : true // can be true | false | 'cycle' | 'relative' etc;
+            });
+            _r.camera.activate("camera2");
+        });
+
+        _r("camera1, camera2").on("deactivate", function() {
+            console.log(this.name + " deactivate");
+        });
+        _r("camera1, camera2").on("deactivated", function() {
+            console.log(this.name + " deactivated");
+        });
+        _r("camera1, camera2").on("activate", function() {
+            console.log(this.name + " activate");
+        });
+        _r("camera1, camera2").on("activated", function() {
+            console.log(this.name + " activated");
         });
     });
 </script>

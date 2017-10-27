@@ -13,14 +13,18 @@
             _r.patch([
                 {
                     "scene" : {
-                        clearColor : _r.color(1, 0, 0, 0.4)
+                        clearColor : {
+                            r : 1,
+                            g : 0,
+                            b : 0,
+                            a : 0.4
+                        }
                     }
                 },
                 {
                     "camera::free" : {
                         name: "camera1",
                         position: {
-                            x: 0,
                             y: 5,
                             z: -10
                         },

@@ -1,0 +1,30 @@
+[
+    {
+        "scene":
+        {
+            "ambientColor": "#ffffff"
+        }
+    },
+    {
+        "camera.FPV":
+        {
+            "speed": .08,
+            "fov": 1.2,
+            "position":
+                {
+                    "x": -2.241,
+                    "z": .599
+                },
+            "rotation":
+                {
+                    "x": .092,
+                    "y": -9.888
+                }
+        }
+    },
+    {
+        "tableau.000" : {
+            dragAlongMesh : "mur.*"
+        }
+    }
+]

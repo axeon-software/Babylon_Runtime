@@ -3254,6 +3254,28 @@ var _r;
         });
     }
     _r.override = override;
+    function isOverrided(target, source, property) {
+        for (var i = 0; i < _r.overrides.length; i++) {
+            if (_r.overrides[i] instanceof RegExp && _r.overrides[i].test(property)) {
+                var res = _r.overrides[i].call(target, source, property);
+                if (res) {
+                    target = res;
+                }
+                return true;
+            }
+            else {
+                if (_r.overrides[i] == property) {
+                    var res = _r.overrides[i].call(target, source, property);
+                    if (res) {
+                        target = res;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    _r.isOverrided = isOverrided;
     function extend() {
         var params = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -3279,13 +3301,17 @@ var _r;
                     }
                     else {
                         if (_r.is.PlainObject(nextSource[key])) {
-                            if (target[key] == null) {
-                                target[key] = {};
+                            if (_r.is.Color(nextSource[key])) {
+                                target[key] = _r.to.Color(nextSource[key]);
                             }
-                            target[key] = extend(target[key], nextSource[key]);
+                            else {
+                                if (target[key] == null) {
+                                    target[key] = {};
+                                }
+                                target[key] = extend(target[key], nextSource[key]);
+                            }
                         }
                         else {
-                            // TODO _r.to.Color()
                             if (target[key] != null && _r.is.Color(target[key])) {
                                 target[key] = _r.to.Color(nextSource[key]);
                             }
@@ -3359,6 +3385,7 @@ var _r;
             this.duration = 0.4;
             this.speedRatio = 1;
             this.elements = _r.select(elements);
+            this.loop = false;
             var element = _r.select(elements)[0];
             if (_r.is.Vector2(element[property])) {
                 this.animationType = BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
@@ -3448,7 +3475,7 @@ var _r;
         Animation.prototype.getLoopMode = function () {
             if (_r.is.Boolean(this.loop)) {
                 if (this.loop) {
-                    return BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE;
+                    return BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT;
                 }
             }
             if (_r.is.String(this.loop)) {
@@ -3491,7 +3518,7 @@ var _r;
                 if (!self.animatables) {
                     self.animatables = [];
                 }
-                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, true, self.speedRatio);
+                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, (self.loop == false) ? false : true, self.speedRatio);
                 //_r.trigger(_r.scene, 'animationStart', animatable);
                 animatable.onAnimationEnd = self.onComplete;
                 self.animatables.push(animatable);
@@ -3962,12 +3989,7 @@ var _r;
                 return false; // break the each.
             }
         });
-        if (result) {
-            return result;
-        }
-        else {
-            return el;
-        }
+        return result;
     }
     _r.data = data;
     _r.override(['data'], function (target, source, property) {
@@ -4030,7 +4052,8 @@ var _r;
         var DragDrop = (function () {
             function DragDrop(ground) {
                 this.ground = ground;
-                var scene = this.ground.getScene();
+                this.elements = _r.select(ground);
+                var scene = _r.scene;
                 var canvas = scene.getEngine().getRenderingCanvas();
                 var self = this;
                 var pointerdown = function (evt) {
@@ -4052,23 +4075,40 @@ var _r;
                 };
             }
             DragDrop.prototype.getGroundPosition = function (evt) {
-                var scene = this.ground.getScene();
+                var scene = _r.scene;
                 var ground = this.ground;
-                var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) { return mesh == ground; });
+                var self = this;
+                var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) {
+                    self.elements.each(function (element) {
+                        if (mesh == element) {
+                            return true;
+                        }
+                    });
+                    return false;
+                    //return mesh == ground;
+                });
                 if (pickinfo.hit) {
                     return pickinfo.pickedPoint;
                 }
                 return null;
             };
+            DragDrop.prototype.isInElements = function (mesh) {
+                this.elements.each(function (element) {
+                    if (mesh == element) {
+                        return true;
+                    }
+                });
+                return false;
+            };
             DragDrop.prototype.onPointerDown = function (evt) {
                 if (evt.button !== 0) {
                     return;
                 }
-                var scene = this.ground.getScene();
-                // check if we are under a mesh
-                var ground = this.ground;
+                var scene = _r.scene;
+                var self = this;
                 var pickInfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) {
-                    return mesh['draggable'] && mesh !== ground;
+                    console.log('onPointerDown', mesh, self.isInElements(mesh));
+                    return mesh['dragAlongMesh'] !== null && self.isInElements(mesh);
                 });
                 if (pickInfo.hit) {
                     this.currentMesh = pickInfo.pickedMesh;
@@ -4103,7 +4143,11 @@ var _r;
             return DragDrop;
         }());
         _r.override(["dragAlongMesh"], function (target, source, property) {
-            new DragDrop(_r.select(source[property])[0]);
+            new DragDrop(source[property]);
+        });
+        _r.override(["drag"], function (target, source, property) {
+            var along = _r.select(source[property]);
+            //var startingPoint;
         });
     })(dragdrop = _r.dragdrop || (_r.dragdrop = {}));
 })(_r || (_r = {}));
@@ -4425,16 +4469,24 @@ var _r;
         'OnKeyDownTrigger',
         'OnKeyUpTrigger'
     ];
+    // TODO
+    var pointerEvents = [
+        'pointermove',
+        'pointerdown',
+        'pointerup',
+        'pointerover',
+        'pointerout',
+        'pointerenter',
+        'pointerleave',
+        'pointercancel',
+    ];
     function on(elements, event, handler, repeat) {
         if (repeat === void 0) { repeat = true; }
         var el = new _r.Elements(elements);
         el.each(function (element) {
-            var _events;
-            if (!_r.data(element, '_events')) {
-                _events = [];
-            }
-            else {
-                _events = _r.data(element, '_events');
+            var _events = _r.data(element, '_events');
+            if (!_events) {
+                _events = {};
             }
             if (!_events[event]) {
                 _events[event] = [];
@@ -4454,10 +4506,23 @@ var _r;
                 });
             }
             else {
-                _events[event].push({
-                    handler: handler,
-                    repeat: repeat
-                });
+                if (_r.is.DOM(element) && pointerEvents.indexOf(event) != -1) {
+                    var listener = function (evt) {
+                        trigger(element, event, evt);
+                    };
+                    element.addEventListener(event, listener, false);
+                    _events[event].push({
+                        handler: handler,
+                        repeat: repeat,
+                        listener: listener
+                    });
+                }
+                else {
+                    _events[event].push({
+                        handler: handler,
+                        repeat: repeat
+                    });
+                }
             }
             _r.data(element, '_events', _events);
         });
@@ -4468,24 +4533,27 @@ var _r;
         return _r.on(elements, type, handler, false);
     }
     _r.one = one;
-    function off(elements, type, handler) {
+    function off(elements, event, handler) {
         var el = new _r.Elements(elements);
         el.each(function (element) {
             var events = _r.data(element, '_events');
-            if (events[type]) {
+            if (events[event]) {
                 if (handler) {
-                    events[type] = events[type].filter(function (_event) {
+                    events[event] = events[event].filter(function (_event) {
                         if (_event.handler.toString() == handler.toString()) {
                             if (_event.action) {
                                 var index = element["actionManager"].actions.indexOf(_event.action);
                                 element["actionManager"].actions.splice(index, 1);
+                            }
+                            if (_event.listener) {
+                                element.removeEventListener(_event, _event.listener);
                             }
                         }
                         return _event.handler.toString() !== handler.toString();
                     });
                 }
                 else {
-                    events[type] = [];
+                    events[event] = [];
                 }
             }
             _r.data(element, '_events', events);
@@ -4498,11 +4566,16 @@ var _r;
         el.each(function (element) {
             var events = _r.data(element, '_events');
             if (_r.is.Array(events[event])) {
-                events[event].forEach(function (event) {
+                events[event].forEach(function (_event) {
                     try {
-                        event.handler.call(element, data);
-                        if (!event.repeat) {
-                            off(element, event, event.handler);
+                        _event.handler.call(element, data);
+                        if (!_event.repeat) {
+                            if (_event.handler) {
+                                off(element, event, _event.handler);
+                            }
+                            else {
+                                off(element, event);
+                            }
                         }
                     }
                     catch (ex) {
@@ -4612,6 +4685,17 @@ var _r;
             return typeof expr == 'boolean';
         }
         is.Boolean = Boolean;
+        /**
+         * Check is a javascript Object is a DOM Object
+         * @param expr
+         * @constructor
+         */
+        function DOM(expr) {
+            // from https://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+            return (typeof HTMLElement === "object" ? expr instanceof HTMLElement :
+                expr && typeof expr === "object" && expr !== null && expr.nodeType === 1 && typeof expr.nodeName === "string");
+        }
+        is.DOM = DOM;
     })(is = _r.is || (_r.is = {}));
 })(_r || (_r = {}));
 var _r;
@@ -5198,7 +5282,6 @@ var _r;
                     var r = expr["r"] || 0;
                     var g = expr["g"] || 0;
                     var b = expr["b"] || 0;
-                    console.log(r, g, b);
                     if (expr["a"]) {
                         return new BABYLON.Color4(r, g, b, expr["a"]);
                     }
@@ -5284,6 +5367,12 @@ var _r;
             return new BABYLON.Vector3(expr['x'] ? expr['x'] : 0, expr['y'] ? expr['y'] : 0, expr['z'] ? expr['z'] : 0);
         }
         to.Vector3 = Vector3;
+        function ScreenVector(position) {
+            var vector = _r.to.Vector3(position);
+            var transform = _r.scene.getTransformMatrix();
+            var viewport = _r.scene.activeCamera.viewport;
+        }
+        to.ScreenVector = ScreenVector;
     })(to = _r.to || (_r.to = {}));
 })(_r || (_r = {}));
 var _r;
@@ -5338,6 +5427,8 @@ var _r;
         }
     });
     /** Helpers **/
+    // TODO
+    // DEPRECATED : _r.to.Color(args)
     function color() {
         var parameters = [];
         for (var _i = 0; _i < arguments.length; _i++) {

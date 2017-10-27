@@ -88,4 +88,17 @@ module _r.is {
     export function Boolean(expr : any) : boolean {
         return typeof expr == 'boolean';
     }
+
+    /**
+     * Check is a javascript Object is a DOM Object
+     * @param expr
+     * @constructor
+     */
+    export function DOM(expr : any) : boolean {
+        // from https://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+        return (
+            typeof HTMLElement === "object" ? expr instanceof HTMLElement : //DOM2
+                expr && typeof expr === "object" && expr !== null && expr.nodeType === 1 && typeof expr.nodeName==="string"
+        );
+    }
 }

@@ -19,6 +19,7 @@ module _r {
             this.duration = 0.4;
             this.speedRatio = 1;
             this.elements = _r.select(elements);
+            this.loop = false;
             var element = _r.select(elements)[0];
             if(_r.is.Vector2(element[property])) {
                 this.animationType = BABYLON.Animation.ANIMATIONTYPE_VECTOR2;
@@ -112,7 +113,7 @@ module _r {
         getLoopMode() : number {
             if(_r.is.Boolean(this.loop)) {
                 if(this.loop) {
-                    return BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE;
+                    return BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT;
                 }
             }
             if(_r.is.String(this.loop)) {
@@ -156,11 +157,14 @@ module _r {
                     animation.setEasingFunction(_r.Animation.getEasingFunction(self.easing));
                 }
                 element.animations.push(animation);
-
+                
                 if(!self.animatables) {
                     self.animatables = [];
                 }
-                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, true, self.speedRatio);
+
+                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, (self.loop == false) ? false : true, self.speedRatio);
+
+
                 //_r.trigger(_r.scene, 'animationStart', animatable);
                 animatable.onAnimationEnd = self.onComplete;
                 self.animatables.push(animatable);

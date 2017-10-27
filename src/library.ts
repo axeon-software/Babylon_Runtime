@@ -11,6 +11,10 @@ module _r.library {
     }
     export function show(params : ILibrary) : Q.Promise<Array<BABYLON.AbstractMesh>> {
         let deferred = Q.defer<Array<BABYLON.AbstractMesh>>();
+        _r.trigger(_r.scene, 'importStart', {
+            rootUrl : params.rootUrl,
+            fileName : params.fileName
+        });
         BABYLON.SceneLoader.ImportMesh(null, params.rootUrl, params.fileName, _r.scene,
             function(meshes) {
                 var names = [];
@@ -24,6 +28,11 @@ module _r.library {
                             data.forEach(function(_patch){
                                 _r.patchFile.apply(_patch);
                             });
+                            _r.trigger(_r.scene, 'importEnd', {
+                                rootUrl : params.rootUrl,
+                                fileName : params.fileName,
+                                meshes : meshes
+                            });
                             deferred.resolve(meshes);
                         }
                         catch(exception) {
@@ -35,6 +44,7 @@ module _r.library {
                     deferred.resolve(meshes);
                 }
             },
+            // TODO
             function() {
                 //deferred.notify(arguments[0]);
             },

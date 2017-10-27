@@ -11,7 +11,6 @@ module _r.to {
                 let r = expr["r"] || 0;
                 let g = expr["g"] || 0;
                 let b = expr["b"] || 0;
-                console.log(r,g,b);
                 if(expr["a"]) {
                     return new BABYLON.Color4(r, g, b, expr["a"]);
                 }
@@ -96,5 +95,12 @@ module _r.to {
               return new BABYLON.Vector3(expr[0], expr[1], expr[2])
           }
           return new BABYLON.Vector3(expr['x'] ? expr['x'] : 0, expr['y'] ? expr['y'] : 0, expr['z'] ? expr['z'] : 0);
+    }
+
+    export function ScreenVector(position : any) {
+        let vector = _r.to.Vector3(position);
+        let transform = _r.scene.getTransformMatrix();
+        let viewport = _r.scene.activeCamera.viewport;
+
     }
 }

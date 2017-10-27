@@ -61,6 +61,8 @@ module _r {
         })
 
     /** Helpers **/
+    // TODO
+    // DEPRECATED : _r.to.Color(args)
     export function color(...parameters : any[]) {
         if(parameters.length == 1) {
             if(parameters[0] instanceof BABYLON.Color3){

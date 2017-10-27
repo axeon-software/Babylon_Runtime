@@ -27,13 +27,7 @@ module _r {
                 return false; // break the each.
             }
         });
-        if(result) {
-            return result;
-        }
-        else {
-            return el;
-        }
-
+        return result;
     }
 
     _r.override(['data'], function(target, source, property) {

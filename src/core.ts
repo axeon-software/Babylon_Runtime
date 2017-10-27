@@ -7,6 +7,28 @@ module _r {
         });
     }
 
+    export function isOverrided(target : any, source : any, property : string) {
+        for(var i = 0; i < _r.overrides.length; i++) {
+            if(_r.overrides[i] instanceof RegExp && _r.overrides[i].test(property)) {
+               var res = _r.overrides[i].call(target, source, property);
+               if(res) {
+                   target = res;
+               }
+               return true;
+            }
+            else {
+                if(_r.overrides[i] == property) {
+                    var res = _r.overrides[i].call(target, source, property);
+                    if(res) {
+                        target = res;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     export function extend(...params : any[]) : any {
         var target = params[0];
         for(var i = 1; i < params.length; i++) {
@@ -28,13 +50,17 @@ module _r {
                     }
                     else {
                         if (_r.is.PlainObject(nextSource[key])) {
-                            if(target[key] == null) {
-                                target[key] = {}
+                            if(_r.is.Color(nextSource[key])) {
+                                target[key] = _r.to.Color(nextSource[key])
                             }
-                            target[key] = extend(target[key], nextSource[key]);
+                            else {
+                                if(target[key] == null) {
+                                    target[key] = {}
+                                }
+                                target[key] = extend(target[key], nextSource[key]);
+                            }
                         }
                         else {
-                            // TODO _r.to.Color()
                             if(target[key] != null && _r.is.Color(target[key])) {
                                 target[key] = _r.to.Color(nextSource[key]);
                             }

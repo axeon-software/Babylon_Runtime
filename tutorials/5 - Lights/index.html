@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>_r.light</title>
-    <script src="../../assets/js/babylon.js"></script>
-    <script src="../../../dist/babylon-runtime.js"></script>
+    <title>5 - Lights</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="../../dist/babylon-runtime.js"></script>
 </head>
 <body>
 <script>
@@ -149,10 +149,12 @@
                                     a : 0
                                 }
                             }
+                        },
+                        "OnPickTrigger" : function() {
+                            console.log("yooo");
                         }
                     }
                 }
-
             ])
         },
         activeCamera : "Camera"

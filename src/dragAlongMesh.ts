@@ -2,11 +2,9 @@ module _r.dragdrop {
      class DragDrop {
         currentMesh : BABYLON.AbstractMesh;
         startingPoint : BABYLON.Vector3;
-        elements : _r.Elements;
 
-        constructor(public ground : any) {
-            this.elements = _r.select(ground);
-            var scene = _r.scene;
+        constructor(public target : BABYLON.AbstractMesh, public ground : BABYLON.AbstractMesh) {
+            var scene = this.ground.getScene();
             var canvas = scene.getEngine().getRenderingCanvas();
 
             var self = this;
@@ -31,19 +29,9 @@ module _r.dragdrop {
         }
 
         getGroundPosition(evt) {
-            var scene = _r.scene;
+            var scene = this.ground.getScene();
             var ground = this.ground;
-            var self = this;
-            var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh)
-            {
-                self.elements.each(function(element) {
-                    if(mesh == element) {
-                        return true;
-                    }
-                });
-                return false;
-                //return mesh == ground;
-            });
+            var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) { return mesh == ground; });
             if (pickinfo.hit) {
                 return pickinfo.pickedPoint;
             }
@@ -51,26 +39,18 @@ module _r.dragdrop {
             return null;
         }
 
-        isInElements(mesh) {
-            this.elements.each(function(element) {
-                if(mesh == element) {
-                    return true;
-                }
-            });
-            return false;
-        }
-
         onPointerDown(evt) {
             if (evt.button !== 0) {
                 return;
             }
-            var scene = _r.scene;
+            var scene = this.ground.getScene();
+            // check if we are under a mesh
+            var ground = this.ground;
             var self = this;
             var pickInfo = scene.pick(scene.pointerX,
                 scene.pointerY,
                 function (mesh) {
-                console.log('onPointerDown',mesh, self.isInElements(mesh) )
-                    return mesh['dragAlongMesh'] !== null && self.isInElements(mesh);
+                    return self.target == mesh;
                 });
             if (pickInfo.hit) {
                 this.currentMesh = pickInfo.pickedMesh;
@@ -106,6 +86,7 @@ module _r.dragdrop {
 
             var diff = current.subtract(this.startingPoint);
             this.currentMesh.position.addInPlace(diff);
+
             this.startingPoint = current;
         }
     }
@@ -113,13 +94,6 @@ module _r.dragdrop {
     _r.override(
         ["dragAlongMesh"],
         function(target, source, property) {
-            new DragDrop(source[property]);
-        })
-
-    _r.override(["drag"],
-        function(target, source, property) {
-            var along = _r.select(source[property]);
-            //var startingPoint;
-
+            new DragDrop(_r.select(target)[0], _r.select(source[property])[0]);
         })
 }

@@ -1,23 +1,9 @@
-# BABYLON Runtime
+# Code Less, Babylon More
+## What is _r ?
 
-* Patch your BabylonJS scenes without modifying *.*babylon* file.
-* *JQuery*-like API to interact with 3D contents.
+_r is a lightweight, "write less, do more", BabylonJS library. The purpose of _r is to make it much easier to use and maintain BabylonJS settings in the 3D workflow.
 
-## Quick Look
-```json
-[
-    {
-        "material1" : {
-            "diffuseColor" : "#ff0000",
-            "diffusePower" : 0.1
-        }
-    }, 
-    {
-        "mesh2" : {
-            "position" : {
-                "x" : 10
-            }
-        }
-    }
-]
-```
+_r takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code.
+
+_r also simplifies a lot of the complicated things from BabylonJS, like materials, animations,  etc.
+

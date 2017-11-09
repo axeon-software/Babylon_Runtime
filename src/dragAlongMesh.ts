@@ -26,6 +26,10 @@ module _r.dragdrop {
                 canvas.removeEventListener("pointerup", pointerup);
                 canvas.removeEventListener("pointermove", pointermove);
             }
+
+            _r.select(target).on("OnPointerOverTrigger", function() {
+                // just to have the mouse cursor;
+            });
         }
 
         getGroundPosition(evt) {

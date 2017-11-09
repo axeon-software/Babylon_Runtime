@@ -81,37 +81,8 @@ _r.camera.goTo({ x : 0, y : 0, z : 0}).then(function() {
 ```
 ### For 3D Developpers
 
-Developpers can create new directives and plugins from 3D designers and scripters just like a jQuery plugin. 
+Developpers can create new directives and plugins from 3D designers and scripters.
 
-#### Directive 
-
-This is how we implemented fresnelParameters in **\_r**
-```js
- _r.override(
-    ["diffuseFresnelParameters", "opacityFresnelParameters", "emissiveFresnelParameters", "refractionFresnelParameters", "reflectionFresnelParameters"],
-    function(target, source, property) {
-        var configuration = source[property];
-        if(!target[property]) {
-            target[property] = new BABYLON.FresnelParameters();
-        }
-        _r.extend(target[property], configuration);
- });
-```
-So designers now can use fresnel parameters in patches :
-```json
-{
-    "material1" : {
-        "useEmissiveAsIllumination": true,
-        "emissiveFresnelParameters": {
-            "leftColor": "#ffffff",
-            "rightColor": "white",
-            "power": 1,
-            "bias": 0
-        }
-    }
-}
-
-```
 #### Plugin
 ```js
 _r.fn.hotspotPlugin = function(message) {
@@ -122,16 +93,33 @@ _r.fn.hotspotPlugin = function(message) {
     })
 }
 ```
-Then
+Then scripter can use :
 ```js
 _r("mesh1, mesh2").hostpotPlugin("yo");
 _r("mesh3").hotspotPlugin("yeah");
 ```
-Make the plugin available in patch  :
+We can then make the plugin available in patch  :
 ```js
 _r.override( ["hotspotPlugin"],
     function(target, source, property) {
         var message = source[property];
         _r(target).hotspotPlugin(message);
  });
+```
+So designers can patch :
+```json
+ [
+    {
+        "mesh1, mesh2":
+        {
+            "hotspotPlugin": "yo"
+        }
+    },
+    {
+        "mesh3":
+        {
+            "hotspotPlugin": "yeah"
+        }
+    }
+]
 ```

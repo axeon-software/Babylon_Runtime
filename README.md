@@ -43,7 +43,7 @@ With **\_r** you can use patch file to customise the scene. Patch are very easy 
     }
 ]
 ```
-
+[read more about patches](https://axeon-software.github.io/babylon-runtime/).
 
 ### For 3D Scripters - Easy animations and events
 
@@ -114,3 +114,4 @@ So designers can use :
     }
 ]
 ```
+[read more about plugins & directives](https://axeon-software.github.io/babylon-runtime/).

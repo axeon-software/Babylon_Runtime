@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>360  image mapping modeling</title>
-	<script src="js/babylon.3.0.js"></script>
+	<script src="../../../assets/js/babylon.js"></script>
 	<script src="../../../../dist/babylon-runtime.js"></script>
 </head>
 <body>
@@ -12,21 +12,13 @@
     	assets: "assets/",
     	scene: "scene.babylon",
     	activeCamera: "camera.FPV",
-    	patch:["patches.patch"]
+        patch : [ "patches.patch" ]
     });
 
     _r.ready(function() {
-        function log() {
-            console.log("log");
-            _r(_r.canvas).off('pointermove',log);
-        }
-        _r(_r.canvas).on('pointermove',log);
-
-        function log2() {
-            console.log("log2")
-        }
-        _r(_r.canvas).one('pointermove', log2);
+        _r(_r.scene.activeCamera)[0].inputs.removeByType("FreeCameraKeyboardMoveInput");
     })
 </script>
+
 </body>
 </html>

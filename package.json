@@ -1,14 +1,13 @@
 {
   "name": "babylon-runtime",
   "version": "0.0.1",
-  "description": "Code less, Babylon more",
+  "description": "Babylon runtime (_r) is a lightweight, write less, do more, BabylonJS library.",
   "main": "dist/babylon-runtime.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "typedoc --out docs/api src/ --mode file --name 'Babylon runtime API'"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,13 @@
     "babylonjs": "^3.0.1-alpha",
     "pepjs": "^0.4.3",
     "q": "^1.5.0",
-    "typedoc": "^0.7.1",
     "typescript": "^2.3.2"
-  }
+  },
+  "files" : [
+    "dist/babylon-runtime.d.ts",
+    "dist/babylon-runtime.js",
+    "dist/babyon-runtime.js.map",
+    "package.json",
+    "README.md"
+  ]
 }

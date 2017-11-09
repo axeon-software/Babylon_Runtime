@@ -3254,6 +3254,28 @@ var _r;
         });
     }
     _r.override = override;
+    function isOverrided(target, source, property) {
+        for (var i = 0; i < _r.overrides.length; i++) {
+            if (_r.overrides[i] instanceof RegExp && _r.overrides[i].test(property)) {
+                var res = _r.overrides[i].call(target, source, property);
+                if (res) {
+                    target = res;
+                }
+                return true;
+            }
+            else {
+                if (_r.overrides[i] == property) {
+                    var res = _r.overrides[i].call(target, source, property);
+                    if (res) {
+                        target = res;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    _r.isOverrided = isOverrided;
     function extend() {
         var params = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -3279,13 +3301,17 @@ var _r;
                     }
                     else {
                         if (_r.is.PlainObject(nextSource[key])) {
-                            if (target[key] == null) {
-                                target[key] = {};
+                            if (_r.is.Color(nextSource[key])) {
+                                target[key] = _r.to.Color(nextSource[key]);
                             }
-                            target[key] = extend(target[key], nextSource[key]);
+                            else {
+                                if (target[key] == null) {
+                                    target[key] = {};
+                                }
+                                target[key] = extend(target[key], nextSource[key]);
+                            }
                         }
                         else {
-                            // TODO _r.to.Color()
                             if (target[key] != null && _r.is.Color(target[key])) {
                                 target[key] = _r.to.Color(nextSource[key]);
                             }
@@ -3450,6 +3476,9 @@ var _r;
                 if (this.loop) {
                     return BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE;
                 }
+                else {
+                    return false;
+                }
             }
             if (_r.is.String(this.loop)) {
                 if (this.loop.toLowerCase() == "cycle") {
@@ -3464,7 +3493,7 @@ var _r;
                     return this.loop;
                 }
             }
-            return BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT;
+            return false;
         };
         Animation.prototype.play = function (from, to) {
             var self = this;
@@ -3491,7 +3520,7 @@ var _r;
                 if (!self.animatables) {
                     self.animatables = [];
                 }
-                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, true, self.speedRatio);
+                var animatable = _r.scene.beginAnimation(element, from ? from : 0, to ? to : self.fps * self.duration, false, self.speedRatio);
                 //_r.trigger(_r.scene, 'animationStart', animatable);
                 animatable.onAnimationEnd = self.onComplete;
                 self.animatables.push(animatable);
@@ -3599,6 +3628,7 @@ var _r;
         return Animation;
     }());
     _r.Animation = Animation;
+    // TODO : should return a Q.Promise ?
     function animate(elements, properties, options) {
         Object.getOwnPropertyNames(properties).forEach(function (property) {
             var animation = new _r.Animation(elements, property, properties[property]);
@@ -4030,6 +4060,7 @@ var _r;
         var DragDrop = (function () {
             function DragDrop(ground) {
                 this.ground = ground;
+                console.log("DragDrop", ground);
                 var scene = this.ground.getScene();
                 var canvas = scene.getEngine().getRenderingCanvas();
                 var self = this;
@@ -4061,6 +4092,7 @@ var _r;
                 return null;
             };
             DragDrop.prototype.onPointerDown = function (evt) {
+                console.log("OnPOinterDown");
                 if (evt.button !== 0) {
                     return;
                 }
@@ -4068,7 +4100,7 @@ var _r;
                 // check if we are under a mesh
                 var ground = this.ground;
                 var pickInfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) {
-                    return mesh['draggable'] && mesh !== ground;
+                    return mesh['dragAlongMesh'] !== null && mesh !== ground;
                 });
                 if (pickInfo.hit) {
                     this.currentMesh = pickInfo.pickedMesh;
@@ -5198,7 +5230,6 @@ var _r;
                     var r = expr["r"] || 0;
                     var g = expr["g"] || 0;
                     var b = expr["b"] || 0;
-                    console.log(r, g, b);
                     if (expr["a"]) {
                         return new BABYLON.Color4(r, g, b, expr["a"]);
                     }
@@ -5284,6 +5315,12 @@ var _r;
             return new BABYLON.Vector3(expr['x'] ? expr['x'] : 0, expr['y'] ? expr['y'] : 0, expr['z'] ? expr['z'] : 0);
         }
         to.Vector3 = Vector3;
+        function ScreenVector(position) {
+            var vector = _r.to.Vector3(position);
+            var transform = _r.scene.getTransformMatrix();
+            var viewport = _r.scene.activeCamera.viewport;
+        }
+        to.ScreenVector = ScreenVector;
     })(to = _r.to || (_r.to = {}));
 })(_r || (_r = {}));
 var _r;
@@ -5338,6 +5375,8 @@ var _r;
         }
     });
     /** Helpers **/
+    // TODO
+    // DEPRECATED : _r.to.Color(args)
     function color() {
         var parameters = [];
         for (var _i = 0; _i < arguments.length; _i++) {

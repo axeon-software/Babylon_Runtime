@@ -1,30 +1,55 @@
 [
-    {
-        "scene":
-        {
-            "ambientColor": "#ffffff"
-        }
-    },
-    {
-        "camera.FPV":
-        {
-            "speed": .08,
-            "fov": 1.2,
-            "position":
-                {
-                    "x": -2.241,
-                    "z": .599
-                },
-            "rotation":
-                {
-                    "x": .092,
-                    "y": -9.888
-                }
-        }
-    },
-    {
-        "tableau.000" : {
-            dragAlongMesh : "mur.*"
-        }
-    }
+	{
+		"scene":
+		{
+			"ambientColor": "#ffffff"
+		}
+	},
+	{
+		"camera.FPV":
+		{
+			"speed": .08,
+			"fov": 1.5,
+			"position":
+			{
+				"x":  - .0627,
+				"z": .1557
+			},
+			"rotation":
+			{
+				"x":  - .0527,
+				"y": -8.9316
+			}
+		}
+	},
+	{
+		"mid-century-wall-art.000:mesh":
+		{
+			"dragAlongMesh": "trump-palace.wall.000"
+		}
+	},
+	{
+		"mickey.000:mesh":
+		{
+			"dragAlongMesh": "trump-palace.sol.000"
+		}
+	},
+	{
+		"low-poly-statue.000:mesh":
+		{
+			"dragAlongMesh": "trump-palace.sol.000"
+		}
+	},
+	{
+		"*fake-shadow*:material":
+		{
+			"useAlphaFromDiffuseTexture": true,
+			"alpha": .3,
+			"diffuseTexture":
+			{
+				"wrapU": 0,
+				"wrapV": 0
+			}
+		}
+	}
 ]

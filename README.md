@@ -6,7 +6,7 @@
 * Visit  the [Home Page](https://axeon-software.github.io/babylon-runtime/)
 * Test the [demo](https://axeon-software.github.io/babylon-runtime/)
 * [Download the latest version]()
-* Documentation :
+* Features for :
     * [3D Designer](https://axeon-software.github.io/babylon-runtime/)
     * [3D Scripter](https://axeon-software.github.io/babylon-runtime/)
     * [3D Developper](https://axeon-software.github.io/babylon-runtime/)

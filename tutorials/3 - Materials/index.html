@@ -157,9 +157,10 @@
                         },
                         material: {
                             "material::standard": {
-                                name: "texture6",
+                                name: "texture7",
                                 diffuseTexture : {
                                     "texture::base" : {
+                                        "name" : "grass.texture",
                                         url : "textures/grass.jpg",
                                         uScale : 5,
                                         vScale : 5,
@@ -175,6 +176,26 @@
         },
         activeCamera : "Camera"
     });
+
+    _r.ready(function() {
+        var texture = _r("grass.texture")[0];
+        var img = texture.getInternalTexture();
+        var textureContext = texture.getContext();
+
+
+        var dynamicTexture = new BABYLON.DynamicTexture("dynamicTexture1", 512, _r.scene, false);
+        _r("texture7")[0].diffuseTexture = dynamicTexture;
+        var clearColor = "#555555";
+        var font = "bold 70px Segoe UI";
+        var invertY = true;
+        var text = "test";
+        var color = "white";
+        var x = 10;
+        var y = 70 + 10;
+        var dynamicContext = dynamicTexture.getContext();
+        dynamicContext.draw(textureContext);
+        dynamicTexture.drawText(text, x, y, font, color, clearColor);
+    })
 
 </script>
 </body>

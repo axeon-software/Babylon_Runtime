@@ -102,12 +102,12 @@ So designers now can use fresnel parameters in patches :
 {
     "material1" : {
         "useEmissiveAsIllumination": true,
-            "emissiveFresnelParameters": {
-                "leftColor": "#ffffff",
-                "rightColor": "white",
-                "power": 1,
-                "bias": 0
-            }
+        "emissiveFresnelParameters": {
+            "leftColor": "#ffffff",
+            "rightColor": "white",
+            "power": 1,
+            "bias": 0
+        }
     }
 }
 

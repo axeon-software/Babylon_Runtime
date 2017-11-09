@@ -3,8 +3,8 @@
 
 **\_r** takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code. **\_r** also simplifies a lot of the 'complicated' things from BabylonJS.
 
-
 * Visit  the [Home Page](https://axeon-software.github.io/babylon-runtime/)
+* Test the [demo](https://axeon-software.github.io/babylon-runtime/)
 * [Download the latest version]()
 * Documentation :
     * [3D Designer](https://axeon-software.github.io/babylon-runtime/)

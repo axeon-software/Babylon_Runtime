@@ -19,7 +19,6 @@ module _r {
         'OnKeyUpTrigger'
     ];
 
-    // TODO
     const pointerEvents = [
         'pointermove',
         'pointerdown',
@@ -116,7 +115,7 @@ module _r {
         var el = new Elements(elements);
         el.each(function(element) {
             var events = _r.data(element, '_events');
-            if(_r.is.Array(events[event])) {
+            if(events && _r.is.Array(events[event])) {
                 events[event].forEach(function(_event) {
                     try {
                         _event.handler.call(element, data);

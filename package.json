@@ -1,6 +1,6 @@
 {
   "name": "babylon-runtime",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Babylon runtime (_r) is a lightweight, write less, do more, BabylonJS library.",
   "main": "dist/babylon-runtime.js",
   "directories": {
@@ -31,7 +31,7 @@
     "q": "^1.5.0",
     "typescript": "^2.3.2"
   },
-  "files" : [
+  "files": [
     "dist/babylon-runtime.d.ts",
     "dist/babylon-runtime.js",
     "dist/babyon-runtime.js.map",

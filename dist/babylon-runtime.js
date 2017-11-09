@@ -4050,10 +4050,10 @@ var _r;
     var dragdrop;
     (function (dragdrop) {
         var DragDrop = (function () {
-            function DragDrop(ground) {
+            function DragDrop(target, ground) {
+                this.target = target;
                 this.ground = ground;
-                this.elements = _r.select(ground);
-                var scene = _r.scene;
+                var scene = this.ground.getScene();
                 var canvas = scene.getEngine().getRenderingCanvas();
                 var self = this;
                 var pointerdown = function (evt) {
@@ -4073,42 +4073,29 @@ var _r;
                     canvas.removeEventListener("pointerup", pointerup);
                     canvas.removeEventListener("pointermove", pointermove);
                 };
+                _r.select(target).on("OnPointerOverTrigger", function () {
+                    // just to have the mouse cursor;
+                });
             }
             DragDrop.prototype.getGroundPosition = function (evt) {
-                var scene = _r.scene;
+                var scene = this.ground.getScene();
                 var ground = this.ground;
-                var self = this;
-                var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) {
-                    self.elements.each(function (element) {
-                        if (mesh == element) {
-                            return true;
-                        }
-                    });
-                    return false;
-                    //return mesh == ground;
-                });
+                var pickinfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) { return mesh == ground; });
                 if (pickinfo.hit) {
                     return pickinfo.pickedPoint;
                 }
                 return null;
             };
-            DragDrop.prototype.isInElements = function (mesh) {
-                this.elements.each(function (element) {
-                    if (mesh == element) {
-                        return true;
-                    }
-                });
-                return false;
-            };
             DragDrop.prototype.onPointerDown = function (evt) {
                 if (evt.button !== 0) {
                     return;
                 }
-                var scene = _r.scene;
+                var scene = this.ground.getScene();
+                // check if we are under a mesh
+                var ground = this.ground;
                 var self = this;
                 var pickInfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) {
-                    console.log('onPointerDown', mesh, self.isInElements(mesh));
-                    return mesh['dragAlongMesh'] !== null && self.isInElements(mesh);
+                    return self.target == mesh;
                 });
                 if (pickInfo.hit) {
                     this.currentMesh = pickInfo.pickedMesh;
@@ -4143,11 +4130,7 @@ var _r;
             return DragDrop;
         }());
         _r.override(["dragAlongMesh"], function (target, source, property) {
-            new DragDrop(source[property]);
-        });
-        _r.override(["drag"], function (target, source, property) {
-            var along = _r.select(source[property]);
-            //var startingPoint;
+            new DragDrop(_r.select(target)[0], _r.select(source[property])[0]);
         });
     })(dragdrop = _r.dragdrop || (_r.dragdrop = {}));
 })(_r || (_r = {}));
@@ -4469,7 +4452,6 @@ var _r;
         'OnKeyDownTrigger',
         'OnKeyUpTrigger'
     ];
-    // TODO
     var pointerEvents = [
         'pointermove',
         'pointerdown',
@@ -4565,7 +4547,7 @@ var _r;
         var el = new _r.Elements(elements);
         el.each(function (element) {
             var events = _r.data(element, '_events');
-            if (_r.is.Array(events[event])) {
+            if (events && _r.is.Array(events[event])) {
                 events[event].forEach(function (_event) {
                     try {
                         _event.handler.call(element, data);
@@ -4717,7 +4699,9 @@ var _r;
         runtime["canvas"] = _r.canvas;
         window["_r"] = runtime;
         _r.isReady = true;
-        _r.trigger(window, "ready");
+        _r.scene.executeWhenReady(function () {
+            _r.trigger(window, "ready");
+        });
     }
     _r.init = init;
     _r.isReady = false;
@@ -5154,7 +5138,9 @@ var _r;
             _r.scene.render();
         }
         function run() {
-            _r.engine.runRenderLoop(loop);
+            _r.scene.executeWhenReady(function () {
+                _r.engine.runRenderLoop(loop);
+            });
         }
         renderloop.run = run;
         function stop() {

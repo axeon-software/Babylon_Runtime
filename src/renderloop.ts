@@ -5,7 +5,9 @@ module _r.renderloop {
     }
 
     export function run() {
-        engine.runRenderLoop(loop);
+        _r.scene.executeWhenReady(function() {
+            engine.runRenderLoop(loop);
+        });
     }
 
     export function stop() {

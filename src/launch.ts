@@ -37,7 +37,9 @@ module _r {
         window["_r"] = runtime;
 
         isReady = true;
-        _r.trigger(window, "ready");
+        _r.scene.executeWhenReady(function() {
+            _r.trigger(window, "ready");
+        });
     }
 
     export var isReady = false;

@@ -65,20 +65,8 @@ _r("sphere1, sphere2").animate({
 });
 ```
 
-**\_r** has a lot of usefull features for scripting  :
-```js
-_r("Camera1").on("activated", function() {
-    _r("scene").trigger("cameraChanged")    
-});
+**\_r** has a lot of other usefull features for scripters, [read more about scripting](https://axeon-software.github.io/babylon-runtime/).
 
-_r("scene").on("cameraChanged", {
-   "mesh.gui.*" : { visible : true } 
-});
-
-_r.camera.goTo({ x : 0, y : 0, z : 0}).then(function() {
-    _r.camera.activate("Camera1");
-});
-```
 ### For 3D Developpers
 
 Developpers can create new directives and plugins for 3D designers and scripters.

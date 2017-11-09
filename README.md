@@ -81,7 +81,7 @@ _r.camera.goTo({ x : 0, y : 0, z : 0}).then(function() {
 ```
 ### For 3D Developpers
 
-Developpers can create new directives and plugins from 3D designers and scripters.
+Developpers can create new directives and plugins for 3D designers and scripters.
 
 #### Plugin
 ```js
@@ -98,7 +98,10 @@ Then scripter can use :
 _r("mesh1, mesh2").hostpotPlugin("yo");
 _r("mesh3").hotspotPlugin("yeah");
 ```
-We can then make the plugin available in patch  :
+
+#### Directive 
+
+We can then make this plugin available in patch  :
 ```js
 _r.override( ["hotspotPlugin"],
     function(target, source, property) {
@@ -106,7 +109,7 @@ _r.override( ["hotspotPlugin"],
         _r(target).hotspotPlugin(message);
  });
 ```
-So designers can patch :
+So designers can use :
 ```json
  [
     {

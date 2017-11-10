@@ -135,8 +135,8 @@ module _r {
             }
             var self = this;
             for(var prop in _r.fn) {
-                self[prop] = function() {
-                    _r.fn[prop].call(self, arguments[0]);
+                self[prop] = function(arg) {
+                    _r.fn[prop].call(self, arg);
                 }
             }
         }

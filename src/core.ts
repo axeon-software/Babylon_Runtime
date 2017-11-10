@@ -43,9 +43,19 @@ module _r {
                 else {
                     if(key.indexOf('::') != -1) {
                         var split = key.split('::');
-                        var res = _r[split[0]][split[1]](nextSource[key]);
-                        if(res) {
-                            target = res;
+                        switch(split[0]) {
+                            case "on" :
+                                _r.select(target).on(split[1], nextSource[key]);
+                                break;
+                            case 'one':
+                                _r.select(target).one(split[1], nextSource[key]);
+                                break;
+                            default :
+                                var res = _r[split[0]][split[1]](nextSource[key]);
+                                if(res) {
+                                    target = res;
+                                }
+                                break;
                         }
                     }
                     else {

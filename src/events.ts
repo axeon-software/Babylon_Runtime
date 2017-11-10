@@ -118,7 +118,27 @@ module _r {
             if(events && _r.is.Array(events[event])) {
                 events[event].forEach(function(_event) {
                     try {
-                        _event.handler.call(element, data);
+                        if(_r.is.Function(_event.handler)) {
+                            _event.handler.call(element, data);
+                        }
+                        else {
+
+                            if(_r.is.Array(_event.handler)) {
+                                let el = _r.select(element)
+                                _event.handler.forEach(function(_patch) {
+                                    el.patch(_patch);
+                                });
+                            }
+                            else {
+                                if(_r.is.PlainObject(_event.handler)) {
+                                    _r.select(element).patch(_event.handler);
+                                }
+                                else {
+                                    console.log("unrecognized handler for event " + event);
+                                }
+                            }
+                        }
+
                         if(!_event.repeat) {
                             if(_event.handler) {
                                 off(element, event, _event.handler);

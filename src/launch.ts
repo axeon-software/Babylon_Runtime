@@ -54,25 +54,31 @@ module _r {
     }
 
 
-    function load(scene : Function | string, assets? : string, progressLoading? : Function ) : Q.Promise<BABYLON.Scene> {
+    function load(scene : Function | string | Array<String>, assets? : string, progressLoading? : Function ) : Q.Promise<BABYLON.Scene> {
         let deferred = Q.defer<BABYLON.Scene>();
-        if(is.Function(scene)) {
-            _r.scene = new BABYLON.Scene(_r.engine);
-            (<Function> scene).call(this,_r.scene, _r.engine, _r.canvas)
-            deferred.resolve(_r.scene);
-        }
-        else {
-            if(scene) {
-                BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function(_scene) {
-                    _r.scene = _scene;
-                    deferred.resolve(_r.scene);
-                }, progressLoading);
-            }
-            else {
+        if(scene) {
+            if(_r.is.Function(scene)) {
                 _r.scene = new BABYLON.Scene(_r.engine);
+                (<Function> scene).call(this,_r.scene, _r.engine, _r.canvas)
                 deferred.resolve(_r.scene);
             }
-
+            else {
+                if (_r.is.Array(scene)) {
+                    _r.scene = new BABYLON.Scene(_r.engine);
+                    _r.patch(scene);
+                    deferred.resolve(_r.scene);
+                }
+                else {
+                    BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function(_scene) {
+                        _r.scene = _scene;
+                        deferred.resolve(_r.scene);
+                    }, progressLoading);
+                }
+            }
+        }
+        else {
+            _r.scene = new BABYLON.Scene(_r.engine);
+            deferred.resolve(_r.scene);
         }
         return deferred.promise;
     }
@@ -130,6 +136,14 @@ module _r {
                 })
             }
             Q.all(promises).then(function(data) {
+                try {
+                    data.forEach(function(_patch){
+                        _r.patch(_patch);
+                    })
+                }
+                catch(exception) {
+                    console.error(exception);
+                }
                 if(params.hasOwnProperty('activeCamera')) {
                     _r.scene.setActiveCameraByName(params.activeCamera);
                     _r.scene.activeCamera.attachControl(_r.canvas, true);
@@ -139,14 +153,6 @@ module _r {
                         _r.scene.setActiveCameraByName(_r.scene.cameras[0].name);
                         _r.scene.activeCamera.attachControl(_r.canvas, true);
                     }
-                }
-                try {
-                    data.forEach(function(_patch){
-                        _r.patchFile.apply(_patch);
-                    })
-                }
-                catch(exception) {
-                    console.error(exception);
                 }
                 if(params.beforeFirstRender) {
                     try {
@@ -161,6 +167,8 @@ module _r {
                 deferred.resolve();
                 _r.renderloop.run();
             });
+        }, function() {
+            console.error("Error while loading scene")
         });
         return deferred.promise;
     }

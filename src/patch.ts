@@ -41,23 +41,6 @@ module _r.patchFile {
         return deferred.promise;
     }
 
-    export function apply(_patch : any) {
-        if(Array.isArray(_patch)) {
-            _patch.forEach(function(_item) {
-                Object.getOwnPropertyNames(_item).forEach(function(selector){
-                    var value = _item[selector];
-                    _r.select(selector).patch(value);
-                });
-            });
-        }
-        else {
-            Object.getOwnPropertyNames(_patch).forEach(function(selector){
-                var value = _patch[selector];
-                _r.select(selector).patch(value);
-            });
-        }
-    }
-
     export function load(patch : string | any) : Q.Promise<any> {
         let deferred = Q.defer<void>();
         if(_r.is.PatchFile(patch)) {

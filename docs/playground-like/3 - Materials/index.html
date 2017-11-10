@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3 - Materials</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
+</head>
+<body>
+<script>
+    // see http://www.babylonjs-playground.com/?4
+    _r.launch({
+        scene : [
+            {
+                "camera::arcrotate" : {
+                    name : "Camera",
+                    alpha : Math.PI/2,
+                    beta : 1,
+                    radius : 110,
+                    position : {
+                        x : 0,
+                        y : 0,
+                        z : 0
+                    }
+                }
+            }, {
+                "light::point" : {
+                    name : "Omni",
+                    direction : {
+                        x : -60,
+                        y : 60,
+                        z : 80
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name : "Sphere1",
+                    segments : 10,
+                    diameter : 9,
+                    position : {
+                        x : 40
+                    },
+                    material : {
+                        "material::standard" : {
+                            name : "texture1",
+                            wireframe : true
+                        }
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name : "Sphere2",
+                    segments : 2,
+                    diameter : 9,
+                    position : {
+                        x : 25
+                    },
+                    material : {
+                        "material::standard" : {
+                            name : "texture2",
+                            diffuseColor : 'red',
+                            alpha : 0.3
+                        }
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name : "Sphere3",
+                    segments : 10,
+                    diameter : 9,
+                    position : {
+                        x : 10
+                    },
+                    material : {
+                        "material::standard" : {
+                            name : "texture3",
+                            diffuseTexture : {
+                                "texture::base" : {
+                                    url : "textures/misc.jpg"
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name : "Sphere4",
+                    segments : 10,
+                    diameter : 9,
+                    position : {
+                        x : -5
+                    },
+                    material : {
+                        "material::standard" : {
+                            name : "texture4",
+                            diffuseTexture : {
+                                "texture::base" : {
+                                    url : "textures/misc.jpg",
+                                    vOffset : 0.1,
+                                    uOffset : 0.4
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name : "Sphere5",
+                    segments : 10,
+                    diameter : 9,
+                    position : {
+                        x : -20
+                    },
+                    material : {
+                        "material::standard" : {
+                            name : "texture5",
+                            diffuseTexture : {
+                                "texture::base" : {
+                                    url : "textures/tree.png",
+                                    hasAlpha : true
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {
+                "mesh::sphere" : {
+                    name: "Sphere6",
+                    segments: 10,
+                    diameter: 9,
+                    position: {
+                        x: -35
+                    },
+                    material: {
+                        "material::standard": {
+                            name: "texture6",
+                            diffuseTexture: {
+                                "texture::base": {
+                                    url: "textures/tree.png",
+                                    hasAlpha: true
+                                }
+                            },
+                            backFaceCulling: false
+                        }
+                    }
+                }
+            }, {
+                "mesh::plane" : {
+                    name : "plane",
+                    size : 120,
+                    position : {
+                        y : -5
+                    },
+                    rotation : {
+                        x : Math.PI/2
+                    },
+                    material: {
+                        "material::standard": {
+                            name: "texture7",
+                            diffuseTexture : {
+                                "texture::base" : {
+                                    "name" : "grass.texture",
+                                    url : "textures/grass.jpg",
+                                    uScale : 5,
+                                    vScale : 5,
+                                    backFaceCulling : false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    });
+
+</script>
+</body>
+</html>

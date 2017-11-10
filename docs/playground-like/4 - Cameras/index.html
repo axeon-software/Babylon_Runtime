@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4 - Camera</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="../../../dist/babylon-runtime.js"></script>
+</head>
+<body>
+<script>
+    _r.launch({
+        scene : [
+            {
+                "light::point" : {
+                    name : "Omni",
+                    direction : {
+                        x : 0,
+                        y : 2,
+                        z : 8
+                    }
+                },
+            },
+            {
+                "mesh::box" : {
+                    name : "b1",
+                    size : 1
+                }
+            },
+            {
+                "mesh::box" : {
+                    name : "b2",
+                    size : 1,
+                    position : {
+                        x : -3
+                    }
+                }
+            },
+            {
+                "mesh::box" : {
+                    name : "b3",
+                    size : 1,
+                    position : {
+                        x : 3
+                    }
+                }
+            },
+            {
+                "camera::free" : {
+                    name : "FreeCamera",
+                    position : {
+                        z : 5
+                    },
+                    rotation : {
+                        y : Math.PI
+                    }
+                }
+            }
+
+        ]
+    })
+</script>
+</body>
+</html>

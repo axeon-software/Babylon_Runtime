@@ -1,0 +1,45 @@
+[
+    {
+        "camera::free" : {
+            name : "camera1",
+            position : {
+                x : 0,
+                y : 5,
+                z : -10
+            },
+            target : {
+                x : 0,
+                y : 0,
+                z : 0
+            }
+        }
+    },
+    {
+        "light::hemispheric" : {
+            name : "light1",
+            direction : {
+                x : 0,
+                y : 1,
+                z : 0
+            },
+            intensity : 0.7
+        }
+    },
+    {
+        "mesh::sphere" : {
+            name : "sphere1",
+            segments : 16,
+            diameter : 2,
+            position : {
+                y : 1
+            }
+        }
+    },
+    {
+        "mesh::ground" : {
+            width : 6,
+            height : 6,
+            subdivisions : 2
+        }
+    }
+]

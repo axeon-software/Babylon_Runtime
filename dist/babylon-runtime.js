@@ -3294,9 +3294,19 @@ var _r;
                 else {
                     if (key.indexOf('::') != -1) {
                         var split = key.split('::');
-                        var res = _r[split[0]][split[1]](nextSource[key]);
-                        if (res) {
-                            target = res;
+                        switch (split[0]) {
+                            case "on":
+                                _r.select(target).on(split[1], nextSource[key]);
+                                break;
+                            case 'one':
+                                _r.select(target).one(split[1], nextSource[key]);
+                                break;
+                            default:
+                                var res = _r[split[0]][split[1]](nextSource[key]);
+                                if (res) {
+                                    target = res;
+                                }
+                                break;
                         }
                     }
                     else {
@@ -4550,7 +4560,25 @@ var _r;
             if (events && _r.is.Array(events[event])) {
                 events[event].forEach(function (_event) {
                     try {
-                        _event.handler.call(element, data);
+                        if (_r.is.Function(_event.handler)) {
+                            _event.handler.call(element, data);
+                        }
+                        else {
+                            if (_r.is.Array(_event.handler)) {
+                                var el_1 = _r.select(element);
+                                _event.handler.forEach(function (_patch) {
+                                    el_1.patch(_patch);
+                                });
+                            }
+                            else {
+                                if (_r.is.PlainObject(_event.handler)) {
+                                    _r.select(element).patch(_event.handler);
+                                }
+                                else {
+                                    console.log("unrecognized handler for event " + event);
+                                }
+                            }
+                        }
                         if (!_event.repeat) {
                             if (_event.handler) {
                                 off(element, event, _event.handler);
@@ -4716,22 +4744,29 @@ var _r;
     _r.ready = ready;
     function load(scene, assets, progressLoading) {
         var deferred = Q.defer();
-        if (_r.is.Function(scene)) {
-            _r.scene = new BABYLON.Scene(_r.engine);
-            scene.call(this, _r.scene, _r.engine, _r.canvas);
-            deferred.resolve(_r.scene);
-        }
-        else {
-            if (scene) {
-                BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function (_scene) {
-                    _r.scene = _scene;
-                    deferred.resolve(_r.scene);
-                }, progressLoading);
-            }
-            else {
+        if (scene) {
+            if (_r.is.Function(scene)) {
                 _r.scene = new BABYLON.Scene(_r.engine);
+                scene.call(this, _r.scene, _r.engine, _r.canvas);
                 deferred.resolve(_r.scene);
             }
+            else {
+                if (_r.is.Array(scene)) {
+                    _r.scene = new BABYLON.Scene(_r.engine);
+                    _r.patch(scene);
+                    deferred.resolve(_r.scene);
+                }
+                else {
+                    BABYLON.SceneLoader.Load(assets || '', scene, _r.engine, function (_scene) {
+                        _r.scene = _scene;
+                        deferred.resolve(_r.scene);
+                    }, progressLoading);
+                }
+            }
+        }
+        else {
+            _r.scene = new BABYLON.Scene(_r.engine);
+            deferred.resolve(_r.scene);
         }
         return deferred.promise;
     }
@@ -4785,6 +4820,14 @@ var _r;
                 });
             }
             Q.all(promises).then(function (data) {
+                try {
+                    data.forEach(function (_patch) {
+                        _r.patch(_patch);
+                    });
+                }
+                catch (exception) {
+                    console.error(exception);
+                }
                 if (params.hasOwnProperty('activeCamera')) {
                     _r.scene.setActiveCameraByName(params.activeCamera);
                     _r.scene.activeCamera.attachControl(_r.canvas, true);
@@ -4794,14 +4837,6 @@ var _r;
                         _r.scene.setActiveCameraByName(_r.scene.cameras[0].name);
                         _r.scene.activeCamera.attachControl(_r.canvas, true);
                     }
-                }
-                try {
-                    data.forEach(function (_patch) {
-                        _r.patchFile.apply(_patch);
-                    });
-                }
-                catch (exception) {
-                    console.error(exception);
                 }
                 if (params.beforeFirstRender) {
                     try {
@@ -4816,6 +4851,8 @@ var _r;
                 deferred.resolve();
                 _r.renderloop.run();
             });
+        }, function () {
+            console.error("Error while loading scene");
         });
         return deferred.promise;
     }
@@ -4842,7 +4879,7 @@ var _r;
                     Q.all(promises).then(function (data) {
                         try {
                             data.forEach(function (_patch) {
-                                _r.patchFile.apply(_patch);
+                                _r.patch(_patch);
                             });
                             _r.trigger(_r.scene, 'importEnd', {
                                 rootUrl: params.rootUrl,
@@ -5056,23 +5093,6 @@ var _r;
             return deferred.promise;
         }
         patchFile.get = get;
-        function apply(_patch) {
-            if (Array.isArray(_patch)) {
-                _patch.forEach(function (_item) {
-                    Object.getOwnPropertyNames(_item).forEach(function (selector) {
-                        var value = _item[selector];
-                        _r.select(selector).patch(value);
-                    });
-                });
-            }
-            else {
-                Object.getOwnPropertyNames(_patch).forEach(function (selector) {
-                    var value = _patch[selector];
-                    _r.select(selector).patch(value);
-                });
-            }
-        }
-        patchFile.apply = apply;
         function load(patch) {
             var deferred = Q.defer();
             if (_r.is.PatchFile(patch)) {

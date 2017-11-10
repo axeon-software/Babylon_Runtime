@@ -258,7 +258,6 @@ declare module _r.mesh {
 }
 declare module _r.patchFile {
     function get(file: string): Q.Promise<any>;
-    function apply(_patch: any): void;
     function load(patch: string | any): Q.Promise<any>;
 }
 declare module _r.reflectionProbe {

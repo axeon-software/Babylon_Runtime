@@ -16,6 +16,8 @@ module _r {
         loadingScreen : any
     }
 
+    export var fn = {}
+
     export function init(scene? : BABYLON.Scene) {
         if(scene) {
             _r.scene = scene;
@@ -23,12 +25,15 @@ module _r {
             _r.canvas = _r.engine.getRenderingCanvas();
         }
         var runtime = function(params) {
-            return _r.select(params);
+            var elements = _r.select(params);
+            return elements;
         };
 
         Object.getOwnPropertyNames(_r).forEach(function(property) {
             runtime[property] = _r[property];
         });
+
+
 
         runtime["engine"] = _r.engine;
         runtime["scene"] = _r.scene;
@@ -36,10 +41,7 @@ module _r {
 
         window["_r"] = runtime;
 
-        isReady = true;
-        _r.scene.executeWhenReady(function() {
-            _r.trigger(window, "ready");
-        });
+
     }
 
     export var isReady = false;
@@ -84,6 +86,7 @@ module _r {
     }
 
     export function launch(params : ILauncher) : Q.Promise<void> {
+        init();
         let deferred = Q.defer<void>();
         if(params.hasOwnProperty('container')) {
             if(_r.is.String(params['container'])) {
@@ -162,9 +165,13 @@ module _r {
                         console.error(exception);
                     }
                 }
-                init();
+
                 _r.engine.resize();
                 deferred.resolve();
+                isReady = true;
+                _r.scene.executeWhenReady(function() {
+                    _r.trigger(window, "ready");
+                });
                 _r.renderloop.run();
             });
         }, function() {

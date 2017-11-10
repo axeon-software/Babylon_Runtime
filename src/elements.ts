@@ -133,11 +133,12 @@ module _r {
                     this.length = 1;
                 }
             }
-            // TODO : idea...WHAT IF ?
-            // if(isMeshes || isCamera) -> rotate, move, etc.
-            // if(isLights) ->
-            // if(isScene) ->
-            // if(isTextures) ->
+            var self = this;
+            for(var prop in _r.fn) {
+                self[prop] = function() {
+                    _r.fn[prop].call(self, arguments[0]);
+                }
+            }
         }
 
         patch(value: any) : Elements {

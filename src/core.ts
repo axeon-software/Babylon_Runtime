@@ -7,28 +7,6 @@ module _r {
         });
     }
 
-    export function isOverrided(target : any, source : any, property : string) {
-        for(var i = 0; i < _r.overrides.length; i++) {
-            if(_r.overrides[i] instanceof RegExp && _r.overrides[i].test(property)) {
-               var res = _r.overrides[i].call(target, source, property);
-               if(res) {
-                   target = res;
-               }
-               return true;
-            }
-            else {
-                if(_r.overrides[i] == property) {
-                    var res = _r.overrides[i].call(target, source, property);
-                    if(res) {
-                        target = res;
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     export function extend(...params : any[]) : any {
         var target = params[0];
         for(var i = 1; i < params.length; i++) {

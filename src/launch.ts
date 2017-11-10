@@ -33,8 +33,6 @@ module _r {
             runtime[property] = _r[property];
         });
 
-
-
         runtime["engine"] = _r.engine;
         runtime["scene"] = _r.scene;
         runtime["canvas"] = _r.canvas;

@@ -103,4 +103,22 @@ module _r {
     export function hideDebug() {
         _r.scene.debugLayer.hide();
     }
+
+    export function normalizeRadian(radian : number) : number {
+        var nbTours = Math.abs(radian) / (2 * Math.PI);
+        if(radian > 0) {
+            var result = radian - Math.floor(nbTours) * (2 * Math.PI);
+        }
+        else {
+            var result = radian + Math.floor(nbTours) * (2 * Math.PI);
+        }
+        return result;
+    }
+
+    export function normalizeRotation(rotation : BABYLON.Vector3) : BABYLON.Vector3 {
+        rotation.x = normalizeRadian(rotation.x);
+        rotation.y = normalizeRadian(rotation.y);
+        rotation.z = normalizeRadian(rotation.z);
+        return rotation;
+    }
 }

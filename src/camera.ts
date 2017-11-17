@@ -320,6 +320,10 @@ module _r.camera {
         }
         else {
             if(rotation) {
+                //console.log("before : ", _r.scene.activeCamera.rotation);
+                //console.log("before : ", rotation);
+                _r.normalizeRotation(_r.scene.activeCamera.rotation);
+                _r.normalizeRotation(rotation);
                 return _r.animate(_r.scene.activeCamera, {
                     position : position,
                     rotation : rotation
@@ -331,6 +335,12 @@ module _r.camera {
                 }, options);
             }
         }
+    }
+
+    export function screenshot(width : number, height : number) {
+        var camera = _r.scene.activeCamera;
+        var engine = _r.engine;
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, {width: width, height: height});
     }
     export interface IFreeCamera {
         name : string,

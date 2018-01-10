@@ -29,10 +29,16 @@ module _r {
                                 _r.select(target).one(split[1], nextSource[key]);
                                 break;
                             default :
-                                var res = _r[split[0]][split[1]](nextSource[key]);
-                                if(res) {
-                                    target = res;
+                                if(_r.is.Function( _r[split[0]][split[1]])) {
+                                    var res = _r[split[0]][split[1]](nextSource[key]);
+                                    if(res) {
+                                        target = res;
+                                    }
                                 }
+                                else {
+                                    console.warn(key + ' is not a function');
+                                }
+
                                 break;
                         }
                     }
@@ -86,7 +92,12 @@ module _r {
                var selector = Object.getOwnPropertyNames(_patch)[0];
                if(selector.indexOf('::') != -1) {
                    var split = selector.split('::');
-                   _r[split[0]][split[1]](_patch[selector]);
+                   if(_r.is.Function(_r[split[0]][split[1]])) {
+                       _r[split[0]][split[1]](_patch[selector]);
+                   }
+                   else {
+                       console.warn(selector + " is not a function");
+                   }
                }
                else {
                    _r.select(selector).each(function(element) {

@@ -76,13 +76,17 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_r.light.idirectionallight.html" class="tsd-kind-icon">IDirectional<wbr>Light</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_r.light.ihemisphericlight.html" class="tsd-kind-icon">IHemispheric<wbr>Light</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_r.light.ipointlight.html" class="tsd-kind-icon">IPoint<wbr>Light</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.light.html#directional" class="tsd-kind-icon">directional</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.light.html#hemispheric" class="tsd-kind-icon">hemispheric</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.light.html#point" class="tsd-kind-icon">point</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,6 +94,29 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="directional" class="tsd-anchor"></a>
+					<h3>directional</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">directional<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_r.light.idirectionallight.html" class="tsd-signature-type">IDirectionalLight</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DirectionalLight</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/light.ts#L45">src/light.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../interfaces/_r.light.idirectionallight.html" class="tsd-signature-type">IDirectionalLight</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DirectionalLight</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="hemispheric" class="tsd-anchor"></a>
 					<h3>hemispheric</h3>
@@ -100,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/light.ts#L7">src/light.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/light.ts#L7">src/light.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -110,6 +137,29 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HemisphericLight</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="point" class="tsd-anchor"></a>
+					<h3>point</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">point<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_r.light.ipointlight.html" class="tsd-signature-type">IPointLight</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PointLight</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/light.ts#L26">src/light.ts:26</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../interfaces/_r.light.ipointlight.html" class="tsd-signature-type">IPointLight</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PointLight</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -124,9 +174,6 @@
 					<li class="current tsd-kind-module tsd-is-not-exported">
 						<a href="_r.html">_r</a>
 						<ul>
-							<li class=" tsd-kind-module tsd-parent-kind-module">
-								<a href="_r.animations.html">animations</a>
-							</li>
 							<li class=" tsd-kind-module tsd-parent-kind-module">
 								<a href="_r.camera.html">camera</a>
 							</li>
@@ -163,6 +210,9 @@
 							<li class=" tsd-kind-module tsd-parent-kind-module">
 								<a href="_r.texture.html">texture</a>
 							</li>
+							<li class=" tsd-kind-module tsd-parent-kind-module">
+								<a href="_r.to.html">to</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -170,10 +220,22 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_r.light.idirectionallight.html" class="tsd-kind-icon">IDirectional<wbr>Light</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_r.light.ihemisphericlight.html" class="tsd-kind-icon">IHemispheric<wbr>Light</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_r.light.ipointlight.html" class="tsd-kind-icon">IPoint<wbr>Light</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_r.light.html#directional" class="tsd-kind-icon">directional</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_r.light.html#hemispheric" class="tsd-kind-icon">hemispheric</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_r.light.html#point" class="tsd-kind-icon">point</a>
 					</li>
 				</ul>
 			</nav>

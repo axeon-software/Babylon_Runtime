@@ -99,8 +99,10 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#activate" class="tsd-kind-icon">activate</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#arcrotate" class="tsd-kind-icon">arcrotate</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#free" class="tsd-kind-icon">free</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#freegoto" class="tsd-kind-icon">free<wbr>GoTo</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#goto" class="tsd-kind-icon">go<wbr>To</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#isactive" class="tsd-kind-icon">is<wbr>Active</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#screenshot" class="tsd-kind-icon">screenshot</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_r.camera.html#topancamera" class="tsd-kind-icon">to<wbr>Pan<wbr>Camera</a></li>
 							</ul>
 						</section>
@@ -115,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">event<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;BABYLON.Tools.GetPointerPrefix()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L4">src/camera.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L4">src/camera.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -125,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L2">src/camera.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L2">src/camera.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -142,7 +144,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L272">src/camera.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L272">src/camera.ts:272</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -165,7 +167,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L375">src/camera.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L420">src/camera.ts:420</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L337">src/camera.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L382">src/camera.ts:382</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,16 +204,45 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="goto" class="tsd-anchor"></a>
-					<h3>go<wbr>To</h3>
+					<a name="freegoto" class="tsd-anchor"></a>
+					<h3>free<wbr>GoTo</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">go<wbr>To<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span>, rotation<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Vector3</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">free<wbr>GoTo<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span>, rotation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L311">src/camera.ts:311</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L338">src/camera.ts:338</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>position: <span class="tsd-signature-type">Vector3</span></h5>
+								</li>
+								<li>
+									<h5>rotation: <span class="tsd-signature-type">Vector3</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="goto" class="tsd-anchor"></a>
+					<h3>go<wbr>To</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">go<wbr>To<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span>, rotation<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Vector3</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_r.animation.html" class="tsd-signature-type">Animation</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L315">src/camera.ts:315</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -226,7 +257,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_r.animation.html" class="tsd-signature-type">Animation</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -240,7 +271,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L263">src/camera.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L263">src/camera.ts:263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -259,6 +290,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="screenshot" class="tsd-anchor"></a>
+					<h3>screenshot</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">screenshot<span class="tsd-signature-symbol">(</span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L371">src/camera.ts:371</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>width: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>height: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="topancamera" class="tsd-anchor"></a>
 					<h3>to<wbr>Pan<wbr>Camera</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -268,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/034d3b8/src/camera.ts#L255">src/camera.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/axeon-software/babylon-runtime/blob/83857ac/src/camera.ts#L255">src/camera.ts:255</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -292,9 +349,6 @@
 					<li class="current tsd-kind-module tsd-is-not-exported">
 						<a href="_r.html">_r</a>
 						<ul>
-							<li class=" tsd-kind-module tsd-parent-kind-module">
-								<a href="_r.animations.html">animations</a>
-							</li>
 							<li class="current tsd-kind-module tsd-parent-kind-module">
 								<a href="_r.camera.html">camera</a>
 							</li>
@@ -331,6 +385,9 @@
 							<li class=" tsd-kind-module tsd-parent-kind-module">
 								<a href="_r.texture.html">texture</a>
 							</li>
+							<li class=" tsd-kind-module tsd-parent-kind-module">
+								<a href="_r.to.html">to</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -362,10 +419,16 @@
 						<a href="_r.camera.html#free" class="tsd-kind-icon">free</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_r.camera.html#freegoto" class="tsd-kind-icon">free<wbr>GoTo</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_r.camera.html#goto" class="tsd-kind-icon">go<wbr>To</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_r.camera.html#isactive" class="tsd-kind-icon">is<wbr>Active</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_r.camera.html#screenshot" class="tsd-kind-icon">screenshot</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_r.camera.html#topancamera" class="tsd-kind-icon">to<wbr>Pan<wbr>Camera</a>

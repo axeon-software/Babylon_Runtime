@@ -71,7 +71,11 @@ module _r.to {
                             return BABYLON.Color3.Magenta();
                         case 'yellow' :
                             return BABYLON.Color3.Yellow();
+                        case 'teal' :
+                        case 'cyan' :
+                            return BABYLON.Color3.Teal();
                         case 'gray' :
+                        case 'grey' :
                             return BABYLON.Color3.Gray();
                         case 'random':
                             return BABYLON.Color3.Random();

@@ -67,6 +67,7 @@ module _r.to {
                         case 'purple' :
                             return BABYLON.Color3.Purple();
                         case 'magenta' :
+                        case 'pink' :
                             return BABYLON.Color3.Magenta();
                         case 'yellow' :
                             return BABYLON.Color3.Yellow();

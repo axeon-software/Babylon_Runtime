@@ -1,10 +1,12 @@
 # some file types
 
 *.blend1
+*.blend2
 *.DS_Store
 *.old
 *.sav
 *.kra~
+*.ffs_db
 
 # some specific files
 
